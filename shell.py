@@ -569,7 +569,7 @@ class shark:
                 size_bytes = os.path.getsize(file)
                 file_size = self.byte_size(size_bytes)
 
-                file_extension = os.path.splitext(file)[1] or "No extension"
+                file_extension = os.path.splitext(file)[1] or "N/A"
 
                 mime_type, _ = mimetypes.guess_type(file)
                 file_type_data = mime_type if mime_type else "Unknown"
