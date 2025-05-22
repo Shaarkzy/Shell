@@ -401,7 +401,7 @@ class shark:
         port = a3+a2+a1+a2+a3
         print (F.BLUE+"[✓]Server Started")
         tm.sleep(1)
-        print (F.GREEN+f"[*]Ip: {ip} : [*]Port: {port}")
+        print (F.GREEN+f"[*]Ip: {ip}  [*]Port: {port}")
     
         sock.bind(("0.0.0.0", int(port)))
         sock.listen(5)
@@ -818,7 +818,7 @@ class shark:
         sock.bind(('0.0.0.0', int(port)))
         print (F.BLUE+"[✓]Server Started")
         ip = self.get_private_addr()
-        print(F.GREEN+f'[*]Ip: {ip} :[*]Port {port}'+F.CYAN)
+        print(F.GREEN+f'[*]Ip: {ip} [*]Port: {port}'+F.CYAN)
 
         sock.listen(5)
 
@@ -923,7 +923,7 @@ class shark:
         print(F.CYAN+"[Note]: Input <exit> To Close Session")
         print (F.BLUE+"[✓]Shell Host Started")
         tm.sleep(1)
-        print (F.GREEN+f"[*]Ip: {ip} : [*]Port: {port}")
+        print (F.GREEN+f"[*]Ip: {ip}  [*]Port: {port}")
 
         sock.bind(("0.0.0.0", int(port)))
         sock.listen(5)
