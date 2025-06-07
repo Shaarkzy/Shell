@@ -71,15 +71,18 @@ to build and configure program
 # Program Executable
 
 **Program File Structure (Architecture)**
-
-```Shell/                                                                                                                                               ├── UTILS
+```
+├── UTILS
 │   ├── BOOT_SETUP
-│   │   └── update.sh                                           │   ├── android_setup.sh                                        │   └── kali_setup.sh
+│   │   └── update.sh
+│   ├── android_setup.sh
+│   └── kali_setup.sh
 ├── __version__
 ├── relink
 ├── setup.sh
 ├── shell_android
-└── shell_kali                                                  
+└── shell_kali
+
 ```    
 **Link To Software**
 https://www.dropbox.com/scl/fi/8tlky09l7rvdwymfzbiel/shell_exec.tar.gz?rlkey=rqlheo4xbyzom4e5x7z5oer35&st=ts1igrgd&dl=0 
