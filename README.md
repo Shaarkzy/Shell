@@ -72,7 +72,7 @@ to build and configure program
 
 **Program File Structure (Architecture)**
 
-```Shell/                                                       ├── LICENSE                                                     ├── README.md                                                   ├── UTILS
+```Shell/                                                                                                                                               ├── UTILS
 │   ├── BOOT_SETUP
 │   │   └── update.sh                                           │   ├── android_setup.sh                                        │   └── kali_setup.sh
 ├── __version__
