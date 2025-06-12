@@ -82,7 +82,7 @@ try:
             if check_git == check_local:
                 return False
             else:
-                return True
+                return check_git
         else:
             return 'null_internet'
 

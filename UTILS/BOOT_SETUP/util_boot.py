@@ -31,9 +31,9 @@ else:
 def trigger_software_update():
     check_res = check()
 
-    if check_res == True:
+    if check_res != False and check_res != "null_internet":
         #software update function
-        option = input(Fore.YELLOW+"[?]NEW UPDATE AVAILABLE WISH TO UPDATE [y/n] "+Fore.WHITE).lower().strip()
+        option = input(f"{Fore.YELLOW}[?]NEW UPDATE [{check_res}] AVAILABLE WISH TO UPDATE [y/n] "+Fore.WHITE).lower().strip()
         if option == "y":
             software_update()
             return ""
