@@ -68,27 +68,4 @@ to build and configure program
 14. File and Folder Properties Viewer
 ```
 
-# Program Executable
-
-**Program File Structure (Architecture)**
-```
-├── UTILS
-│   ├── BOOT_SETUP
-│   │   └── update.sh
-│   ├── android_setup.sh
-│   └── kali_setup.sh
-├── __version__
-├── relink
-├── setup.sh
-├── shell_android
-└── shell_kali
-
-```    
-**Link To Software**
-https://www.dropbox.com/scl/fi/8tlky09l7rvdwymfzbiel/shell_exec.tar.gz?rlkey=rqlheo4xbyzom4e5x7z5oer35&st=ts1igrgd&dl=0 
-
-# Security Check                                                
-**Android Executable**: https://www.virustotal.com/gui/file/82453bf5a16da27eec3eb4be0b4fc8ad73213f77c54657770d83633bb4b04cda/detection                                                          
-**Kali Executable**: https://www.virustotal.com/gui/file-analysis/OGUyYjA5ODI0MzQxMDFjMDI0MzkxMTNjYjVjZDU3NmM6MTc0OTEzMTY2OQ==/detection
-
 **Good luck**
