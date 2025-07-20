@@ -30,7 +30,7 @@ to build and configure program
 ├── __version__
 ├── relink
 ├── setup.sh
-└── shell.py    
+└── shell.py
 
 ```
 

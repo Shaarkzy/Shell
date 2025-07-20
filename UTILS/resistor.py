@@ -79,7 +79,7 @@ def solve(*args):
         temperature = ", "+str(get_value(args[5], "temp_val"))+"ppm/K"
         
     else:
-        print("\n{F.RED}[x]Error: Invalid Band Type")
+        print(f"\n{F.RED}[x]Error: Invalid Band Type")
         return True
         
     solve = (resist * multiplier) 

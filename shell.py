@@ -7,8 +7,8 @@
 # import all libraries
 from UTILS.BOOT_SETUP.util_boot import *
 from UTILS.check_os import *
-from UTILS.BOOT_SETUP.util_boot import *
-from UTILS.resistor import run
+from UTILS.BOOT_SETUP.util_boot import trigger_software_update
+from UTILS.resistor import *
 from UTILS.alias import *
 
 
