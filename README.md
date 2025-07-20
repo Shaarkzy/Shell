@@ -14,28 +14,23 @@ to build and configure program
 ```Shell/
 ├── LICENSE
 ├── README.md
-├── setup.sh
-├── shell.py
+├── UTILS
+│   ├── BOOT_SETUP
+│   │   ├── pycryptodome.sh
+│   │   ├── update.sh
+│   │   └── util_boot.py
+│   ├── alias.py
+│   ├── android_setup.sh
+│   ├── check_os.py
+│   ├── kali_setup.sh
+│   ├── resistor.py
+│   ├── .shellrc
+│   ├── .shell_help
+│   └── version.py
 ├── __version__
 ├── relink
-├── UTILS/
-│   ├── android_setup.sh
-│   ├── kali_setup.sh
-│   ├── .shell_history
-│   ├── .shell_help
-│   ├── check_os.py
-│   ├── version.py
-│   ├── resistor.py
-│   ├── __pycache__
-│   │       ├── check_os.cpython-312.pyc
-│   │       └── version.cpython-312.pyc
-│   └── BOOT_SETUP/
-│       ├── util_boot.py
-│       ├── pycryptodome.sh
-│       ├── update.sh
-│       └── __pycache__
-│           └── util_boot.cpython-312.pyc
-│       
+├── setup.sh
+└── shell.py    
 
 ```
 
