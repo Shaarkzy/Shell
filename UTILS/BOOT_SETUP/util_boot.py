@@ -1,5 +1,4 @@
 #------------------------------------------------------------------------------------------------------------------------------
-
 #imports
 try:
     import subprocess as sub
@@ -79,7 +78,7 @@ def load_libraries():
     global ipaddress, r, json, tqdm, pt, p, phone, carrier, geocoder
     global timezone, AES, get_random_bytes, mimetypes
     global datetime, glob, sys, ifaddresses, interfaces
-    global AF_INET, AF_INET6, n, readl, at
+    global AF_INET, AF_INET6, n, readline, at
 
     import sys as sy
     print("━"*2+" •", end="\r", flush=True)
@@ -157,7 +156,7 @@ def load_libraries():
     from os import system as sys
     print("━"*50+" •", end="\r", flush=True)
     
-    import readline as readl
+    import readline
     print("━"*52+" •", end="\r", flush=True)
     
     import atexit as at
@@ -170,7 +169,7 @@ def load_libraries():
 __all__ = [
     "sy", "F", "B", "Sty", "tm", "socket", "sub", "rd", "exists", "os", "re", "uuid",
     "ipaddress", "r", "json", "tqdm", "pt", "p", "phone", "carrier", "geocoder", 
-    "timezone", "AES", "get_random_bytes", "interfaces", "ifaddresses", "AF_INET", "AF_INET6", "mimetypes", "datetime", "glob", "sys", "n", "readl", "at"
+    "timezone", "AES", "get_random_bytes", "interfaces", "ifaddresses", "AF_INET", "AF_INET6", "mimetypes", "datetime", "glob", "sys", "n", "readline", "at"
 ]
 try:
     trigger_software_update()
@@ -183,4 +182,4 @@ except KeyboardInterrupt:
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-#end line 185
+#end line 184

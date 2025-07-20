@@ -6,9 +6,10 @@
 
 # import all libraries
 from UTILS.BOOT_SETUP.util_boot import *
-from UTILS.check_os import detect_os
-from UTILS.BOOT_SETUP.util_boot import trigger_software_update
+from UTILS.check_os import *
+from UTILS.BOOT_SETUP.util_boot import *
 from UTILS.resistor import run
+from UTILS.alias import *
 
 
 #------------------------------------------------------------------------------------------------------------------------------
@@ -22,33 +23,6 @@ sys("clear")
     
 # input function
 def inpu():
-    #initialize command history
-    if detect_os():
-        history_file = "/data/data/com.termux/files/home/Shell/UTILS/.shell_history"
-        try:
-            with open(history_file, "w") as tf:
-                tf.close()
-        except FileNotFoundError:
-            print(F.RED+"[x]Tempered Program Folder")
-        
-    else:
-        user = sub.getoutput("whoami")
-        directory = "/root" if os.geteuid() == 0 else f"/home/{user}"
-        history_file = f"{directory}/Shell/UTILS/.shell_history"
-        try:
-            with open(history_file, "w") as tf:
-                tf.close()
-        except FileNotFoundError:
-            print(F.RED+"[x]Tempered Program Folder")
-            quit(0)
-        except PermissionError:
-            print(F.RED+"[x]Run As Root")
-            quit(0)
-
-    readl.read_history_file(history_file)
-    
-    at.register(readl.write_history_file, history_file)
-    
     #get working directories
     try:
         print("\n")
@@ -60,6 +34,7 @@ def inpu():
         #initiate input method
         s = F.CYAN+"§"
         data = input(F.YELLOW+f"{F.YELLOW}╭─({F.CYAN}{subt}{F.YELLOW}@{F.CYAN}Shell{F.YELLOW})——[{new_path}]\n│\n{F.YELLOW}╰─{s} "+ F.WHITE)
+        readline.add_history(data)
         return data
     except:
         return 1
@@ -497,12 +472,14 @@ class shark:
         matches = glob.glob(path)
         if matches:
             if len(matches) == 1:
-                return matches[0]
+                check = matches[0]
+                return check.replace("'", "")
             else:
                 print(F.RED+"[x] Multiple Entry Found")
                 return False
         else:
-            return file
+            check = file
+            return check.replace("'", "")
 
 
 #------------------------------------------------------------------------------------------------------------------------------      
@@ -562,6 +539,7 @@ class shark:
 
         elif option == "-v":
             file = self.get_file(file)
+            print(file)
             if not file:
                 return False
             os = self.os
@@ -572,7 +550,8 @@ class shark:
                 file_extension = os.path.splitext(file)[1] or "N/A"
 
                 mime_type, _ = mimetypes.guess_type(file)
-                file_type_data = mime_type if mime_type else "Unknown"
+                add_f = "'"+file+"'"
+                file_type_data = sub.getoutput(f"file {add_f}").replace(f"{file}", "").replace(": ", "")
 
                 last_modified_timestamp = os.path.getmtime(file)
                 last_modified_time = datetime.fromtimestamp(last_modified_timestamp).strftime('%d-%m-%Y %H:%M:%S')
@@ -638,16 +617,8 @@ class shark:
             if not file:
                 return False
             os = self.os
-            tuggle = False
-            ext = { 
-                ".mp4", ".avi", ".mov", ".wmv", ".flv", ".mkv", ".m2ts", ".mts", ".webm", ".mpeg", ".mpg", ".3gp", ".ogv", ".divx", ".mp3", ".wav", ".aac", ".ogg", ".flac", ".m4a", ".wma", ".aiff", ".pcm", ".dts", ".ac3", ".mid", ".iso", ".ova", ".jpeg", ".png", ".jpg"
-                }
-            for ex in ext:
-                if file.endswith(ex):
-                    tuggle = True
-            if exists(file) and tuggle:
-                print(F.RED+"[x]File Type Not Supported")
-            elif exists(file):
+
+            if exists(file):
                 print(F.BLUE+"[*]File.Content:"+F.WHITE+"")
                 try:
                     open_file = open(file, "r")
@@ -1180,7 +1151,7 @@ class shark:
 
         folder = "/data/data/com.termux" if directory == "/termux" else directory
 
-        target__file = input(f"{F.BLUE}[%]File To Search:{F.WHITE} ")
+        target__file = input(f"{F.BLUE}[%]File To Search:{F.WHITE} ").replace("'", "")
         
         if target__file:
             print("")
@@ -1249,11 +1220,19 @@ class shark:
 shark = shark()
 if __name__ == '__main__':
     shark.main()
+    memory = compute()
     while True:
+
+#------------------------------------------------------------------------------------------------------------------------------
+
         data = inpu()
+
+        def cons_(num):
+            return ' '.join(data.split()[num:])
+            
         try:
             #data = inpu()
-            if "@help" in data:
+            if '@help'in data:
                 shark.help()
             elif "@get -i" in data: 
                 shark.get_ip(data.split()[2])
@@ -1262,9 +1241,9 @@ if __name__ == '__main__':
             elif "@port -sn" in data: 
                 shark.port_scan_sin(data.split()[2], data.split()[3])
             elif "@bina -a" in data: 
-                shark.Bina_Alpha(data.split()[2])
+                shark.Bina_Alpha(cons_(2))
             elif "@alpha -b" in data: 
-                shark.Alpha_Bina(data.split()[2])
+                shark.Alpha_Bina(cons_(2))
             elif "@num -b" in data: 
                 shark.Num_Bina(data.split()[2], data.split()[3])
             elif "@bina -n" in data: 
@@ -1272,6 +1251,7 @@ if __name__ == '__main__':
             elif "@ip -details" in data:
                 shark.get_device_ip()
 
+#------------------------------------------------------------------------------------------------------------------------------
 
             elif "@cpu" in data: 
                 shark.cpu_info()
@@ -1280,7 +1260,7 @@ if __name__ == '__main__':
             elif "@con -s" in data: 
                 shark.connect_server(data.split()[2], data.split()[3])
             elif "@file" in data:
-                shark.file_sys(data.split()[1], data.split()[2])
+                    shark.file_sys(data.split()[1], cons_(2))
             elif "@send -w" in data:
                 shark.send_mess(data.split()[2])
             elif "@send -file" in data: 
@@ -1290,6 +1270,7 @@ if __name__ == '__main__':
             elif data == "@shell -host":
                 shark.shell_host()
 
+#------------------------------------------------------------------------------------------------------------------------------
 
             elif "@shell -c" in data:
                 shark.shell_client(data.split()[2], data.split()[3])
@@ -1302,16 +1283,30 @@ if __name__ == '__main__':
             elif "@ip -s" in data:
                 shark.ip_osint(data.split()[2])
             elif "@sch -f" in data:
-                shark.trigger_search(data.split()[2])
+                shark.trigger_search(cons_(2))
             elif "@sch -m" in data:
                 shark.mac_lookup(data.split()[2])
             elif "@solve -res" in data:
                 run()
+
+#------------------------------------------------------------------------------------------------------------------------------
+
             elif "@version" in data:
                 shark.version()
+            elif "@shark" in data:
+                memory.update({data.split("=")[0].split()[1]: data.split("=")[1]})
+            elif "@clone" in data:
+                if data.split()[2] == "file":
+                    clone_alias(True)
+                    print(F.RED+"[!]Cloned: Restart The Shell For Update To Take Effect")
+                elif data.split()[2] == "mem":
+                    memory.update(clone_alias(False))
+
             elif "@exit" in data: 
                 print (F.RED+"[✓]Exiting Program...")
                 break
+
+#------------------------------------------------------------------------------------------------------------------------------
 
             elif data.lstrip().startswith('cd') and "cd" != data.strip():
                 d_path = ' '.join(filter(None, data.split()))
@@ -1329,16 +1324,21 @@ if __name__ == '__main__':
             elif data == "@update":
                 print(trigger_software_update())
 
+#------------------------------------------------------------------------------------------------------------------------------
+
             else:
+                for alias in memory.keys():
+                    if data.split()[0] == alias:
+                        data = data.split()[0].replace(alias, memory[alias].strip()) +' '+' '.join(data.split()[1:])
                 sys(data)
 
         except FileNotFoundError as er:
             print(F.RED+"[x]",er)
         except IsADirectoryError as er:
             print(F.RED+"[x]",er)
-        except TypeError:
-            print(F.RED+"[x]A Fatal Error Occured\n[*]Quiting Program")
-            break
+
+#------------------------------------------------------------------------------------------------------------------------------
+
         except ValueError as er:
             print(F.RED+"[x]",er)
         except PermissionError as er:
@@ -1347,7 +1347,6 @@ if __name__ == '__main__':
             print(F.RED+"[x]",er)
         except socket.timeout as er:
             print(F.RED+"[x]",er)
-
         except socket.gaierror as er:
             print(F.RED+"[x]",er)
         except NameError as er:
@@ -1362,6 +1361,5 @@ if __name__ == '__main__':
             print(F.RED+"[x]An Error Occured")
 
 
-
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1366
+# end line 1365

@@ -88,8 +88,15 @@
 {F.YELLOW}[21].{F.CYAN}To Lookup MAC Address: {F.WHITE}@sch -m {F.GREEN}<mac address>
      {F.GREEN}Example: {F.WHITE}@sch -m 00:00:00:00:00:00
 
-{F.YELLOW}[22].{F.CYAN}To Manually Update Software: {F.WHITE}@update
+{F.YELLOW}[22].{F.CYAN}To Clone Main Shell Aliases To Shark Shell (.bashrc) to (.shellrc): {F.WHITE}@clone -t {F.GREEN}<mode | file/mem>
+     {F.GREEN}Example: {F.WHITE}@clone -t {F.GREEN}file
 
-{F.YELLOW}[23].{F.CYAN}To Check For Software Version: {F.WHITE}@version
+{F.YELLOW}[23].{F.CYAN}To Create A Temporary Alias: {F.WHITE}@shark {F.GREEN}alias=value
+     {F.GREEN}Example: {F.WHITE}@shark {F.GREEN}p=python
+     {F.RED}NOTE: {F.BLUE}Creating Or cloning An Alias For Shell Commands Isn't Supported.
+
+{F.YELLOW}[24].{F.CYAN}To Manually Update Software: {F.WHITE}@update
+
+{F.YELLOW}[25].{F.CYAN}To Check For Software Version: {F.WHITE}@version
 
 {F.YELLOW}[00].{F.CYAN}To Exit Program: {F.WHITE}@exit
