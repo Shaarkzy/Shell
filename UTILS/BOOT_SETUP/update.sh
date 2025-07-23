@@ -18,6 +18,9 @@ git clone "$REPO_URL" "$TEMP_DIR" > /dev/null 2>&1
 if [ $? -eq 0 ]; then
     # If the main Shell directory exists, remove it
     if [ -d "$TARGET_DIR" ]; then
+	#copy files before deleting
+	# 1. .shellrc
+	cp -r "$TARGET_DIR"/UTILS/.shellrc "TEMP_DIR"/UTILS/.shellrc
         rm -rf "$TARGET_DIR"
     fi
 
