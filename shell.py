@@ -328,7 +328,7 @@ class shark:
    
     # get device cpu information
     def cpu_info(self): #10
-        print (F.BLUE+"[*]Cpu Details: ctrl+c To Exit")
+        print (F.BLUE+"[*]Cpu Details")
 
         while True:
 
@@ -340,17 +340,17 @@ class shark:
             disk = p.disk_partitions()[0]
             d_usage = p.disk_usage(disk.mountpoint)
 
-            total_ram = F.BLUE+str((ram.total // (1024 ** 2))//1024)
+            total_ram = F.BLUE+str((ram.total // (1024 ** 2)))
 
-            ram_used = F.BLUE+str((ram.used // (1024 ** 2)) // 1024)
+            ram_used = F.GREEN+str((ram.used // (1024 ** 2)))
 
             cu = F.CYAN+'Cpu Usage'
             co = F.CYAN+'Cpu Cores'
             cl = F.CYAN+'Logical Cores'
-            ra = F.CYAN+'Ram:'
+            ra = F.CYAN+'Ram'
 
 
-            print (f'{cu}:{cpu_p} | {co}:{cpu_us} | {cl}:{cpu_l} | A-{ra}:{ram_used}/{total_ram}Gb', end='\r', flush=True)
+            print (f'{cu}: {cpu_p} | {co}: {cpu_us} | {cl}: {cpu_l} | {ra}: {ram_used} / {total_ram}MiB   ', end='\r', flush=True)
             tm.sleep(0.5)
 
 
