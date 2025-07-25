@@ -22,7 +22,7 @@ detect_os() {
             ./UTILS/kali_setup.sh
 
 	else
-	    echo "${RED}[x]Unsupported OS : Read Documentation${NC}"
+	    echo "${RED}[x]No Setup File For Your Os${NC}"
         fi
     else
         echo "${RED}[x]Unsupported OS : Read Documentation${NC}"

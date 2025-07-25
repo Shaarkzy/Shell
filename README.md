@@ -1,6 +1,6 @@
 # Shark Shell
 
-Shell like emulator with utilities
+Shell like emulator with extra utilities
 Run Setup for libary installations and binary setup.
 Program only for Linux.
 
@@ -21,7 +21,6 @@ to build and configure program
 │   │   └── util_boot.py
 │   ├── alias.py
 │   ├── android_setup.sh
-│   ├── check_os.py
 │   ├── kali_setup.sh
 │   ├── resistor.py
 │   ├── .shellrc
@@ -36,13 +35,28 @@ to build and configure program
 
 **Note:**
 ```
-1. Tested under Kali LInux Os and Android OS (Configured For Termux Terminal Only)
-2. Some utilities requires superuser privilege (on feature 10)...
-3. For kali installation run setup as root: $ sudo ./setup.sh
-4. Program Folder must be in the home directory (~/Shell , /root/Shell)
-5. On Kali, it's advisable to run setup on Non root Terminal, Run: $ ./relink on Non root terminal if setup was run on Root Terminal and you wish to run shell command from Non root terminal.
-6. On kali, To start shell on Non root Terminal run: sudo shell.
-7. On kali, the program runs on root environment.
+1. Some utilities requires superuser privilege (on feature 9)...
+2. For Debian installation run setup as root: $ sudo ./setup.sh
+3. Program Folder must be in the home directory (~/Shell , /root/Shell)
+4. On Debian system, it's advisable to run setup on Non root Terminal, Run: $ ./relink on Non root terminal if setup was run on Root Terminal and you wish to run shell command from Non root terminal.
+5. On Debian system, To start shell on Non root Terminal run: sudo shell.
+6. On Debian system, the program runs on root environment.
+7. Setup File is configured for Android and Debian based systems only
+```
+
+**List Of Libraries Required**
+```
+1. colorama
+2. regex
+3. tqdm
+4. xdg
+5. uuid
+6. ipaddress
+7. requests
+8. psutil
+9. netifaces
+10. phonenumbers
+11. pycryptodome
 ```
 
 **Features:**

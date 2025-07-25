@@ -6,7 +6,6 @@
 
 # import all libraries
 from UTILS.BOOT_SETUP.util_boot import *
-from UTILS.check_os import *
 from UTILS.BOOT_SETUP.util_boot import trigger_software_update
 from UTILS.resistor import *
 from UTILS.alias import *
@@ -70,13 +69,11 @@ class shark:
 
     # function for list of tools
     def help(self): #1
-        if detect_os():
-            data = open("/data/data/com.termux/files/home/Shell/UTILS/.shell_help", "r").read()
-        else:
-            user = sub.getoutput('whoami')
-            data = "/root/Shell/UTILS/.shell_help" if os.geteuid() == 0 else f"/home/{user}/Shell/UTILS/.shell_help"
-            data = open(data, "r").read()
+        home = os.environ["HOME"]
+        data = open(f"{home}/Shell/UTILS/.shell_help", "r").read()
         print(eval(f"f'''{data}'''"))
+
+
 
 
 
@@ -1202,10 +1199,8 @@ class shark:
 
 
     def version(self):
-        if detect_os():
-            folder = '/data/data/com.termux/files/home/Shell/__version__'
-        else:
-            folder = "/root/Shell/__version__" if os.geteuid() == 0 else f'/home/{user}/Shell/__version__'
+        home = os.environ["HOME"]
+        folder = f"{home}/Shell/__version__"
         open_file = open(folder, 'r')
         print(F.CYAN+open_file.read().strip())
         open_file.close()
@@ -1362,4 +1357,4 @@ if __name__ == '__main__':
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1365
+# end line 1359

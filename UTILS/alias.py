@@ -3,7 +3,6 @@
 
 
 from os import system
-from .check_os import detect_os
 import subprocess as sub
 import os
 
@@ -14,11 +13,8 @@ import os
 
 
 def load_file():
-    if detect_os():
-        file = "/data/data/com.termux/files/home/Shell/UTILS/.shellrc"
-    else:
-        user = sub.getoutput("whoami")
-        file = "/root/Shell/UTILS/.shellrc" if os.geteuid() == 0 else f'/home/{user}/Shell/UTILS/.shellrc'
+    home = os.environ["HOME"]
+    file = f"{home}/Shell/UTILS/.shellrc"
 
     open_file = open(file, "r")
 
@@ -57,16 +53,12 @@ def compute():
 
 
 def clone_alias(mode):
-    if detect_os():
-        bash_alias_file = "/data/data/com.termux/files/home/.bashrc"
-        shell_alias_file = "/data/data/com.termux/files/home/Shell/UTILS/.shellrc"
 
-    else:
-        detect_shell = os.environ.get("SHELL", "/bin/bash").split("/")[-1]
-        shell = ".zshrc" if detect_shell == "zsh" else ".bashrc"
-        user = sub.getoutput("whoami")
-        bash_alias_file = f"/root/{shell}" if os.geteuid() == 0 else f'/home/{user}/{shell}'
-        shell_alias_file = f"/root/Shell/UTILS/.shellrc" if os.geteuid() == 0 else f"/home/{user}/Shell/UTILS/.shellrc"
+    home = os.environ["HOME"]
+    detect_shell = os.environ.get("SHELL", "/bin/bash").split("/")[-1]
+    shell = ".zshrc" if detect_shell == "zsh" else ".bashrc"
+    bash_alias_file = f"{home}/{shell}"
+    shell_alias_file = f"{home}/Shell/UTILS/.shellrc"
 
 
     open_file = open(bash_alias_file, "r")
@@ -101,7 +93,7 @@ def clone_alias(mode):
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-#end line 103
+#end line 95
 
 
 

@@ -3,7 +3,6 @@
 try:
     import subprocess as sub
     from ..version import check
-    from ..check_os import detect_os
     import os
     import shutil
     import time as tm
@@ -19,10 +18,10 @@ except:
 
 
 #detect operating system
-if detect_os() == True or detect_os() == False:
+if sub.getoutput("uname -a | grep -i linux").strip():
     pass
 else:
-    print(Fore.RED+"[x]Possible Error: Unsupported OS or Corrupted Shell Folder [exit folder now]")
+    print(Fore.RED+"[x]Unsupported OS")
     quit(0)
 
 #------------------------------------------------------------------------------------------------------------------------------
@@ -49,14 +48,8 @@ def trigger_software_update():
 #------------------------------------------------------------------------------------------------------------------------------
 
 def software_update():
-    #detect os
-    if detect_os():
-        folder = '/data/data/com.termux/files/home/'
-    else:
-        user = sub.getoutput('whoami')
-        folder = "/root/" if os.geteuid() == 0 else f'/home/{user}/'
-
-    form = f'{folder}Shell'
+    home = os.environ["HOME"]
+    form = f'{home}/Shell'
 
     #quit update if user in shell directory
     if form in sub.getoutput("pwd"):
@@ -182,4 +175,4 @@ except KeyboardInterrupt:
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-#end line 184
+#end line 177

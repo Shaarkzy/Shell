@@ -5,7 +5,6 @@ try:
     import requests as req
     from requests.exceptions import RequestException
     import os
-    from .check_os import detect_os
     import base64
     import socket
     import subprocess as sub
@@ -17,11 +16,8 @@ except ImportError:
 
 github_raw_version = "https://api.github.com/repos/Shaarkzy/Shell/contents/__version__?ref=main"
 
-if detect_os():
-    local_raw_version = '/data/data/com.termux/files/home/Shell/__version__'
-else:
-    user = sub.getoutput('whoami')
-    local_raw_version = "/root/Shell/__version__" if os.geteuid() == 0 else f'/home/{user}/Shell/__version__' 
+home = os.environ["HOME"]
+local_raw_version = f"{home}/Shell/__version__"
 
 
 #------------------------------------------------------------------------------------------------------------------------------
@@ -91,5 +87,5 @@ except:
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-#end line 93
+#end line 89
 
