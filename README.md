@@ -8,7 +8,7 @@ Program only for Linux.
 
 ```$ ./setup.sh ``` 
 
-to build and configure program
+to build and configure program (Android | Debian based system only).
 
 **Program File Structure (Architecture)**
 ```Shell/
