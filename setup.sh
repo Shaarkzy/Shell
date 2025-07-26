@@ -15,11 +15,11 @@ detect_os() {
             echo -e "${BLUE}DONE${NC}"
             ./UTILS/android_setup.sh
             
-        elif [[ "$(uname -a | grep -i kali)" ]]; then
+        elif grep -Eq '^(ID|ID_LIKE)=.*debian' /etc/os-release; then
             echo -e "${GREEN}INSTALLING PYTHON3${NC}"
             apt-get install python3
             echo -e "${BLUE}DONE${NC}"
-            ./UTILS/kali_setup.sh
+            ./UTILS/debain_setup.sh
 
 	else
 	    echo "${RED}[x]No Setup File For Your Os${NC}"

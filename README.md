@@ -21,7 +21,7 @@ to build and configure program
 │   │   └── util_boot.py
 │   ├── alias.py
 │   ├── android_setup.sh
-│   ├── kali_setup.sh
+│   ├── debian_setup.sh
 │   ├── resistor.py
 │   ├── .shellrc
 │   ├── .shell_help
