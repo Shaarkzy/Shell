@@ -1213,7 +1213,7 @@ class shark:
         home = os.environ["HOME"]
         folder = f"{home}/Shell/__version__"
         open_file = open(folder, 'r')
-        print(F.CYAN+open_file.read().strip())
+        print(F.GREEN+'[*]VERSION:',F.CYAN+open_file.read().strip())
         open_file.close()
 
 
@@ -1368,4 +1368,4 @@ if __name__ == '__main__':
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1359
+# end line 1370
