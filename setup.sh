@@ -19,7 +19,7 @@ detect_os() {
             echo -e "${GREEN}INSTALLING PYTHON3${NC}"
             apt-get install python3
             echo -e "${BLUE}DONE${NC}"
-            ./UTILS/debain_setup.sh
+            ./UTILS/debian_setup.sh
 
 	else
 	    echo -e "${RED}[x]No Setup File For Your Os${NC}"
