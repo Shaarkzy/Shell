@@ -22,10 +22,10 @@ detect_os() {
             ./UTILS/debain_setup.sh
 
 	else
-	    echo "${RED}[x]No Setup File For Your Os${NC}"
+	    echo -e "${RED}[x]No Setup File For Your Os${NC}"
         fi
     else
-        echo "${RED}[x]Unsupported OS : Read Documentation${NC}"
+        echo -e "${RED}[x]Unsupported OS : Read Documentation${NC}"
     fi
 }
 # run function
