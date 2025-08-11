@@ -62,6 +62,24 @@ def get_github():
 #------------------------------------------------------------------------------------------------------------------------------
 
 
+def compute(data):
+    if data == False:
+        return False
+    sp = data.split(".")
+    _, year, month, day, hr, mi = sp
+
+    year = int(year) * 365 * 86400
+    month = int(month) * 30 * 86400
+    day = int(day) * 24 * 3600
+    hr = int(hr) * 60 * 60
+    mi = int(mi) * 60
+
+    computed = year + month + day + hr + mi
+    return computed
+
+
+#------------------------------------------------------------------------------------------------------------------------------
+
 
 def get_local():
     open_file = open(local_raw_version, "r")
@@ -70,15 +88,15 @@ def get_local():
 
 try:
     def check():
-        check_git = get_github()
-        check_local = get_local()
+        git_val = compute(get_github())
+        local_val = compute(get_local())
 
     
-        if check_git != False:
-            if check_git == check_local:
+        if git_val != False:
+            if git_val <= local_val:
                 return False
             else:
-                return check_git
+                return get_github()
         else:
             return 'null_internet'
 
@@ -87,5 +105,5 @@ except:
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-#end line 89
+#end line 107
 
