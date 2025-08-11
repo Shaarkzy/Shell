@@ -24,7 +24,7 @@ local_raw_version = f"{home}/Shell/__version__"
 
 
 
-def is_connected(host="8.8.8.8", port=53, timeout=3):
+def is_connected(host="8.8.8.8", port=53, timeout=0.5):
 
     try:
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
