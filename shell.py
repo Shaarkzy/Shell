@@ -616,9 +616,9 @@ class shark:
             os = self.os
 
             if exists(file):
-                print(F.BLUE+"[*]File.Content:"+F.WHITE+"")
                 try:
                     open_file = open(file, "r")
+                    print(F.BLUE+"[*]File.Content:"+F.WHITE+"")
                     buffer = 1024
                     while True:
                         data = open_file.read(buffer)
@@ -1232,6 +1232,8 @@ if __name__ == '__main__':
 #------------------------------------------------------------------------------------------------------------------------------
 
         data = inpu()
+        if data: pass
+        else: continue
 
         def cons_(num):
             return ' '.join(data.split()[num:])
@@ -1308,9 +1310,9 @@ if __name__ == '__main__':
                 elif data.split()[2] == "mem":
                     memory.update(clone_alias(False))
 
-            elif "@exit" in data: 
-                print (F.RED+"[✓]Exiting Program...")
-                break
+            elif "@exit" in data:
+                sys("clear")
+                quit(0)
 
 #------------------------------------------------------------------------------------------------------------------------------
 
@@ -1322,7 +1324,7 @@ if __name__ == '__main__':
                     if len(matches) == 1:
                         os.chdir(matches[0])
                     else:
-                        print(F.RED+"[x] Multiple Entry Found")
+                        print(F.RED+"[x]Multiple Entry Found")
                 else:
                     print (f"cd:{path}: No Such File Or Directory")
             elif data.strip() == 'cd':
@@ -1338,34 +1340,26 @@ if __name__ == '__main__':
                         data = data.split()[0].replace(alias, memory[alias].strip()) +' '+' '.join(data.split()[1:])
                 sys(data)
 
-        except FileNotFoundError as er:
-            print(F.RED+"[x]",er)
-        except IsADirectoryError as er:
-            print(F.RED+"[x]",er)
+        except FileNotFoundError:
+            print(F.RED+"[x]File Not Found")
+        except IsADirectoryError:
+            print(F.RED+"[x]Not A File")
 
 #------------------------------------------------------------------------------------------------------------------------------
 
-        except ValueError as er:
-            print(F.RED+"[x]",er)
-        except PermissionError as er:
-            print(F.RED+"[x]",er)
-        except socket.error as er:
-            print(F.RED+"[x]",er)
-        except socket.timeout as er:
-            print(F.RED+"[x]",er)
-        except socket.gaierror as er:
-            print(F.RED+"[x]",er)
-        except NameError as er:
-            print(F.RED+"[x]",er)
-        except UnboundLocalError as er:
-            print(F.RED+"[x]",er)
+        except ValueError:
+            print(F.RED+"[x]Invalid Value")
+        except TypeError:
+            continue
+        except PermissionError:
+            print(F.RED+"[x]Permission Error")
         except KeyboardInterrupt:
-            pass
-        except IndexError as er:
-            print(F.RED+"[x]",er)
-        except:
-            print(F.RED+"[x]An Error Occured")
+            continue
+        except IndexError:
+            print(F.RED+"[x]Invalid Argument")
+        except Exception as e:
+            print(F.RED,e)
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1370
+# end line 1364
