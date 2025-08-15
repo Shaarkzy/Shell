@@ -11,7 +11,7 @@ TEMP_DIR="$HOME/Shell_temp"
 REPO_URL="https://github.com/Shaarkzy/Shell"
 
 # Clone the repo to a temporary directory
-echo -e "${YELLOW}[!]Software Updating...${NC}"
+echo -e "${YELLOW}[!]SOFTWARE UPDATING...${NC}"
 git clone "$REPO_URL" "$TEMP_DIR" > /dev/null 2>&1
 
 # Check if the clone was successful
@@ -26,12 +26,12 @@ if [ $? -eq 0 ]; then
 
     # Rename temp folder to Shell
     mv "$TEMP_DIR" "$TARGET_DIR"
-    echo -e "${GREEN}[*]Update Successful${NC}"
+    echo -e "${YELLOW}[✓]UPDATE SUCCESSFUL${NC}"
 
     version="$HOME/Shell/__version__"
     if [ -f "$version" ]; then
         data=$(cat "$version")
-        echo -e "${YELLOW}[!] SOFTWARE UPDATED: VERSION: ${GREEN}${data}${NC}"
+        echo -e "${GREEN}[!]SOFTWARE UPDATED: VERSION: ${YELLOW}${data}${NC}"
     else
         echo -e "${RED}[x]Version File Not Found${NC}"
     fi

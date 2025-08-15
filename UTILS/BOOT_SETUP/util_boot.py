@@ -32,7 +32,7 @@ def trigger_software_update():
 
     if check_res != False and check_res != "null_internet":
         #software update function
-        option = input(f"{Fore.GREEN}[!]NEW UPDATE {Fore.YELLOW}[{check_res}]{Fore.GREEN} AVAILABLE\n[?]WISH TO UPDATE [y/n] "+Fore.WHITE).lower().strip()
+        option = input(f"{Fore.GREEN}[!]NEW UPDATE {Fore.YELLOW}[{check_res}]{Fore.GREEN} AVAILABLE\n[?]WISH TO UPDATE [y/n]: "+Fore.WHITE).lower().strip()
         if option == "y":
             software_update()
             return ""
@@ -68,10 +68,10 @@ def software_update():
 
         if check_res == read_f.strip():
             print(Fore.RED+"[!]EXITING PROGRAM FOR UPDATE TO TAKE EFFECT")
-            tm.sleep(2)
+            tm.sleep(1)
             quit(0)
         else:
-            tm.sleep(2)
+            tm.sleep(1)
             pass
 
 
