@@ -27,11 +27,12 @@ else:
 #------------------------------------------------------------------------------------------------------------------------------
 #software update trigger 
 def trigger_software_update():
+    global check_res
     check_res = check()
 
     if check_res != False and check_res != "null_internet":
         #software update function
-        option = input(f"{Fore.YELLOW}[?]NEW UPDATE [{check_res}] AVAILABLE WISH TO UPDATE [y/n] "+Fore.WHITE).lower().strip()
+        option = input(f"{Fore.GREEN}[!]NEW UPDATE [{check_res}] AVAILABLE\n[?]WISH TO UPDATE [y/n] "+Fore.WHITE).lower().strip()
         if option == "y":
             software_update()
             return ""
@@ -59,7 +60,19 @@ def software_update():
     #run update script
     else:
         sys("./Shell/UTILS/BOOT_SETUP/update.sh")
-        tm.sleep(4)
+
+        file = f"{form}/__version__"
+        open_f = open(file, "r")
+        read_f = open_f.read()
+        open_f.close()
+
+        if check_res == read_f.strip():
+            print(Fore.RED+"[!]EXITING PROGRAM FOR UPDATE TO TAKE EFFECT")
+            tm.sleep(4)
+            quit(0)
+        else:
+            tm.sleep(4)
+            pass
 
 
 
@@ -184,4 +197,4 @@ except KeyboardInterrupt:
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-#end line 186
+#end line 199

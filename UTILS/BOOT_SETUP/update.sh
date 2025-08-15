@@ -32,7 +32,6 @@ if [ $? -eq 0 ]; then
     if [ -f "$version" ]; then
         data=$(cat "$version")
         echo -e "${YELLOW}[!] SOFTWARE UPDATED: VERSION: ${GREEN}${data}${NC}"
-        echo -e "${YELLOW}[!] PLEASE REFRESH YOUR TERMINAL${NC}"
     else
         echo -e "${RED}[x]Version File Not Found${NC}"
     fi
