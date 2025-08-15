@@ -32,7 +32,7 @@ def trigger_software_update():
 
     if check_res != False and check_res != "null_internet":
         #software update function
-        option = input(f"{Fore.GREEN}[!]NEW UPDATE [{check_res}] AVAILABLE\n[?]WISH TO UPDATE [y/n] "+Fore.WHITE).lower().strip()
+        option = input(f"{Fore.GREEN}[!]NEW UPDATE {F.YELLOW}[{check_res}]{F.GREEN} AVAILABLE\n[?]WISH TO UPDATE [y/n] "+Fore.WHITE).lower().strip()
         if option == "y":
             software_update()
             return ""
@@ -55,7 +55,7 @@ def software_update():
     #quit update if user in shell directory
     if form in sub.getoutput("pwd"):
         print(Fore.RED+"[x]POTENTIAL ERROR: WON'T RUN UPDATE ON SHELL SOFTWARE FOLDER")
-        tm.sleep(4)
+        tm.sleep(1)
 
     #run update script
     else:
@@ -68,10 +68,10 @@ def software_update():
 
         if check_res == read_f.strip():
             print(Fore.RED+"[!]EXITING PROGRAM FOR UPDATE TO TAKE EFFECT")
-            tm.sleep(4)
+            tm.sleep(2)
             quit(0)
         else:
-            tm.sleep(4)
+            tm.sleep(2)
             pass
 
 
