@@ -9,8 +9,8 @@ try:
     from os import system as sys
     import subprocess as sub
     from colorama import Fore
-except:
-    pass
+except Exception as er:
+    print('[x]',er)
     quit(0)
 
 
@@ -71,7 +71,8 @@ def load_libraries():
     global ipaddress, r, json, tqdm, pt, p, phone, carrier, geocoder
     global timezone, AES, get_random_bytes, mimetypes
     global datetime, glob, sys, ifaddresses, interfaces
-    global AF_INET, AF_INET6, n, readline, at
+    global AF_INET, AF_INET6, n, readline, at, threading
+    global PromptSession, patch_stdout, ANSI, print_formatted_text
 
     import sys as sy
     print("━"*2+" •", end="\r", flush=True)
@@ -149,30 +150,38 @@ def load_libraries():
     from os import system as sys
     print("━"*50+" •", end="\r", flush=True)
     
-    import readline
+    import readline, threading
     print("━"*52+" •", end="\r", flush=True)
     
     import atexit as at
     print("━"*54+" •", end="\r", flush=True)
- 
+
+    from prompt_toolkit import PromptSession
+    from prompt_toolkit.patch_stdout import patch_stdout
+    from prompt_toolkit.shortcuts import print_formatted_text
+    from prompt_toolkit.formatted_text import ANSI
+    print("━"*56+" •", end="\r", flush=True)
+
 
 #------------------------------------------------------------------------------------------------------------------------------
 
 
 __all__ = [
     "sy", "F", "B", "Sty", "tm", "socket", "sub", "rd", "exists", "os", "re", "uuid",
-    "ipaddress", "r", "json", "tqdm", "pt", "p", "phone", "carrier", "geocoder", 
-    "timezone", "AES", "get_random_bytes", "interfaces", "ifaddresses", "AF_INET", "AF_INET6", "mimetypes", "datetime", "glob", "sys", "n", "readline", "at"
+    "ipaddress", "r", "json", "tqdm", "pt", "p", "phone", "carrier", "geocoder", "threading", 
+    "timezone", "AES", "get_random_bytes", "interfaces", "ifaddresses", "AF_INET", "AF_INET6", "mimetypes", "datetime", "glob", "sys", "n", "readline", "at", "PromptSession", "patch_stdout", "print_formatted_text", "ANSI",
 ]
+
 try:
     trigger_software_update()
     load_libraries()
 except Exception as er:
-    print(Fore.RED+"[x]",er)
+    print(Fore.RED+"[x]",er, "                                ")
+    print(Fore.YELLOW+"[!]Install The Required Library\nOr\n[!]Run Setup Script")
     quit(0)
 except KeyboardInterrupt:
     quit(0)
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-#end line 177
+#end line 186

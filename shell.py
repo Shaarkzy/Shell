@@ -373,33 +373,73 @@ class shark:
         port = a3+a2+a1+a2+a3
         print (F.BLUE+"[✓]Server Started")
         tm.sleep(1)
-        print (F.GREEN+f"[*]Ip: {ip}  [*]Port: {port}")
+        print (F.CYAN+f"[*]Ip: {F.YELLOW}{ip}  {F.CYAN}[*]Port: {F.YELLOW}{port}")
     
         sock.bind(("0.0.0.0", int(port)))
         sock.listen(5)
         c, addr = sock.accept()
+        flag = False
 
-        while True:
-            sen = input(F.CYAN+"[%]Send-Message: "+F.WHITE)
-            c.send(sen.encode())
-            print (F.BLUE+"[✓]Message Sent")
-            print (F.GREEN+"[*]Waiting For Incoming Message")
-            if sen == "@bye":
-                tm.sleep(1)
-                print (F.RED+"[*]Closing Chat")
-                c.close()
-                break
-            rec = c.recv(20480).decode()
-            print (F.CYAN+"[*]Received-Message: ",F.WHITE+rec)
-            if rec == "@bye":
-                tm.sleep(1)
-                print (F.RED+"[*]User Closed Chat")
-                c.close()
-                break
+        session = PromptSession()
+
+        def send_():
+            nonlocal flag
+            while True:
+                with patch_stdout():
+                    sen = session.prompt(ANSI(f"{F.GREEN}[*]Send-Message: {F.WHITE}"))
+                    try:
+                        c.send(len(sen).to_bytes(4, byteorder='big'))
+                        c.send(sen.encode())
+                    except:
+                        c.close()
+                        break
+
+                if sen.strip() == '@bye':
+                    c.close()
+                    flag = True
+                    break
+
+                if flag == True:
+                    c.close()
+                    break
+
+        def recv_():
+            nonlocal flag
+            while True:
+                try:
+                    length = int.from_bytes(c.recv(4), byteorder='big')
+                    data = c.recv(length).decode()
+                except:
+                    c.close()
+                    break
+
+                if data.strip() == '@bye':
+                    print_formatted_text(ANSI(f'{F.RED}[!]USER CLOSED CHAT HIT ENTER TO CLOSE SESSION'))
+                    c.close()
+                    flag = True
+                    break
+
+                if flag == True:
+                    c.close()
+                    break
+
+                print_formatted_text(ANSI(f"{F.YELLOW}[*]Recieved-Message: {F.WHITE}{data}"))
+
+
+        send__ = threading.Thread(target=send_)
+        recv__ = threading.Thread(target=recv_)
+
+        send__.start()
+        recv__.start()
+
+
+        send__.join()
+        recv__.join()
+        print(F.RED+'[✓]SESSION CLOSED')
+
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-
 
 
     # connect to wifi chat room server
@@ -410,24 +450,64 @@ class shark:
          print (F.BLUE+"[✓]Connected To Server")
          print (F.CYAN+"[Note]: Only Support Wlan")
          print(F.CYAN+"......:  To Close Chat: @bye")
-         tm.sleep(1)
-         while True:
-             print(F.GREEN+"[*]Waiting For Incoming Message")
-             rec = sock.recv(20480).decode()
-             print (F.CYAN+"[*]Recieved-Message: "+F.WHITE+rec)
-             if rec == "@bye":
-                 tm.sleep(1)
-                 print(F.RED+"[*]User Closed Chat")
-                 sock.close()
-                 break
-             sen = input(F.CYAN+"[%]Send-Message: "+F.WHITE)
-             sock.send(sen.encode())
-             print (F.BLUE+"[✓]Message Sent")
-             if sen == "@bye":
-                 print (F.RED+"[*]Closing Chat")
-                 tm.sleep(1)
-                 sock.close()
-                 break
+         flag = False
+
+         session = PromptSession()
+
+         def recv_cs():
+             nonlocal flag
+             while True:
+                 try:
+                     length = int.from_bytes(sock.recv(4), byteorder='big')
+                     rec = sock.recv(length).decode()
+                 except:
+                     sock.close()
+                     break
+
+                 if rec.strip() == '@bye':
+                     print_formatted_text(ANSI(f'{F.RED}[!]USER CLOSE CHAT HIT ENTER TO CLOSE SESSION'))
+                     sock.close()
+                     flag = True
+                     break
+
+                 if flag == True:
+                     sock.close()
+                     break
+
+                 print_formatted_text(ANSI(f"{F.YELLOW}[*]Recieved-Message: {F.WHITE}{rec}"))
+
+
+         def send_cs():
+             nonlocal flag
+             while True:
+                 with patch_stdout():
+                     sen = session.prompt(ANSI(f"{F.GREEN}[*]Send-Message: {F.WHITE}"))
+                     try:
+                         sock.send(len(sen).to_bytes(4, byteorder='big'))
+                         sock.send(sen.encode())
+                     except:
+                         sock.close()
+                         break
+ 
+                 if sen.strip() == "@bye":
+                     sock.close()
+                     flag = True
+                     break
+
+                 if flag == True:
+                     sock.close()
+                     break
+
+         recv__cs = threading.Thread(target=recv_cs)
+         send__cs = threading.Thread(target=send_cs)
+
+         send__cs.start()
+         recv__cs.start()
+
+         send__cs.join()
+         recv__cs.join()
+         print(F.RED+'[✓]SESSION CLOSED')
+                 
 
 
 #------------------------------------------------------------------------------------------------------------------------------
@@ -1362,4 +1442,4 @@ if __name__ == '__main__':
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1364
+# end line 1444
