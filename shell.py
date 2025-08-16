@@ -54,10 +54,13 @@ class shark:
         
     # load the welcome screen on start
     def main(self):
+        home = os.environ["HOME"]
+        version = open(f"{home}/Shell/__version__", "r").read().strip()
         data = f"""
                 {F.CYAN}  ╭────────────────────────╮
-                │ │ {F.YELLOW}WELCOME·TO·SHARK-SHELL{F.CYAN} |─╮
-                ╰─│  {F.GREEN}For Help: Run {F.WHITE}@help{F.CYAN}   │ │
+                • │ {F.YELLOW}WELCOME·TO·SHARK-SHELL{F.CYAN} |─╮
+                ╰─│  {F.GREEN}For Help: Run {F.WHITE}@help{F.CYAN}   │ {F.GREEN}Software By{F.CYAN}
+                  │   {F.CYAN}{version}  │ {F.YELLOW}Shaarkzy{F.CYAN}
                   ╰────────────────────────╯
                     """
         print (data)
@@ -616,7 +619,7 @@ class shark:
 
         elif option == "-v":
             file = self.get_file(file)
-            print(file)
+
             if not file:
                 return False
             os = self.os
@@ -1442,4 +1445,4 @@ if __name__ == '__main__':
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1444
+# end line 1447
