@@ -190,7 +190,7 @@ try:
     load_libraries()
 except Exception as er:
     print(Fore.RED+"[x]",er, "                                ")
-    print(Fore.YELLOW+"[!]Install The Required Library\nOr\n[!]Run Setup Script")
+    print(Fore.YELLOW+"[!]Run Setup Script If A Library Isn't Installed")
     quit(0)
 except KeyboardInterrupt:
     quit(0)
