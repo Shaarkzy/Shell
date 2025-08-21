@@ -57,6 +57,7 @@ to build and configure program (Android | Debian based system only).
 9. netifaces
 10. phonenumbers
 11. pycryptodome
+12. prompt_toolkit
 ```
 
 **Features:**
@@ -75,6 +76,7 @@ to build and configure program (Android | Debian based system only).
 12. Gather Information About An Ip Address.
 13. File Searching
 14. File and Folder Properties Viewer
+15. Clone Aliases
 ```
 
 **Good luck**
