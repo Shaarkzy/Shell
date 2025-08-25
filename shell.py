@@ -366,16 +366,13 @@ class shark:
     def open_server(self): #11
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.settimeout(100)
-        #sock = socket.socket()
         print (F.CYAN+"[Note]: Only Support Wlan")
         print(F.CYAN+"......: To Close Chat: @bye")
 
-        tm.sleep(1)
         a1, a2, a3 = str(rd.randint(1,6)), str(rd.randint(1,6)), str(rd.randint(1,5))
         ip = self.get_private_addr()
         port = a3+a2+a1+a2+a3
         print (F.BLUE+"[✓]Server Started")
-        tm.sleep(1)
         print (F.CYAN+f"[*]Ip: {F.YELLOW}{ip}  {F.CYAN}[*]Port: {F.YELLOW}{port}")
     
         sock.bind(("0.0.0.0", int(port)))
@@ -732,7 +729,6 @@ class shark:
                     print (F.GREEN+"[*]File Is In Encrypted Format!!\n[*]Wish To Decrypt")
                     opt = input(F.YELLOW+"[?]Y/N: "+F.WHITE).upper()
                     if opt == "Y":
-                        #decryption here
                         print(F.BLUE+"[Note]: Key Must Be EITHER 16, 24 Or 32 Bytes Character\n[*]Meaning Your Key Should Be ↑Above↑ Bytes Character Long")
                         key = input(F.CYAN+"[%]KEY: "+F.WHITE)
                         if len(key) == 16 or len(key) == 24 or len(key) == 32:
@@ -779,7 +775,6 @@ class shark:
                     print (F.GREEN+"[*]File Is In Decrypted Format!!\n[*]Wish To Encrypt")
                     opt = input(F.YELLOW+"[?]Y/N: "+F.WHITE).upper()
                     if opt == "Y":
-                        #encryption here
                         print(F.BLUE+"[*]Note: Key Must Be Either 16, 24 OR 32 Bytes Character\n[*]Meaning Your Key Should Be ↑Above↑ Bytes Character Long")
                         option = input(F.CYAN+"[?]Generate Key [Y/N]: ").upper()
                         if option == "Y":
@@ -821,7 +816,6 @@ class shark:
                             file_ = "/".join(file.split(os.sep)[-1:])
                             print(f'{F.CYAN}[*]Encrypted File Is {F.WHITE}{file_}')
 
-                            tm.sleep(0.6)
                             key_file = open("key.txt", "a")
                             cur_dir = os.getcwd()
                             data = "[Filnename= "+file+" :Key= "+keyD+" ]\n"
@@ -869,7 +863,7 @@ class shark:
         sock.bind(('0.0.0.0', int(port)))
         print (F.BLUE+"[✓]Server Started")
         ip = self.get_private_addr()
-        print(F.GREEN+f'[*]Ip: {ip} [*]Port: {port}'+F.CYAN)
+        print (F.CYAN+f"[*]Ip: {F.YELLOW}{ip}  {F.CYAN}[*]Port: {F.YELLOW}{port}")
 
         sock.listen(5)
 
@@ -920,7 +914,6 @@ class shark:
         c_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         c_socket.connect((ip, int(port)))
         print(F.CYAN+"[✓]Connected To Server")
-        #tm.sleep(1)
         data = c_socket.recv(1024).decode()
         print (F.BLUE+data)
 
@@ -967,14 +960,13 @@ class shark:
     def shell_host(self): #17
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.settimeout(100)
-        tm.sleep(1)
         a1, a2, a3 = str(rd.randint(1,6)), str(rd.randint(1,6)), str(rd.randint(1,5))
         ip = self.get_private_addr()
         port = a3+a2+a1+a2+a3
-        print(F.CYAN+"[Note]: Input <exit> To Close Session")
+        print(F.CYAN+"[Note]: Input <@exit> To Close Session")
         print (F.BLUE+"[✓]Shell Host Started")
-        tm.sleep(1)
-        print (F.GREEN+f"[*]Ip: {ip}  [*]Port: {port}")
+        #
+        print (F.CYAN+f"[*]Ip: {F.YELLOW}{ip}  {F.CYAN}[*]Port: {F.YELLOW}{port}")
 
         sock.bind(("0.0.0.0", int(port)))
         sock.listen(5)
@@ -983,10 +975,9 @@ class shark:
 
         while True:
             data = input(F.CYAN+"\n[shell]: "+F.WHITE)
-            if data == "exit":
+            if data == "@exit":
                 c.send(data.encode())
                 print(F.RED+"[*]Closing Shell")
-                tm.sleep(1)
                 c.close()
                 break
             c.send(data.encode())
@@ -1005,23 +996,23 @@ class shark:
         os = self.os
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.connect((ip, int(port)))
-        print(F.BLUE+"[✓]Connected To User")
-        tm.sleep(1)
-        print(F.CYAN+"[*]Shell Activity In Progress")
+        print(F.BLUE+"[✓]Connected To Host")
+        print(F.YELLOW+"[*]━━━━━━━━━━━━━━━━SERVER LOG━━━━━━━━━━━━━━━━")
         
         while True:
             data = sock.recv(1024).decode()
-            if data == "exit":
-                print (F.RED+"[*]Closing Shell")
-                tm.sleep(1)
+            print(f"{F.GREEN}[*]Host Executed: {F.WHITE}{data}")
+            if data == "@exit":
+                print (F.RED+"[*]Host Closed Shell")
                 sock.close()
                 break
             elif data.startswith('cd '):
                 path = data[3:]
+                path = self.get_file(path)
                 try:
                     os.chdir(path)
                     path = os.getcwd()
-                    sock.send(f'~{path}'.encode())
+                    sock.send(f'{path}'.encode())
                 except:
                     sock.send("Invalid Directory".encode())
             else:
@@ -1035,9 +1026,9 @@ class shark:
                         timeout=0.5,
                         text=True
                     )
-                    sock.send(f"•{decode_data.stdout}".encode())
+                    sock.send(f"{decode_data.stdout}".encode())
                 except:
-                    sock.send(f'•unexpected'.encode())
+                    sock.send(f'unexpected'.encode())
 
 
 #------------------------------------------------------------------------------------------------------------------------------
@@ -1445,4 +1436,4 @@ if __name__ == '__main__':
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1447
+# end line 1438
