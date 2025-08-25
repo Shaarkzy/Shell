@@ -60,8 +60,9 @@ class shark:
                 {F.CYAN}  ╭────────────────────────╮
                 • │ {F.YELLOW}WELCOME·TO·SHARK-SHELL{F.CYAN} |─╮
                 ╰─│  {F.GREEN}For Help: Run {F.WHITE}@help{F.CYAN}   │ {F.GREEN}Software By{F.CYAN}
-                  │   {F.CYAN}{version}   │ {F.YELLOW}Shaarkzy{F.CYAN}
+                  │   {F.CYAN}UTILITY PROGRAMS     │ {F.YELLOW}Shaarkzy{F.CYAN}
                   ╰────────────────────────╯
+                      {F.YELLOW}{version}
                     """
         print (data)
 
@@ -1436,4 +1437,4 @@ if __name__ == '__main__':
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1438
+# end line 1439
