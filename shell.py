@@ -9,6 +9,7 @@ from UTILS.BOOT_SETUP.util_boot import *
 from UTILS.BOOT_SETUP.util_boot import trigger_software_update
 from UTILS.resistor import *
 from UTILS.alias import *
+from UTILS.scanner import *
 
 
 #------------------------------------------------------------------------------------------------------------------------------
@@ -99,43 +100,6 @@ class shark:
 
 
 
-    # multiple port scanning using ping interval as timeout
-    def port_scan(self, ip): #3
-        data = sub.getoutput(f'ping -w 1 {ip} ')
-
-        try:
-            re_search = re.search(r'(time=)(\d+)', data)
-            interval = int(re_search.group(2))/1000
-            print (F.CYAN+"[*]Start Scanning In Time Interval: "+F.YELLOW+str(interval))
-
-            total_port = 0
-            port = -1
-            for i in range(65354):
-                try:
-                    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                    port += 1
-                    sock.settimeout(interval)
-                    check =  sock.connect_ex((ip, port))
-                    if check == 0:
-                        total_port += 1
-                        print (F.BLUE+f"[✓]Port {port} Opened For {ip}")
-                        sock.close()
-                    else:
-                        pass
-                        sock.close()
-                except:
-                    break
-            print (F.GREEN+f"[*]Total Port Opened for {ip} is : {total_port}")
-            sock.close()
-        except:
-            print(F.RED+"[x]Server Not Reachable")
-
-
-
-#------------------------------------------------------------------------------------------------------------------------------
-    
-
-
    # single port scan
     def port_scan_sin(self, ip, port): #4
         try:
@@ -143,14 +107,14 @@ class shark:
             sock.settimeout(0.5)
             check = sock.connect_ex((ip, int(port)))
             if check == 0:
-                print (F.BLUE+f"[✓]Port: {port} Opened")
+                print (f"\n{F.BLUE}[✓]Port: {F.CYAN}{port} Opened")
                 sock.close()
             else:
-                print (F.BLUE+f"[x]Port: {port} Closed")
+                print (f"\n{F.RED}[x]Port: {F.CYAN}{port} Closed")
                 sock.close()
 
         except:
-            print (F.RED+"[x]An Error Occured, Internet Issue")
+            print (F.RED+"\n[x]An Error Occured, Internet Issue")
             sock.close()
 
 
@@ -1320,7 +1284,7 @@ if __name__ == '__main__':
             elif "@get -i" in data: 
                 shark.get_ip(data.split()[2])
             elif "@port -sm" in data:
-                shark.port_scan(data.split()[2])
+                run_port(data.split()[2], data.split()[3])
             elif "@port -sn" in data: 
                 shark.port_scan_sin(data.split()[2], data.split()[3])
             elif "@bina -a" in data: 
@@ -1370,7 +1334,7 @@ if __name__ == '__main__':
             elif "@sch -m" in data:
                 shark.mac_lookup(data.split()[2])
             elif "@solve -res" in data:
-                run()
+                run_resist()
 
 #------------------------------------------------------------------------------------------------------------------------------
 
@@ -1437,4 +1401,4 @@ if __name__ == '__main__':
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1439
+# end line 1403

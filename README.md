@@ -23,8 +23,10 @@ to build and configure program (Android | Debian based system only).
 │   ├── android_setup.sh
 │   ├── debian_setup.sh
 │   ├── resistor.py
+│   ├── scanner.py
 │   ├── .shellrc
 │   ├── .shell_help
+│   ├── .port
 │   └── version.py
 ├── __version__
 ├── relink

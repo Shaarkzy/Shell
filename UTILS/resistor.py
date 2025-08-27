@@ -97,7 +97,7 @@ def solve(*args):
 
  
 try:
-    def run():
+    def run_resist():
         print(f"\n{F.YELLOW}[!]Example For A 4 Band Resistor: {F.WHITE}red white yellow gold")   
 
         inp = input(F.GREEN+"[:]Enter Code: "+F.WHITE).lower().split()
