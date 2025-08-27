@@ -13,10 +13,11 @@ def ping(ip):
 
     output = subprocess.getoutput(f'ping -w 1 {ip} ')
     try:
-        re_search = re.search(r'(time=)(\d+)', output)
-        ping = int(re_search.group(2))/1000
+        re_search = re.search(r'time=([\d.]+)', output)
+        ping = float(re_search.group(1))/1000
         return ping
-    except: return False
+    except: return "null"
+
 
 
 #------------------------------------------------------------------------------------------------------------------------------
@@ -25,7 +26,7 @@ def ping(ip):
 async def scan_port(ip: str, port: int, leng: int, ping: int):
 
     timeout = int(leng/500)
-    timeout = timeout+(timeout*(ping**ping))
+    timeout = timeout+(timeout+(25*ping))
     timeout = timeout if timeout >= 1 else 1
 
     semaphore = asyncio.Semaphore(500) 
@@ -48,11 +49,11 @@ async def scan(ip: str, ports: list):
     total_opened = 0
     total_closed = 0
     total = 0
-    if timeout == False: print(Fore.RED+"\n[x]Host Unreachable"); pass
+    if timeout == "null": print(Fore.RED+"\n[x]Host Unreachable"); pass
     else:
         leng = len(ports)
         interval = int(leng / 500)
-        interval = round(interval+(interval*(timeout**timeout)), 2)
+        interval = round(interval+(interval+(25*timeout)), 2)
         interval = interval if interval >= 1 else 1
         print(f'\n{Fore.YELLOW}[!]STARTED: SCANNING {Fore.GREEN}{leng} {Fore.YELLOW}Ports : ETS {Fore.GREEN}{interval}{Fore.YELLOW} seconds\n')
         start_time = time.time()
@@ -140,4 +141,4 @@ def run_port(ip: str, port_range):
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-#end line 142
+#end line 143
