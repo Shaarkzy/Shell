@@ -6,8 +6,10 @@
 {F.YELLOW}[1]. {F.CYAN}Getting Ip Address: {F.WHITE}@get -i {F.GREEN}<target>
      {F.GREEN}Example: {F.WHITE}@get -i google.com
 
-{F.YELLOW}[2]. {F.CYAN}Port Scanning Multiple: {F.WHITE}@port -sm {F.GREEN}<target>
-     {F.GREEN}Example: {F.WHITE}@port -sm 127.0.0.1
+{F.YELLOW}[2]. {F.CYAN}Port Scanning Multiple: {F.WHITE}@port -sm {F.GREEN}<target> <range>
+     {F.GREEN}Example: {F.WHITE}@port -sm 127.0.0.1 0-65535
+     {F.RED}Note: Use <default> To Scan Well Known (1000)Ports
+     {F.GREEN}Example: {F.WHITE}@port -sm 127.0.0.1 default
 
 {F.YELLOW}[3]. {F.CYAN}Port Scanning Single: {F.WHITE}@port -sn {F.GREEN}<target> <port>
      {F.GREEN}Example: {F.WHITE}@port -sn 127.0.0.1 80
