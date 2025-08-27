@@ -15,16 +15,17 @@ def ping(ip):
     try:
         re_search = re.search(r'(time=)(\d+)', output)
         ping = int(re_search.group(2))/1000
-        return True
+        return ping
     except: return False
 
 
 #------------------------------------------------------------------------------------------------------------------------------
 
 
-async def scan_port(ip: str, port: int, leng: int):
+async def scan_port(ip: str, port: int, leng: int, ping: int):
 
     timeout = int(leng/500)
+    timeout = timeout+(timeout*(ping**ping))
     timeout = timeout if timeout >= 1 else 1
 
     semaphore = asyncio.Semaphore(500) 
@@ -51,10 +52,11 @@ async def scan(ip: str, ports: list):
     else:
         leng = len(ports)
         interval = int(leng / 500)
+        interval = round(interval+(interval*(timeout**timeout)), 2)
         interval = interval if interval >= 1 else 1
-        print(f'\n{Fore.YELLOW}[!]STARTED: SCANNING {Fore.GREEN}{leng} {Fore.YELLOW}Ports : ETS {Fore.GREEN}{interval}{Fore.YELLOW} Seconds\n')
+        print(f'\n{Fore.YELLOW}[!]STARTED: SCANNING {Fore.GREEN}{leng} {Fore.YELLOW}Ports : ETS {Fore.GREEN}{interval}{Fore.YELLOW} seconds\n')
         start_time = time.time()
-        tasks = [scan_port(ip, port, leng) for port in ports]
+        tasks = [scan_port(ip, port, leng, timeout) for port in ports]
         results = await asyncio.gather(*tasks)
     
         for port, status in results:
@@ -66,7 +68,7 @@ async def scan(ip: str, ports: list):
                 pass
             total += 1
         end_time = time.time()
-        elapsed = f'{int(end_time - start_time)}{Fore.YELLOW} seconds'
+        elapsed = f'{round((end_time - start_time), 2)}{Fore.YELLOW} seconds'
 
         print(f'\n{Fore.YELLOW}[*]SCANNED {Fore.GREEN}{total}{Fore.YELLOW} Ports in {Fore.GREEN}{elapsed}')
         print(f"{Fore.BLUE}[*]Total Port Opened For {ip}: {Fore.CYAN}{total_opened}")
@@ -138,4 +140,4 @@ def run_port(ip: str, port_range):
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-#end line 140
+#end line 142
