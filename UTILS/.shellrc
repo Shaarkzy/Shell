@@ -1,1 +1,14 @@
 #Shark Shell Alias Command
+p=python
+c=clear
+phone=cd ~/storage/shared/
+nv=nvim
+g=git clone
+i=pkg install
+ir=pkg remove
+ii=pkg update && pkg upgrade
+d=rm
+dd=rm -rf
+gc=git add .; git commit -m
+gp=git push origin
+cat=echo ;echo ───────────────────────── Meow Meow: Says ──────────────────────; echo ; cat
