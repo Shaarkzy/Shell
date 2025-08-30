@@ -59,7 +59,7 @@ def software_update():
 
     #run update script
     else:
-        sys("./Shell/UTILS/BOOT_SETUP/update.sh")
+        sys(f"{form}/UTILS/BOOT_SETUP/update.sh")
 
         file = f"{form}/__version__"
         open_f = open(file, "r")
