@@ -329,8 +329,7 @@ class shark:
 
    # open server for wifi chat room
     def open_server(self): #11
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.settimeout(100)
+
         print (F.CYAN+"[Note]: Only Support Wlan")
         print(F.CYAN+"......: To Close Chat: @bye")
 
@@ -339,12 +338,24 @@ class shark:
         port = a3+a2+a1+a2+a3
         print (F.BLUE+"[✓]Server Started")
         print (F.CYAN+f"[*]Ip: {F.YELLOW}{ip}  {F.CYAN}[*]Port: {F.YELLOW}{port}")
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(100)
     
         sock.bind(("0.0.0.0", int(port)))
         sock.listen(5)
-        c, addr = sock.accept()
-        flag = False
+        while True:
+            try:
+                c, ddr = sock.accept()
+                auth_s = '0x1000'
+                c.send(auth_s.encode())
+                auth_r = c.recv(6).decode()
 
+                if auth_s == auth_r:
+                    break
+                else: c.close(); continue
+            except: c.close(); continue
+
+        flag = False
         session = PromptSession()
 
         def send_():
@@ -410,11 +421,20 @@ class shark:
     # connect to wifi chat room server
     def connect_server(self, ip, port): #12
          sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-         sock.connect((ip, int(port)))
-            
-         print (F.BLUE+"[✓]Connected To Server")
-         print (F.CYAN+"[Note]: Only Support Wlan")
-         print(F.CYAN+"......:  To Close Chat: @bye")
+         while True:
+             sock.connect((ip, int(port)))
+             
+             auth_s = '0x1000'
+             auth_r = sock.recv(6).decode()
+             sock.send(auth_s.encode())
+
+             if auth_r == auth_s:
+                 print(F.CYAN+'[NOTE]: Only Support Wlan')
+                 print(F.CYAN+'......: To Close Chat: @bye')
+                 print(F.BLUE+"[]Connected To Server")
+                 break
+             else: print(F.RED+'[x]Unauthorized Connection'); sock.close(); return 0
+
          flag = False
 
          session = PromptSession()
@@ -845,7 +865,18 @@ class shark:
 
             file = "/".join(file_path.split(os.sep)[-1:])
 
-            c, addr = sock.accept()
+            while True:
+                try:
+                    c, addr = sock.accept()
+                    auth_s = '0x2000'
+                    c.send(auth_s.encode())
+                    auth_r = c.recv(6).decode()
+
+                    if auth_r == auth_s:
+                        break
+                    else: c.close(); continue
+                except: c.close(); continue
+
             print(F.CYAN+"[✓]User Connected")
             print(F.BLUE+"[*]Waiting For User To Accept")
             c.send(f'[*]Incoming File! [Name: {file}] [Size: {size_s}]\n'.encode())
@@ -877,8 +908,17 @@ class shark:
    # recieve file via wifi or localhost
     def recv_file(self, ip, port): #16
         c_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        c_socket.connect((ip, int(port)))
-        print(F.CYAN+"[✓]Connected To Server")
+        while True:
+            c_socket.connect((ip, int(port)))
+            auth_s = '0x2000'
+            auth_r = c_socket.recv(6).decode()
+            c_socket.send(auth_s.encode())
+
+            if auth_r == auth_s:
+                print(F.CYAN+"[✓]Connected To Server")
+                break
+            else: print(F.RED+'[x]Unauthorized Connection'); c_socket.close(); return 0
+
         data = c_socket.recv(1024).decode()
         print (F.BLUE+data)
 
@@ -935,7 +975,18 @@ class shark:
 
         sock.bind(("0.0.0.0", int(port)))
         sock.listen(5)
-        c, addr = sock.accept()
+        while True:
+            try:
+                c, addr = sock.accept()
+                auth_s = '0x3000'
+                c.send(auth_s.encode())
+                auth_r = c.recv(6).decode()
+
+                if auth_s == auth_r:
+                    break
+                else: c.close(); continue
+            except: c.close(); continue
+
         print (F.GREEN+"[✓]Client Connected")
 
         while True:
@@ -960,7 +1011,17 @@ class shark:
     def shell_client(self, ip, port): #18
         os = self.os
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.connect((ip, int(port)))
+        while True:
+            sock.connect((ip, int(port)))
+
+            auth_s = '0x3000'
+            auth_r = sock.recv(6).decode()
+            sock.send(auth_s.encode())
+
+            if auth_r == auth_s:
+                break
+            else: print(F.RED+'[x]Unauthoized Connection'); sock.close(); return 0
+
         print(F.BLUE+"[✓]Connected To Host")
         print(F.YELLOW+"[*]━━━━━━━━━━━━━━━━SERVER LOG━━━━━━━━━━━━━━━━")
         
@@ -1401,4 +1462,4 @@ if __name__ == '__main__':
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1403
+# end line 1464
