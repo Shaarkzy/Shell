@@ -353,6 +353,7 @@ class shark:
                 if auth_s == auth_r:
                     break
                 else: c.close(); continue
+            except KeyboardInterrupt: return 0
             except: c.close(); continue
 
         flag = False
@@ -431,7 +432,7 @@ class shark:
              if auth_r == auth_s:
                  print(F.CYAN+'[NOTE]: Only Support Wlan')
                  print(F.CYAN+'......: To Close Chat: @bye')
-                 print(F.BLUE+"[]Connected To Server")
+                 print(F.BLUE+"[✓]Connected To Server")
                  break
              else: print(F.RED+'[x]Unauthorized Connection'); sock.close(); return 0
 
@@ -875,6 +876,7 @@ class shark:
                     if auth_r == auth_s:
                         break
                     else: c.close(); continue
+                except KeyboardInterrupt: return 0
                 except: c.close(); continue
 
             print(F.CYAN+"[✓]User Connected")
@@ -985,6 +987,7 @@ class shark:
                 if auth_s == auth_r:
                     break
                 else: c.close(); continue
+            except KeyboardInterrupt: return 0
             except: c.close(); continue
 
         print (F.GREEN+"[✓]Client Connected")
@@ -1133,52 +1136,6 @@ class shark:
 
 
 
-
-#------------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-    """vulnerability scanner
-    def scan_vul(self, target): #21
-        api_key = input(F.YELLOW+"[%]Api-Key : "+F.WHITE)
-        secret_key = input(F.YELLOW+"[%]Secret-Key: "+F.WHITE)
-        access_key = input(F.YELLOW+"[%]Access-Key: "+F.WHITE)
-
-        api_url = 'https://cloud.tenable.com/api/v2/policies'
-        headers = {
-                'Content-Type': 'application/json',
-                'X-ApiKeys': f'accessKey={access_key};secretKey={secret_key}'
-                }
-
-        try:
-            response = r.get(api_url, headers)
-            if response.status_code == 200:
-                policies = response.json()
-
-                for policy in policies['policies']:
-                    policy_id = policy['policy_id']
-
-                load = TenableIO(api_key=api_key, secret_key=secret_key)
-                scan = load.scans.create("My Scan", targets=[target], policy_id=policy_id)
-                scan.launch()
-
-                while scan.status() != 'completed':
-                    pass
-
-                results = scan.results()
-                print("\n")
-                for vul in results['vulnerabilities']:
-                    print(f"{F.BLUE}[*]Vulnerabilty: {F.GREEN}{vul['plugin_name']}\t{F.BLUE}[*]Severity: {F.GREEN}{vul['severity']}")
-            
-            else:
-                data = response.text
-                data = json.loads(data)
-                print("\n")
-                for keys in data.keys():
-                    print(f"{F.RED}[x]{keys}: {data[keys]}")
-        except requests.exceptions.RequestException as e:
-            print(F.RE+"[x]Error Connecting To Host")"""
 
 
 #------------------------------------------------------------------------------------------------------------------------------
@@ -1458,8 +1415,8 @@ if __name__ == '__main__':
         except IndexError:
             print(F.RED+"[x]Invalid Argument")
         except Exception as e:
-            print(F.RED,e)
+            print(f'{F.RED}[x]Error: {e}')
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1464
+# end line 1421
