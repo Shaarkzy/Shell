@@ -16,7 +16,6 @@ from UTILS.scanner import *
 
 #clear screen after loading libraries
 sys("clear")
-
 #------------------------------------------------------------------------------------------------------------------------------
 
         
@@ -39,6 +38,9 @@ def inpu():
     except:
         return 1
 
+def background(): #future background process
+    #do something, call something, solve something
+    pass
 
 #------------------------------------------------------------------------------------------------------------------------------
 
@@ -49,7 +51,6 @@ class shark:
         self.soc = socket
         self.os = os
         self.count = 0
-
 
 
         
@@ -1284,10 +1285,12 @@ shark = shark()
 if __name__ == '__main__':
     shark.main()
     memory = compute()
+
+    #start Future background processs
+    #process = multiprocessing.Process(target=background)
+    #process.start()
+
     while True:
-
-#------------------------------------------------------------------------------------------------------------------------------
-
         data = inpu()
         if data: pass
         else: continue
@@ -1369,6 +1372,7 @@ if __name__ == '__main__':
 
             elif "@exit" in data:
                 sys("clear")
+                #process.terminate()
                 quit(0)
 
 #------------------------------------------------------------------------------------------------------------------------------
@@ -1419,4 +1423,4 @@ if __name__ == '__main__':
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1421
+# end line 1425

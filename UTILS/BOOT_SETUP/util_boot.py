@@ -85,7 +85,7 @@ def load_libraries():
     global timezone, AES, get_random_bytes, mimetypes
     global datetime, glob, sys, ifaddresses, interfaces
     global AF_INET, AF_INET6, n, readline, at, threading
-    global PromptSession, patch_stdout, ANSI, print_formatted_text
+    global PromptSession, patch_stdout, ANSI, print_formatted_text, multiprocessing
 
     import sys as sy
     print("━"*2+" •", end="\r", flush=True)
@@ -163,7 +163,7 @@ def load_libraries():
     from os import system as sys
     print("━"*50+" •", end="\r", flush=True)
     
-    import readline, threading
+    import readline, threading, multiprocessing
     print("━"*52+" •", end="\r", flush=True)
     
     import atexit as at
@@ -182,7 +182,7 @@ def load_libraries():
 __all__ = [
     "sy", "F", "B", "Sty", "tm", "socket", "sub", "rd", "exists", "os", "re", "uuid",
     "ipaddress", "r", "json", "tqdm", "pt", "p", "phone", "carrier", "geocoder", "threading", 
-    "timezone", "AES", "get_random_bytes", "interfaces", "ifaddresses", "AF_INET", "AF_INET6", "mimetypes", "datetime", "glob", "sys", "n", "readline", "at", "PromptSession", "patch_stdout", "print_formatted_text", "ANSI",
+    "timezone", "AES", "get_random_bytes", "interfaces", "ifaddresses", "AF_INET", "AF_INET6", "mimetypes", "datetime", "glob", "sys", "n", "readline", "at", "PromptSession", "patch_stdout", "print_formatted_text", "ANSI", "multiprocessing",
 ]
 
 try:
