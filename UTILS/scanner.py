@@ -14,8 +14,8 @@ def ping(ip):
     output = subprocess.getoutput(f'ping -w 1 {ip} ')
     try:
         re_search = re.search(r'time=([\d.]+)', output)
-        ping = float(re_search.group(1))/1000
-        return True
+        ping = float(re_search.group(1))/100000
+        return ping
     except: return "null"
 
 
@@ -23,10 +23,9 @@ def ping(ip):
 #------------------------------------------------------------------------------------------------------------------------------
 
 
-async def scan_port(ip: str, port: int, leng: int):
+async def scan_port(ip: str, port: int, leng: int, interval: float):
 
-    x, y, k, m, n = int(leng/500), 0.201, 48.4, 1, 1.767
-    timeout = k * (x**m) * (y**n)
+    timeout = interval * leng
     timeout = timeout if timeout >= 1 else 1
 
     semaphore = asyncio.Semaphore(500) 
@@ -52,12 +51,11 @@ async def scan(ip: str, ports: list):
     if timeout == "null": print(Fore.RED+"\n[x]Host Unreachable"); pass
     else:
         leng = len(ports)
-        x, y, k, m, n = int(leng/500), 0.201, 48.4, 1, 1.767
-        interval = k * (x**m) * (y**n)
+        interval = timeout * leng
         interval = round(interval, 2) if interval >= 1 else 1.01
         print(f'\n{Fore.YELLOW}[!]STARTED: SCANNING {Fore.GREEN}{leng} {Fore.YELLOW}Ports : ETS {Fore.GREEN}{interval}{Fore.YELLOW} seconds\n')
         start_time = time.time()
-        tasks = [scan_port(ip, port, leng) for port in ports]
+        tasks = [scan_port(ip, port, leng, timeout) for port in ports]
         results = await asyncio.gather(*tasks)
     
         for port, status in results:
@@ -141,4 +139,4 @@ def run_port(ip: str, port_range):
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-#end line 143
+#end line 141
