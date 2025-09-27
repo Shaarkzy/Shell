@@ -6,40 +6,38 @@
 {F.YELLOW}[1]. {F.CYAN}Getting Ip Address: {F.WHITE}@get -i {F.GREEN}<target>
      {F.GREEN}Example: {F.WHITE}@get -i google.com
 
-{F.YELLOW}[2]. {F.CYAN}Port Scanning Multiple: {F.WHITE}@port -sm {F.GREEN}<target> <range>
-     {F.GREEN}Example: {F.WHITE}@port -sm 127.0.0.1 0-65535
+{F.YELLOW}[2]. {F.CYAN}Port Scanning Single/Multiple: {F.WHITE}@port -st {F.GREEN}<target> <range>|<port>
+     {F.GREEN}Example: {F.WHITE}@port -st 127.0.0.1 0-65535
+     {F.GREEN}Example: {F.WHITE}@port -st 127.0.0.1 80
      {F.RED}Note: Use <default> To Scan Well Known (1000)Ports
-     {F.GREEN}Example: {F.WHITE}@port -sm 127.0.0.1 default
+     {F.GREEN}Example: {F.WHITE}@port -st 127.0.0.1 default
 
-{F.YELLOW}[3]. {F.CYAN}Port Scanning Single: {F.WHITE}@port -sn {F.GREEN}<target> <port>
-     {F.GREEN}Example: {F.WHITE}@port -sn 127.0.0.1 80
-
-{F.YELLOW}[4]. {F.CYAN}Convert Number To Binary: {F.WHITE}@num -b {F.GREEN}<number> <base>
+{F.YELLOW}[3]. {F.CYAN}Convert Number To Binary: {F.WHITE}@num -b {F.GREEN}<number> <base>
      {F.GREEN}Example: {F.WHITE}@num -b 2000 2
 
-{F.YELLOW}[5]. {F.CYAN}Convert Binary To Number: {F.WHITE}@bina -n {F.GREEN}<binary> <base>
+{F.YELLOW}[4]. {F.CYAN}Convert Binary To Number: {F.WHITE}@bina -n {F.GREEN}<binary> <base>
      {F.GREEN}Example: {F.WHITE}@bina -n 1011101010 2
 
-{F.YELLOW}[6]. {F.CYAN}Convert Alphabet To Binary: {F.WHITE}@alpha -b {F.GREEN}<filename>
+{F.YELLOW}[5]. {F.CYAN}Convert Alphabet To Binary: {F.WHITE}@alpha -b {F.GREEN}<filename>
      {F.GREEN}Example: {F.WHITE}@alpha -b file.txt
 
-{F.YELLOW}[7]. {F.CYAN}Convert Binary To Alphabet: {F.WHITE}@bina -a {F.GREEN}<filename>
+{F.YELLOW}[6]. {F.CYAN}Convert Binary To Alphabet: {F.WHITE}@bina -a {F.GREEN}<filename>
      {F.GREEN}Example: {F.WHITE}@bina -a file.bin
 
-{F.YELLOW}[8]. {F.CYAN}To Get Device Network Info: {F.WHITE}@ip -details
+{F.YELLOW}[7]. {F.CYAN}To Get Device Network Info: {F.WHITE}@ip -details
      {F.GREEN}Example: {F.WHITE}@ip -details
 
-{F.YELLOW}[9]. {F.CYAN}To Get Cpu Info: {F.WHITE}@cpu
+{F.YELLOW}[8]. {F.CYAN}To Get Cpu Info: {F.WHITE}@cpu
      {F.GREEN}Example: {F.WHITE}@cpu
 
-{F.YELLOW}[10].{F.CYAN}To Start Wifi Chat Room:
+{F.YELLOW}[9].{F.CYAN}To Start Wifi Chat Room:
      {F.GREEN}HOST   : {F.WHITE}@open -server
      {F.GREEN}CLIENT : {F.WHITE}@con -s {F.GREEN}<ip> <port>
      {F.GREEN}Example: {F.WHITE}@con -s 127.0.0.1 12345
      {F.RED}Note   : {F.WHITE}To Exit Chat, Users Can Input "@bye"..
            {F.GREEN} : {F.CYAN}Doesn't Support Telnet
 
-{F.YELLOW}[11].{F.CYAN}To Create File: {F.WHITE}@file {F.GREEN}<option> <file_name>
+{F.YELLOW}[10].{F.CYAN}To Create File: {F.WHITE}@file {F.GREEN}<option> <file_name>
             {F.GREEN}Options: {F.CYAN}-c Create File
 	             {F.CYAN}-a Append Data To Existing File
                      {F.CYAN}-d Delete File
@@ -49,56 +47,56 @@
             {F.GREEN}Example: {F.WHITE}@file -cardrv(ed) filename.txt
             {F.RED}NOTE   :{F.CYAN} Can only encrypt files with .enc extension
 
-{F.YELLOW}[12].{F.CYAN}To Send Message To A Whatsapp Contact: {F.WHITE}@send -w {F.GREEN}<number>
+{F.YELLOW}[11].{F.CYAN}To Send Message To A Whatsapp Contact: {F.WHITE}@send -w {F.GREEN}<number>
     {F.GREEN}Example: {F.WHITE}@send -w +1234567890
 
-{F.YELLOW}[13].{F.CYAN}To Send File Via Wifi: {F.WHITE}@send -file
+{F.YELLOW}[12].{F.CYAN}To Send File Via Wifi: {F.WHITE}@send -file
      {F.GREEN}To Recieve File       : {F.WHITE}@recv -f {F.GREEN}<host> <port>
      {F.GREEN}Example: {F.WHITE}@recv -f 127.0.0.1 12345
      {F.GREEN}NOTE: {F.CYAN}Doesn't Suppport Telnet
 
-{F.YELLOW}[14].{F.CYAN}To Start Remote Shell Via Wifi::
+{F.YELLOW}[13].{F.CYAN}To Start Remote Shell Via Wifi::
      {F.GREEN}HOST   : {F.WHITE}@shell -host
      {F.GREEN}CLIENT : {F.WHITE}@shell -c {F.GREEN}<ip> <port>
      {F.GREEN}Example: {F.WHITE}@shell -client 127.0.0.1 12345
      {F.RED}NOTE   : {F.CYAN}Doesn't Support Telnet
            {F.RED} : {F.CYAN}To Exit Session Input: exit
 
-{F.YELLOW}[15].{F.CYAN}To Encrypt A Text: {F.WHITE}@crypt
+{F.YELLOW}[14].{F.CYAN}To Encrypt A Text: {F.WHITE}@crypt
      {F.GREEN}Example: {F.WHITE}@crypt
      {F.RED}Note   : {F.CYAN}Can Only Encrypt String Format Not(int, bytes)
 
-{F.YELLOW}[16].{F.CYAN}To Check Mobile Number Details: {F.WHITE}@check -n {F.GREEN}<country code> <number>
+{F.YELLOW}[15].{F.CYAN}To Check Mobile Number Details: {F.WHITE}@check -n {F.GREEN}<country code> <number>
      {F.GREEN}Example: {F.WHITE}@check -n +123123450000
      {F.RED}NOTE   : {F.CYAN}Without Country Code: Default Is <+62>
 
-{F.YELLOW}[17].{F.CYAN}To Solve Resistor Colour Code: {F.WHITE}@solve -res
+{F.YELLOW}[16].{F.CYAN}To Solve Resistor Colour Code: {F.WHITE}@solve -res
      {F.GREEN}Example: {F.WHITE}@solve -res
 
-{F.YELLOW}[18].{F.CYAN}To Check Weather: {F.WHITE}@check -w {F.GREEN}<city>
+{F.YELLOW}[17].{F.CYAN}To Check Weather: {F.WHITE}@check -w {F.GREEN}<city>
      {F.GREEN}Example: {F.WHITE}@check -w London
 
-{F.YELLOW}[19].{F.CYAN}To Gather Info About An Ip Address: {F.WHITE}@ip -s {F.GREEN}<0.0.0.0>
+{F.YELLOW}[18].{F.CYAN}To Gather Info About An Ip Address: {F.WHITE}@ip -s {F.GREEN}<0.0.0.0>
      {F.GREEN}Example: {F.WHITE}@ip -s 100.101.102.103
 
-{F.YELLOW}[20].{F.CYAN}To Search File In File System: {F.WHITE}@sch -f {F.GREEN}<directory>
+{F.YELLOW}[19].{F.CYAN}To Search File In File System: {F.WHITE}@sch -f {F.GREEN}<directory>
      {F.GREEN}Example: {F.WHITE}@sch -f /root
      {F.RED}Note: {F.CYAN}Searching From The Root(/) Directory Will Consume Enormous Time
         {F.RED} : {F.CYAN}On Termux, Searching From The Termux {F.GREEN}(/data/data/com.termux) {F.CYAN}Directory, Use: {F.GREEN}</termux> 
         {F.GREEN}Example: {F.WHITE}@sch -f /termux
 
-{F.YELLOW}[21].{F.CYAN}To Lookup MAC Address: {F.WHITE}@sch -m {F.GREEN}<mac address>
+{F.YELLOW}[20].{F.CYAN}To Lookup MAC Address: {F.WHITE}@sch -m {F.GREEN}<mac address>
      {F.GREEN}Example: {F.WHITE}@sch -m 00:00:00:00:00:00
 
-{F.YELLOW}[22].{F.CYAN}To Clone Main Shell Aliases To Shark Shell (.bashrc) to (.shellrc): {F.WHITE}@clone -t {F.GREEN}<mode | file/mem>
+{F.YELLOW}[21].{F.CYAN}To Clone Main Shell Aliases To Shark Shell (.bashrc) to (.shellrc): {F.WHITE}@clone -t {F.GREEN}<mode | file/mem>
      {F.GREEN}Example: {F.WHITE}@clone -t {F.GREEN}file
 
-{F.YELLOW}[23].{F.CYAN}To Create A Temporary Alias: {F.WHITE}@shark {F.GREEN}alias=value
+{F.YELLOW}[22].{F.CYAN}To Create A Temporary Alias: {F.WHITE}@shark {F.GREEN}alias=value
      {F.GREEN}Example: {F.WHITE}@shark {F.GREEN}p=python
      {F.RED}NOTE: {F.BLUE}Creating Or cloning An Alias For Shell Commands Isn't Supported.
 
-{F.YELLOW}[24].{F.CYAN}To Manually Update Software: {F.WHITE}@update
+{F.YELLOW}[23].{F.CYAN}To Manually Update Software: {F.WHITE}@update
 
-{F.YELLOW}[25].{F.CYAN}To Check For Software Version: {F.WHITE}@version
+{F.YELLOW}[24].{F.CYAN}To Check For Software Version: {F.WHITE}@version
 
 {F.YELLOW}[00].{F.CYAN}To Exit Program: {F.WHITE}@exit

@@ -101,7 +101,7 @@ class shark:
 
 
 
-   # single port scan
+    """# single port scan
     def port_scan_sin(self, ip, port): #4
         try:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -116,7 +116,7 @@ class shark:
 
         except:
             print (F.RED+"\n[x]An Error Occured, Internet Issue")
-            sock.close()
+            sock.close()"""
 
 
 
@@ -1304,10 +1304,8 @@ if __name__ == '__main__':
                 shark.help()
             elif "@get -i" in data: 
                 shark.get_ip(data.split()[2])
-            elif "@port -sm" in data:
+            elif "@port -st" in data:
                 run_port(data.split()[2], data.split()[3])
-            elif "@port -sn" in data: 
-                shark.port_scan_sin(data.split()[2], data.split()[3])
             elif "@bina -a" in data: 
                 shark.Bina_Alpha(cons_(2))
             elif "@alpha -b" in data: 
@@ -1423,4 +1421,4 @@ if __name__ == '__main__':
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1425
+# end line 1423
