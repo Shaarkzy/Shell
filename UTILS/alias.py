@@ -72,7 +72,7 @@ def clone_alias(mode):
     num = 0
     memory = {}
     for i in range(length):
-        data = read_file[num]
+        data = read_file[num].strip()
         num += 1
         if data.startswith("alias"):
             #alias ii="pkg update && pkg upgrade"
@@ -84,7 +84,7 @@ def clone_alias(mode):
 
             if mode:
                 construct = key+"="+value
-                open_file.write(construct)
+                open_file.write(construct+"\n")
             else:
                 memory.update({key: value})
 
