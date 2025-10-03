@@ -1398,7 +1398,8 @@ if __name__ == '__main__':
                 for alias in memory.keys():
                     if data.split()[0] == alias:
                         data = data.split()[0].replace(alias, memory[alias].strip()) +' '+' '.join(data.split()[1:])
-                sys(data)
+                if data.strip() == "ls": sys("ls -p")
+                else: sys(data)
 
         except FileNotFoundError:
             print(F.RED+"[x]File Not Found")
@@ -1422,4 +1423,4 @@ if __name__ == '__main__':
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1423
+# end line 1425
