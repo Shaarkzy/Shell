@@ -48,7 +48,7 @@ echo -e "\n${GREEN}INSTALLING NETIFACES 10/12${NC}\n"
 apt-get install python3-netifaces
 echo -e "\n${GREEN}DONE INSTALLING NETIFACES 10/12${NC}\n"
 
-echo -e "\n${YELLOW}INSTALLIBG PYCRYPTODOME 11/12${NC}\n"
+echo -e "\n${YELLOW}INSTALLING PYCRYPTODOME 11/12${NC}\n"
 bash -c "cd UTILS/BOOT* && ./pycryptodome.sh"
 echo -e "\n${YELLOW}DONE INSTALLING PYCRYPTODOME 11/12${NC}\n"
 

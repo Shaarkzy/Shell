@@ -59,10 +59,11 @@ class shark:
         home = os.environ["HOME"]
         version = open(f"{home}/Shell/__version__", "r").read().strip()
         data = f"""
+                {F.GREEN}    Shaarkzy @ github.com
                 {F.CYAN}  ╭────────────────────────╮
                 • │ {F.YELLOW}WELCOME·TO·SHARK-SHELL{F.CYAN} |─╮
-                ╰─│  {F.GREEN}For Help: Run {F.WHITE}@help{F.CYAN}   │ {F.GREEN}Software By{F.CYAN}
-                  │   {F.CYAN}UTILITY PROGRAMS     │ {F.YELLOW}Shaarkzy{F.CYAN}
+                ╰─│  {F.GREEN}For Help: Run {F.WHITE}@help{F.CYAN}   │ •
+                  │   {F.CYAN}UTILITY PROGRAMS     │
                   ╰────────────────────────╯
                       {F.YELLOW}{version}
                     """
