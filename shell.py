@@ -346,8 +346,9 @@ class shark:
         sock.bind(("0.0.0.0", int(port)))
         sock.listen(5)
         while True:
+            c = None
             try:
-                c, ddr = sock.accept()
+                c, addr = sock.accept()
                 auth_s = '0x1000'
                 c.send(auth_s.encode())
                 auth_r = c.recv(6).decode()
@@ -356,7 +357,8 @@ class shark:
                     break
                 else: c.close(); continue
             except KeyboardInterrupt: return 0
-            except: c.close(); continue
+            except: print(F.RED+"[x]Timed Out"); return 0
+                    
 
         flag = False
         session = PromptSession()
@@ -869,6 +871,7 @@ class shark:
             file = "/".join(file_path.split(os.sep)[-1:])
 
             while True:
+                c = None
                 try:
                     c, addr = sock.accept()
                     auth_s = '0x2000'
@@ -879,7 +882,7 @@ class shark:
                         break
                     else: c.close(); continue
                 except KeyboardInterrupt: return 0
-                except: c.close(); continue
+                except: print(F.RED+"[x]Timed Out"); return 0
 
             print(F.CYAN+"[✓]User Connected")
             print(F.BLUE+"[*]Waiting For User To Accept")
@@ -974,12 +977,12 @@ class shark:
         port = a3+a2+a1+a2+a3
         print(F.CYAN+"[Note]: Input <@exit> To Close Session")
         print (F.BLUE+"[✓]Shell Host Started")
-        #
         print (F.CYAN+f"[*]Ip: {F.YELLOW}{ip}  {F.CYAN}[*]Port: {F.YELLOW}{port}")
 
         sock.bind(("0.0.0.0", int(port)))
         sock.listen(5)
         while True:
+            c = None
             try:
                 c, addr = sock.accept()
                 auth_s = '0x3000'
@@ -990,10 +993,10 @@ class shark:
                     break
                 else: c.close(); continue
             except KeyboardInterrupt: return 0
-            except: c.close(); continue
+            except: print(F.RED+"[x]Timed Out"); return 0
 
         print (F.GREEN+"[✓]Client Connected")
-
+        
         while True:
             data = input(F.CYAN+"\n[shell]: "+F.WHITE)
             if data == "@exit":
@@ -1426,4 +1429,4 @@ if __name__ == '__main__':
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1428
+# end line 1431
