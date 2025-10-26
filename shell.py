@@ -367,13 +367,13 @@ class shark:
             nonlocal flag
             while True:
                 with patch_stdout():
-                    sen = session.prompt(ANSI(f"{F.GREEN}[*]Send-Message: {F.WHITE}"))
                     try:
-                        c.send(len(sen).to_bytes(4, byteorder='big'))
-                        c.send(sen.encode())
-                    except:
-                        c.close()
-                        break
+                        sen = session.prompt(ANSI(f"{F.GREEN}[*]Send-Message: {F.WHITE}"))
+                        if sen:
+                            c.send(len(sen).to_bytes(4, byteorder='big'))
+                            c.send(sen.encode())
+                    except KeyboardInterrupt: pass
+                    except: c.close(); break
 
                 if sen.strip() == '@bye':
                     c.close()
@@ -390,9 +390,10 @@ class shark:
                 try:
                     length = int.from_bytes(c.recv(4), byteorder='big')
                     data = c.recv(length).decode()
-                except:
-                    c.close()
-                    break
+                    if not data:
+                        continue
+                except KeyboardInterrupt: pass
+                except: c.close(); break
 
                 if data.strip() == '@bye':
                     print_formatted_text(ANSI(f'{F.RED}[!]USER CLOSED CHAT HIT ENTER TO CLOSE SESSION'))
@@ -450,9 +451,10 @@ class shark:
                  try:
                      length = int.from_bytes(sock.recv(4), byteorder='big')
                      rec = sock.recv(length).decode()
-                 except:
-                     sock.close()
-                     break
+                     if not rec:
+                         continue
+                 except KeyboardInterrupt: pass
+                 except: sock.close(); break
 
                  if rec.strip() == '@bye':
                      print_formatted_text(ANSI(f'{F.RED}[!]USER CLOSE CHAT HIT ENTER TO CLOSE SESSION'))
@@ -471,13 +473,13 @@ class shark:
              nonlocal flag
              while True:
                  with patch_stdout():
-                     sen = session.prompt(ANSI(f"{F.GREEN}[*]Send-Message: {F.WHITE}"))
                      try:
-                         sock.send(len(sen).to_bytes(4, byteorder='big'))
-                         sock.send(sen.encode())
-                     except:
-                         sock.close()
-                         break
+                         sen = session.prompt(ANSI(f"{F.GREEN}[*]Send-Message: {F.WHITE}"))
+                         if sen:
+                             sock.send(len(sen).to_bytes(4, byteorder='big'))
+                             sock.send(sen.encode())
+                     except KeyboardInterrupt: pass
+                     except: sock.close(); break
  
                  if sen.strip() == "@bye":
                      sock.close()
@@ -1429,4 +1431,4 @@ if __name__ == '__main__':
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1431
+# end line 1433
