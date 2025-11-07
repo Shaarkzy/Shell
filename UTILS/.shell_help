@@ -30,7 +30,7 @@
 {F.YELLOW}[8]. {F.CYAN}To Get Cpu Info: {F.WHITE}@cpu
      {F.GREEN}Example: {F.WHITE}@cpu
 
-{F.YELLOW}[9].{F.CYAN}To Start Wifi Chat Room:
+{F.YELLOW}[9].{F.CYAN}To Start TCP Chat Room:
      {F.GREEN}HOST   : {F.WHITE}@open -server
      {F.GREEN}CLIENT : {F.WHITE}@con -s {F.GREEN}<ip> <port>
      {F.GREEN}Example: {F.WHITE}@con -s 127.0.0.1 12345
@@ -50,12 +50,12 @@
 {F.YELLOW}[11].{F.CYAN}To Send Message To A Whatsapp Contact: {F.WHITE}@send -w {F.GREEN}<number>
     {F.GREEN}Example: {F.WHITE}@send -w +1234567890
 
-{F.YELLOW}[12].{F.CYAN}To Send File Via Wifi: {F.WHITE}@send -file
+{F.YELLOW}[12].{F.CYAN}To Send File Via TCP: {F.WHITE}@send -file
      {F.GREEN}To Recieve File       : {F.WHITE}@recv -f {F.GREEN}<host> <port>
      {F.GREEN}Example: {F.WHITE}@recv -f 127.0.0.1 12345
      {F.GREEN}NOTE: {F.CYAN}Doesn't Suppport Telnet
 
-{F.YELLOW}[13].{F.CYAN}To Start Remote Shell Via Wifi::
+{F.YELLOW}[13].{F.CYAN}To Start Remote Shell Via TCP::
      {F.GREEN}HOST   : {F.WHITE}@shell -host
      {F.GREEN}CLIENT : {F.WHITE}@shell -c {F.GREEN}<ip> <port>
      {F.GREEN}Example: {F.WHITE}@shell -client 127.0.0.1 12345
@@ -91,12 +91,15 @@
 {F.YELLOW}[21].{F.CYAN}To Clone Main Shell Aliases To Shark Shell (.bashrc) to (.shellrc): {F.WHITE}@clone -t {F.GREEN}<mode | file/mem>
      {F.GREEN}Example: {F.WHITE}@clone -t {F.GREEN}file
 
-{F.YELLOW}[22].{F.CYAN}To Create A Temporary Alias: {F.WHITE}@shark {F.GREEN}alias=value
+{F.YELLOW}[22].{F.CYAN}To Create A Temporary Alias: {F.WHITE}@shark {F.GREEN}<alias=value>
      {F.GREEN}Example: {F.WHITE}@shark {F.GREEN}p=python
      {F.RED}NOTE: {F.BLUE}Creating Or cloning An Alias For Shell Commands Isn't Supported.
 
 {F.YELLOW}[23].{F.CYAN}To Manually Update Software: {F.WHITE}@update
 
 {F.YELLOW}[24].{F.CYAN}To Check For Software Version: {F.WHITE}@version
+
+{F.YELLOW}[25].{F.CYAN}Change Username: {F.WHITE}@name {F.GREEN}<name>
+     {F.GREEN}Example: {F.WHITE}@name {F.GREEN}john doe
 
 {F.YELLOW}[00].{F.CYAN}To Exit Program: {F.WHITE}@exit

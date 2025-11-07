@@ -17,22 +17,48 @@ from UTILS.scanner import *
 #clear screen after loading libraries
 sys("clear")
 #------------------------------------------------------------------------------------------------------------------------------
+#change username
 
+home = os.environ["HOME"]
+with open(f'{home}/Shell/UTILS/.config.json', 'r') as file:
+    try:
+        data = json.load(file)
+        username = data["username"]
+    except:
+        print(f"{F.RED}[!]FILE CORRUPTED REDOWNLOAD THE PROGRAM WITH {F.WHITE}.setup.sh {F.RED}COMMAND")
+        quit(0)
+            
+if username: pass
+else:
+    print(f"{F.GREEN}[!]SkIP {F.WHITE}[HIT ENTER KEY]{F.GREEN} IF YOU WISH TO CONTINUE WITH SYSTEM NAME\n{F.YELLOW}YOU CAN UPDATE NAME ANYTIME WITH {F.WHITE}@name <name> {F.YELLOW} COMMAND")
+    username = input(f"{F.CYAN}[*]Username: {F.WHITE}").strip()
+    if not username:
+        username = sub.getoutput("whoami")
+            
+    data["username"] = username
+    with open(f"{home}/Shell/UTILS/.config.json", "w") as file:
+        json.dump(data, file, indent=4)
+        pass
         
+sys("clear")       
+        
+        
+#------------------------------------------------------------------------------------------------------------------------------
+       
     
 # input function
 def inpu():
     #get working directories
     try:
         print("\n")
-        subt = sub.getoutput("whoami")
+        #get username
         direc = os.getcwd()
         new_path = "/".join(direc.split(os.sep)[-3:])
         new_path = F.CYAN+new_path+F.YELLOW
         
         #initiate input method
         s = F.CYAN+"§"
-        data = input(F.YELLOW+f"{F.YELLOW}╭─({F.CYAN}{subt}{F.YELLOW}@{F.CYAN}Shell{F.YELLOW})——[{new_path}]\n│\n{F.YELLOW}╰─{s} "+ F.WHITE)
+        data = input(F.YELLOW+f"{F.YELLOW}╭─({F.CYAN}{username}{F.YELLOW}@{F.CYAN}Shell{F.YELLOW})——[{new_path}]\n│\n{F.YELLOW}╰─{s} "+ F.WHITE)
         readline.add_history(data)
         return data
     except:
@@ -59,13 +85,11 @@ class shark:
         home = os.environ["HOME"]
         version = open(f"{home}/Shell/__version__", "r").read().strip()
         data = f"""
-                {F.GREEN}    Shaarkzy @ github.com
                 {F.CYAN}  ╭────────────────────────╮
                 • │ {F.YELLOW}WELCOME·TO·SHARK-SHELL{F.CYAN} |─╮
                 ╰─│  {F.GREEN}For Help: Run {F.WHITE}@help{F.CYAN}   │ •
                   │   {F.CYAN}UTILITY PROGRAMS     │
                   ╰────────────────────────╯
-                      {F.YELLOW}{version}
                     """
         print (data)
 
@@ -98,31 +122,7 @@ class shark:
 
 
 
-#------------------------------------------------------------------------------------------------------------------------------
-
-
-
-    """# single port scan
-    def port_scan_sin(self, ip, port): #4
-        try:
-            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            sock.settimeout(0.5)
-            check = sock.connect_ex((ip, int(port)))
-            if check == 0:
-                print (f"\n{F.BLUE}[✓]Port: {F.CYAN}{port} Opened")
-                sock.close()
-            else:
-                print (f"\n{F.RED}[x]Port: {F.CYAN}{port} Closed")
-                sock.close()
-
-        except:
-            print (F.RED+"\n[x]An Error Occured, Internet Issue")
-            sock.close()"""
-
-
-
-#------------------------------------------------------------------------------------------------------------------------------
-
+#-----------------------------------------------------------------------------------------------------------------------------
 
 
     # gather information about an ip address
@@ -332,13 +332,14 @@ class shark:
    # open server for wifi chat room
     def open_server(self): #11
 
-        print (F.CYAN+"[Note]: Only Support Wlan")
+        print (F.CYAN+"[Note]: Only Support TCP")
         print(F.CYAN+"......: To Close Chat: @bye")
 
         a1, a2, a3 = str(rd.randint(1,6)), str(rd.randint(1,6)), str(rd.randint(1,5))
         ip = self.get_private_addr()
         port = a3+a2+a1+a2+a3
         print (F.BLUE+"[✓]Server Started")
+        print(" ")
         print (F.CYAN+f"[*]Ip: {F.YELLOW}{ip}  {F.CYAN}[*]Port: {F.YELLOW}{port}")
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.settimeout(100)
@@ -358,7 +359,15 @@ class shark:
                 else: c.close(); continue
             except KeyboardInterrupt: return 0
             except: print(F.RED+"[x]Timed Out"); return 0
-                    
+            
+        #receive - send 
+        host_name = username
+        
+        length = int.from_bytes(c.recv(4), byteorder='big')
+        client_name = c.recv(length).decode()
+        
+        c.send(len(host_name).to_bytes(4, byteorder='big'))
+        c.send(host_name.encode())
 
         flag = False
         session = PromptSession()
@@ -368,7 +377,8 @@ class shark:
             while True:
                 with patch_stdout():
                     try:
-                        sen = session.prompt(ANSI(f"{F.GREEN}[*]Send-Message: {F.WHITE}"))
+                        sen = session.prompt(ANSI(f"{F.GREEN}↑[{F.CYAN}{host_name}{F.GREEN}]↑: {F.WHITE}"))
+                        print(" ")
                         if sen:
                             c.send(len(sen).to_bytes(4, byteorder='big'))
                             c.send(sen.encode())
@@ -405,7 +415,8 @@ class shark:
                     c.close()
                     break
 
-                print_formatted_text(ANSI(f"{F.YELLOW}[*]Recieved-Message: {F.WHITE}{data}"))
+                print_formatted_text(ANSI(f"{F.YELLOW}↓[{F.CYAN}{client_name}{F.YELLOW}]↓: {F.WHITE}{data}"))
+                print(" ")
 
 
         send__ = threading.Thread(target=send_)
@@ -426,79 +437,91 @@ class shark:
 
     # connect to wifi chat room server
     def connect_server(self, ip, port): #12
-         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-         while True:
-             sock.connect((ip, int(port)))
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        while True:
+            sock.connect((ip, int(port)))
              
-             auth_s = '0x1000'
-             auth_r = sock.recv(6).decode()
-             sock.send(auth_s.encode())
+            auth_s = '0x1000'
+            auth_r = sock.recv(6).decode()
+            sock.send(auth_s.encode())
 
-             if auth_r == auth_s:
-                 print(F.CYAN+'[NOTE]: Only Support Wlan')
-                 print(F.CYAN+'......: To Close Chat: @bye')
-                 print(F.BLUE+"[✓]Connected To Server")
-                 break
-             else: print(F.RED+'[x]Unauthorized Connection'); sock.close(); return 0
+            if auth_r == auth_s:
+                print(F.CYAN+'[NOTE]: Only Support Wlan')
+                print(F.CYAN+'......: To Close Chat: @bye')
+                print(F.BLUE+"[✓]Connected To Server")
+                print(" ")
+                break
+            else: print(F.RED+'[x]Unauthorized Connection'); sock.close(); return 0
+             
+             
+        client_name = username
+        
+        sock.send(len(client_name).to_bytes(4, byteorder='big'))
+        sock.send(client_name.encode())
+        
+        length = int.from_bytes(sock.recv(4), byteorder='big')
+        host_name = sock.recv(length).decode()
 
-         flag = False
+        flag = False
 
-         session = PromptSession()
+        session = PromptSession()
 
-         def recv_cs():
-             nonlocal flag
-             while True:
-                 try:
-                     length = int.from_bytes(sock.recv(4), byteorder='big')
-                     rec = sock.recv(length).decode()
-                     if not rec:
-                         continue
-                 except KeyboardInterrupt: pass
-                 except: sock.close(); break
+        def recv_cs():
+            nonlocal flag
+            while True:
+                try:
+                    length = int.from_bytes(sock.recv(4), byteorder='big')
+                    rec = sock.recv(length).decode()
+                    if not rec:
+                        continue
+                except KeyboardInterrupt: pass
+                except: sock.close(); break
 
-                 if rec.strip() == '@bye':
-                     print_formatted_text(ANSI(f'{F.RED}[!]USER CLOSE CHAT HIT ENTER TO CLOSE SESSION'))
-                     sock.close()
-                     flag = True
-                     break
+                if rec.strip() == '@bye':
+                    print_formatted_text(ANSI(f'{F.RED}[!]USER CLOSE CHAT HIT ENTER TO CLOSE SESSION'))
+                    sock.close()
+                    flag = True
+                    break
 
-                 if flag == True:
-                     sock.close()
-                     break
+                if flag == True:
+                    sock.close()
+                    break
 
-                 print_formatted_text(ANSI(f"{F.YELLOW}[*]Recieved-Message: {F.WHITE}{rec}"))
+                print_formatted_text(ANSI(f"{F.YELLOW}↓[{F.CYAN}{host_name}{F.YELLOW}]↓: {F.WHITE}{rec}"))
+                print(" ")
 
 
-         def send_cs():
-             nonlocal flag
-             while True:
-                 with patch_stdout():
-                     try:
-                         sen = session.prompt(ANSI(f"{F.GREEN}[*]Send-Message: {F.WHITE}"))
-                         if sen:
-                             sock.send(len(sen).to_bytes(4, byteorder='big'))
-                             sock.send(sen.encode())
-                     except KeyboardInterrupt: pass
-                     except: sock.close(); break
+        def send_cs():
+            nonlocal flag
+            while True:
+                with patch_stdout():
+                    try:
+                        sen = session.prompt(ANSI(f"{F.GREEN}↑[{F.CYAN}{client_name}{F.GREEN}]↑: {F.WHITE}"))
+                        print(" ")
+                        if sen:
+                            sock.send(len(sen).to_bytes(4, byteorder='big'))
+                            sock.send(sen.encode())
+                    except KeyboardInterrupt: pass
+                    except: sock.close(); break
  
-                 if sen.strip() == "@bye":
-                     sock.close()
-                     flag = True
-                     break
+                if sen.strip() == "@bye":
+                    sock.close()
+                    flag = True
+                    break
 
-                 if flag == True:
-                     sock.close()
-                     break
+                if flag == True:
+                    sock.close()
+                    break
 
-         recv__cs = threading.Thread(target=recv_cs)
-         send__cs = threading.Thread(target=send_cs)
+        recv__cs = threading.Thread(target=recv_cs)
+        send__cs = threading.Thread(target=send_cs)
 
-         send__cs.start()
-         recv__cs.start()
+        send__cs.start()
+        recv__cs.start()
 
-         send__cs.join()
-         recv__cs.join()
-         print(F.RED+'[✓]SESSION CLOSED')
+        send__cs.join()
+        recv__cs.join()
+        print(F.RED+'[✓]SESSION CLOSED')
                  
 
 
@@ -1288,6 +1311,29 @@ class shark:
 #------------------------------------------------------------------------------------------------------------------------------
 
 
+    def change_name(self, name):
+        global username
+        name = name.replace(" ", "_")
+        home = os.environ["HOME"]
+        with open(f"{home}/Shell/UTILS/.config.json", "r") as file:
+            data = json.load(file)
+            
+        if name == "default": name = sub.getoutput("whoami")
+        else: pass
+
+        data["username"] = name
+        with open(f"{home}/Shell/UTILS/.config.json", "w") as file:
+            json.dump(data, file, indent=4)
+            print(f"{F.GREEN}[✓]NAME UPDATED")
+        username = name
+
+
+
+
+#------------------------------------------------------------------------------------------------------------------------------
+
+
+
 
 # relay for all tools
 shark = shark()
@@ -1304,6 +1350,7 @@ if __name__ == '__main__':
         if data: pass
         else: continue
 
+        #resolve spaced file
         def cons_(num):
             return ' '.join(data.split()[num:])
             
@@ -1376,7 +1423,8 @@ if __name__ == '__main__':
                     print(F.RED+"[!]Cloned: Restart The Shell For Update To Take Effect")
                 elif data.split()[2] == "mem":
                     memory.update(clone_alias(False))
-
+            elif "@name" in data:
+                shark.change_name(cons_(1))
             elif "@exit" in data:
                 sys("clear")
                 #process.terminate()
@@ -1406,8 +1454,7 @@ if __name__ == '__main__':
                 for alias in memory.keys():
                     if data.split()[0] == alias:
                         data = data.split()[0].replace(alias, memory[alias].strip()) +' '+' '.join(data.split()[1:])
-                if data.strip() == "ls": sys("ls -p")
-                else: sys(data)
+                sys(data)
 
         except FileNotFoundError:
             print(F.RED+"[x]File Not Found")
@@ -1431,4 +1478,4 @@ if __name__ == '__main__':
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1433
+# end line 1474

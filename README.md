@@ -27,6 +27,7 @@ to build and configure program (Android | Debian based system only).
 │   ├── .shellrc
 │   ├── .shell_help
 │   ├── .port
+│   ├── .config.json
 │   └── version.py
 ├── __version__
 ├── relink
