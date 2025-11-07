@@ -380,7 +380,8 @@ class shark:
                         sen = session.prompt(ANSI(f"{F.GREEN}↑[{F.CYAN}{host_name}{F.GREEN}]↑: {F.WHITE}"))
                         print(" ")
                         if sen:
-                            c.send(len(sen).to_bytes(4, byteorder='big'))
+                            length = len(sen.encode())
+                            c.send(length.to_bytes(4, byteorder='big'))
                             c.send(sen.encode())
                     except KeyboardInterrupt: pass
                     except: c.close(); break
@@ -400,6 +401,7 @@ class shark:
                 try:
                     length = int.from_bytes(c.recv(4), byteorder='big')
                     data = c.recv(length).decode()
+                    
                     if not data:
                         continue
                 except KeyboardInterrupt: pass
@@ -472,6 +474,7 @@ class shark:
                 try:
                     length = int.from_bytes(sock.recv(4), byteorder='big')
                     rec = sock.recv(length).decode()
+                    
                     if not rec:
                         continue
                 except KeyboardInterrupt: pass
@@ -499,7 +502,8 @@ class shark:
                         sen = session.prompt(ANSI(f"{F.GREEN}↑[{F.CYAN}{client_name}{F.GREEN}]↑: {F.WHITE}"))
                         print(" ")
                         if sen:
-                            sock.send(len(sen).to_bytes(4, byteorder='big'))
+                            length = len(sen.encode())
+                            sock.send(length.to_bytes(4, byteorder='big'))
                             sock.send(sen.encode())
                     except KeyboardInterrupt: pass
                     except: sock.close(); break
@@ -1478,4 +1482,4 @@ if __name__ == '__main__':
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1480
+# end line 1484
