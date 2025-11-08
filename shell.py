@@ -339,10 +339,10 @@ class shark:
         ip = self.get_private_addr()
         port = a3+a2+a1+a2+a3
         print (F.BLUE+"[✓]Server Started")
-        print(" ")
         print (F.CYAN+f"[*]Ip: {F.YELLOW}{ip}  {F.CYAN}[*]Port: {F.YELLOW}{port}")
+        print(" ")
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.settimeout(100)
+        sock.settimeout(500)
     
         sock.bind(("0.0.0.0", int(port)))
         sock.listen(5)
@@ -377,8 +377,8 @@ class shark:
             while True:
                 with patch_stdout():
                     try:
-                        sen = session.prompt(ANSI(f"{F.GREEN}↑[{F.CYAN}{host_name}{F.GREEN}]↑: {F.WHITE}"))
-                        print(" ")
+                        sen = session.prompt(ANSI(f"{B.GREEN}{F.BLACK}↑[{host_name}]↑{Sty.RESET_ALL} {F.WHITE}"))
+                        print_formatted_text(ANSI(f"{Sty.RESET_ALL}━"*55))
                         if sen:
                             length = len(sen.encode())
                             c.send(length.to_bytes(4, byteorder='big'))
@@ -417,8 +417,8 @@ class shark:
                     c.close()
                     break
 
-                print_formatted_text(ANSI(f"{F.YELLOW}↓[{F.CYAN}{client_name}{F.YELLOW}]↓: {F.WHITE}{data}"))
-                print(" ")
+                print_formatted_text(ANSI(f"{B.BLUE}{F.BLACK}↓[{client_name}]↓{Sty.RESET_ALL} {B.WHITE}{F.BLACK}{data}"))
+                print_formatted_text(ANSI(f"{Sty.RESET_ALL}━"*55))
 
 
         send__ = threading.Thread(target=send_)
@@ -490,8 +490,8 @@ class shark:
                     sock.close()
                     break
 
-                print_formatted_text(ANSI(f"{F.YELLOW}↓[{F.CYAN}{host_name}{F.YELLOW}]↓: {F.WHITE}{rec}"))
-                print(" ")
+                print_formatted_text(ANSI(f"{B.BLUE}{F.BLACK}↓[{host_name}]↓{Sty.RESET_ALL} {B.WHITE}{F.BLACK}{rec}"))
+                print_formatted_text(ANSI(f"{Sty.RESET_ALL}━"*55))
 
 
         def send_cs():
@@ -499,8 +499,8 @@ class shark:
             while True:
                 with patch_stdout():
                     try:
-                        sen = session.prompt(ANSI(f"{F.GREEN}↑[{F.CYAN}{client_name}{F.GREEN}]↑: {F.WHITE}"))
-                        print(" ")
+                        sen = session.prompt(ANSI(f"{B.GREEN}{F.BLACK}↑[{client_name}]↑{Sty.RESET_ALL} {F.WHITE}"))
+                        print_formatted_text(ANSI(f"{Sty.RESET_ALL}━"*55))
                         if sen:
                             length = len(sen.encode())
                             sock.send(length.to_bytes(4, byteorder='big'))
@@ -876,7 +876,7 @@ class shark:
    # send file via wifi or localhost
     def send_file(self): #15
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.settimeout(100)
+        sock.settimeout(500)
         a1, a2, a3 = str(rd.randint(1,6)), str(rd.randint(1,6)), str(rd.randint(1,5))
         port = a3+a2+a1+a2+a3
         sock.bind(('0.0.0.0', int(port)))
@@ -1000,7 +1000,7 @@ class shark:
     # open server for shell
     def shell_host(self): #17
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.settimeout(100)
+        sock.settimeout(500)
         a1, a2, a3 = str(rd.randint(1,6)), str(rd.randint(1,6)), str(rd.randint(1,5))
         ip = self.get_private_addr()
         port = a3+a2+a1+a2+a3
