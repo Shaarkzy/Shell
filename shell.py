@@ -377,8 +377,8 @@ class shark:
             while True:
                 with patch_stdout():
                     try:
-                        sen = session.prompt(ANSI(f"{B.GREEN}{F.BLACK}↑[{host_name}]↑{Sty.RESET_ALL} {F.WHITE}"))
-                        print_formatted_text(ANSI(f"{Sty.RESET_ALL}━"*55))
+                        sen = session.prompt(ANSI(f"{B.GREEN}{F.BLACK} {host_name} {Sty.RESET_ALL} {F.WHITE}"))
+                        print("")
                         if sen:
                             length = len(sen.encode())
                             c.send(length.to_bytes(4, byteorder='big'))
@@ -408,7 +408,7 @@ class shark:
                 except: c.close(); break
 
                 if data.strip() == '@bye':
-                    print_formatted_text(ANSI(f'{F.RED}[!]USER CLOSED CHAT HIT ENTER TO CLOSE SESSION'))
+                    print_formatted_text(ANSI(f'{F.RED}[!]USER CLOSED CHAT HIT ENTER TO CLOSE SESSION\n'))
                     c.close()
                     flag = True
                     break
@@ -417,8 +417,8 @@ class shark:
                     c.close()
                     break
 
-                print_formatted_text(ANSI(f"{B.BLUE}{F.BLACK}↓[{client_name}]↓{Sty.RESET_ALL} {B.WHITE}{F.BLACK}{data}"))
-                print_formatted_text(ANSI(f"{Sty.RESET_ALL}━"*55))
+                print_formatted_text(ANSI(f"{B.BLUE}{F.BLACK} {client_name} {Sty.RESET_ALL} {B.WHITE}{F.BLACK}{data}"))
+                print("")
 
 
         send__ = threading.Thread(target=send_)
@@ -481,7 +481,7 @@ class shark:
                 except: sock.close(); break
 
                 if rec.strip() == '@bye':
-                    print_formatted_text(ANSI(f'{F.RED}[!]USER CLOSE CHAT HIT ENTER TO CLOSE SESSION'))
+                    print_formatted_text(ANSI(f'{F.RED}[!]USER CLOSE CHAT HIT ENTER TO CLOSE SESSION\n'))
                     sock.close()
                     flag = True
                     break
@@ -490,8 +490,8 @@ class shark:
                     sock.close()
                     break
 
-                print_formatted_text(ANSI(f"{B.BLUE}{F.BLACK}↓[{host_name}]↓{Sty.RESET_ALL} {B.WHITE}{F.BLACK}{rec}"))
-                print_formatted_text(ANSI(f"{Sty.RESET_ALL}━"*55))
+                print_formatted_text(ANSI(f"{B.BLUE}{F.BLACK} {host_name} {Sty.RESET_ALL} {B.WHITE}{F.BLACK}{rec}"))
+                print("")
 
 
         def send_cs():
@@ -499,8 +499,8 @@ class shark:
             while True:
                 with patch_stdout():
                     try:
-                        sen = session.prompt(ANSI(f"{B.GREEN}{F.BLACK}↑[{client_name}]↑{Sty.RESET_ALL} {F.WHITE}"))
-                        print_formatted_text(ANSI(f"{Sty.RESET_ALL}━"*55))
+                        sen = session.prompt(ANSI(f"{B.GREEN}{F.BLACK} {client_name} {Sty.RESET_ALL} {F.WHITE}"))
+                        print("")
                         if sen:
                             length = len(sen.encode())
                             sock.send(length.to_bytes(4, byteorder='big'))
