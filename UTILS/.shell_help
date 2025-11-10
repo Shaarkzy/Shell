@@ -88,7 +88,7 @@
 {F.YELLOW}[20].{F.CYAN}To Lookup MAC Address: {F.WHITE}@sch -m {F.GREEN}<mac address>
      {F.GREEN}Example: {F.WHITE}@sch -m 00:00:00:00:00:00
 
-{F.YELLOW}[21].{F.CYAN}To Clone Main Shell Aliases To Shark Shell (.bashrc) to (.shellrc): {F.WHITE}@clone -t {F.GREEN}<mode | file/mem>
+{F.YELLOW}[21].{F.CYAN}To Clone Main Shell Aliases To Shark Shell (.bashrc) to (.shellrc) | (.bashrc) to (memory): {F.WHITE}@clone -t {F.GREEN}<mode | file/mem>
      {F.GREEN}Example: {F.WHITE}@clone -t {F.GREEN}file
 
 {F.YELLOW}[22].{F.CYAN}To Create A Temporary Alias: {F.WHITE}@shark {F.GREEN}<alias=value>
@@ -99,7 +99,10 @@
 
 {F.YELLOW}[24].{F.CYAN}To Check For Software Version: {F.WHITE}@version
 
-{F.YELLOW}[25].{F.CYAN}Change Username: {F.WHITE}@name {F.GREEN}<name>
+{F.YELLOW}[25].{F.CYAN}To Change Username: {F.WHITE}@name {F.GREEN}<name>
      {F.GREEN}Example: {F.WHITE}@name {F.GREEN}john doe
+     
+{F.YELLOW}[26].{F.CYAN}To Check If A Site Is Up or Down: {F.WHITE}@check -s {F.GREEN}<domain>
+     {F.GREEN}Example: {F.WHITE}@check -s {F.GREEN}google.com
 
 {F.YELLOW}[00].{F.CYAN}To Exit Program: {F.WHITE}@exit

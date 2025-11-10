@@ -10,6 +10,7 @@ from UTILS.BOOT_SETUP.util_boot import trigger_software_update
 from UTILS.resistor import *
 from UTILS.alias import *
 from UTILS.scanner import *
+from UTILS.site_check import *
 
 
 #------------------------------------------------------------------------------------------------------------------------------
@@ -1328,9 +1329,28 @@ class shark:
         data["username"] = name
         with open(f"{home}/Shell/UTILS/.config.json", "w") as file:
             json.dump(data, file, indent=4)
-            print(f"{F.GREEN}[✓]NAME UPDATED")
+            print(f"{F.GREEN}[✓]Name Updated")
         username = name
 
+
+
+
+#------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+    def site_checker(self, domain):
+        output = check_site(domain)
+        if not output:
+            print(f"{F.RED}[!]Error Resolving Server Element")
+        elif output == "null_internet":
+            print(f"{F.RED}[x]Can't Reach Internet")
+        elif output == "unreach":
+            print(f"{F.RED}[x]Can't Reach Server")
+        else:
+            print(f"{F.GREEN}[*]Site is {F.CYAN}{output}")
+        
 
 
 
@@ -1429,6 +1449,8 @@ if __name__ == '__main__':
                     memory.update(clone_alias(False))
             elif "@name" in data:
                 shark.change_name(cons_(1))
+            elif "@check -s" in data:
+                shark.site_checker(data.split()[2])
             elif "@exit" in data:
                 sys("clear")
                 #process.terminate()
@@ -1482,4 +1504,4 @@ if __name__ == '__main__':
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1484
+# end line 1506

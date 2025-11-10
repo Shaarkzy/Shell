@@ -86,6 +86,7 @@ def load_libraries():
     global datetime, glob, sys, ifaddresses, interfaces
     global AF_INET, AF_INET6, n, readline, at, threading
     global PromptSession, patch_stdout, ANSI, print_formatted_text, multiprocessing
+    global BeautifulSoup
 
     import sys as sy
     print("━"*2+" •", end="\r", flush=True)
@@ -121,6 +122,7 @@ def load_libraries():
     print("━"*22+" •", end="\r", flush=True)
 
     import requests as r
+    from bs4 import BeautifulSoup
     print("━"*24+" •", end="\r", flush=True)
 
     import json
@@ -182,7 +184,9 @@ def load_libraries():
 __all__ = [
     "sy", "F", "B", "Sty", "tm", "socket", "sub", "rd", "exists", "os", "re", "uuid",
     "ipaddress", "r", "json", "tqdm", "pt", "p", "phone", "carrier", "geocoder", "threading", 
-    "timezone", "AES", "get_random_bytes", "interfaces", "ifaddresses", "AF_INET", "AF_INET6", "mimetypes", "datetime", "glob", "sys", "n", "readline", "at", "PromptSession", "patch_stdout", "print_formatted_text", "ANSI", "multiprocessing",
+    "timezone", "AES", "get_random_bytes", "interfaces", "ifaddresses", "AF_INET", "AF_INET6", 
+    "mimetypes", "datetime", "glob", "sys", "n", "readline", "at", "PromptSession", "patch_stdout",
+    "print_formatted_text", "ANSI", "multiprocessing", "BeautifulSoup",
 ]
 
 try:
@@ -197,4 +201,4 @@ except KeyboardInterrupt:
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-#end line 199
+#end line 203
