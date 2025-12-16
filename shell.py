@@ -404,7 +404,10 @@ class shark:
                     data = c.recv(length).decode()
                     
                     if not data:
-                        continue
+                        flag = True
+                        c.close()
+                        print_formatted_text(ANSI(f'{F.RED}[x]CLIENT DSICONNECTED HIT ENTER TO CLOSE SESSION'))
+                        break
                 except KeyboardInterrupt: pass
                 except: c.close(); break
 
@@ -477,7 +480,10 @@ class shark:
                     rec = sock.recv(length).decode()
                     
                     if not rec:
-                        continue
+                        flag = True
+                        sock.close()
+                        print_formatted_text(ANSI(f'{F.RED}[x]SERVER DISCONNECTED HIT ENTER TO CLOSE SESSION'))
+                        break
                 except KeyboardInterrupt: pass
                 except: sock.close(); break
 
@@ -1029,13 +1035,22 @@ class shark:
         
         while True:
             data = input(F.CYAN+"\n[shell]: "+F.WHITE)
+
             if data == "@exit":
+                length = len(data.encode())
+                c.send(length.to_bytes(4, byteorder='big'))
                 c.send(data.encode())
                 print(F.RED+"[*]Closing Shell")
                 c.close()
                 break
+            elif data == False:
+                continue
+            length = len(data.encode())
+            c.send(length.to_bytes(4, byteorder='big'))
             c.send(data.encode())
-            rec = c.recv(51200).decode()
+
+            length = int.from_bytes(c.recv(4), byteorder='big')
+            rec = c.recv(length).decode()
             print(F.WHITE+rec)
 
 
@@ -1063,25 +1078,31 @@ class shark:
         print(F.BLUE+"[✓]Connected To Host")
         print(F.YELLOW+"[*]━━━━━━━━━━━━━━━━SERVER LOG━━━━━━━━━━━━━━━━")
         
+
         while True:
-            data = sock.recv(1024).decode()
+            length = int.from_bytes(sock.recv(4), byteorder='big')
+            data = sock.recv(length).decode()
+            if not data:
+                print(f'{F.RED}[x]SERVER DISCONNECTED')
+                sock.close()
+                break
+
             print(f"{F.GREEN}[*]Host Executed: {F.WHITE}{data}")
             if data == "@exit":
                 print (F.RED+"[*]Host Closed Shell")
                 sock.close()
                 break
+
             elif data.strip() == "ls":
-                out = sub.getoutput("ls -p")
-                sock.send(out.encode())
+                data = sub.getoutput("ls -p")
             elif data.startswith('cd '):
                 path = data[3:]
                 path = self.get_file(path)
                 try:
                     os.chdir(path)
-                    path = os.getcwd()
-                    sock.send(f'{path}'.encode())
+                    data = os.getcwd()
                 except:
-                    sock.send("Invalid Directory".encode())
+                    data = "Invalid Directory"
             else:
                 try:
                     decode_data = sub.run(
@@ -1093,9 +1114,13 @@ class shark:
                         timeout=0.5,
                         text=True
                     )
-                    sock.send(f"{decode_data.stdout}".encode())
+                    data = decode_data.stdout if decode_data.stdout else 'DONE'
                 except:
-                    sock.send(f'unexpected'.encode())
+                    data = 'unexpected'
+
+            length = len(data.encode())
+            sock.send(length.to_bytes(4, byteorder='big'))
+            sock.send(data.encode())
 
 
 #------------------------------------------------------------------------------------------------------------------------------
@@ -1374,84 +1399,86 @@ if __name__ == '__main__':
         if data: pass
         else: continue
 
+        data_strip = data.replace(' ','')
+
         #resolve spaced file
         def cons_(num):
             return ' '.join(data.split()[num:])
             
         try:
             #data = inpu()
-            if '@help'in data:
+            if '@help'in data_strip:
                 shark.help()
-            elif "@get -i" in data: 
+            elif "@get-i" in data_strip: 
                 shark.get_ip(data.split()[2])
-            elif "@port -st" in data:
+            elif "@port-st" in data_strip:
                 run_port(data.split()[2], data.split()[3])
-            elif "@bina -a" in data: 
+            elif "@bina-a" in data_strip: 
                 shark.Bina_Alpha(cons_(2))
-            elif "@alpha -b" in data: 
+            elif "@alpha-b" in data_strip: 
                 shark.Alpha_Bina(cons_(2))
-            elif "@num -b" in data: 
+            elif "@num-b" in data_strip: 
                 shark.Num_Bina(data.split()[2], data.split()[3])
-            elif "@bina -n" in data: 
+            elif "@bina-n" in data_strip: 
                 shark.Bina_Num(data.split()[2], data.split()[3])
-            elif "@ip -details" in data:
+            elif "@ip-details" in data_strip:
                 shark.get_device_ip()
 
 #------------------------------------------------------------------------------------------------------------------------------
 
-            elif "@cpu" in data: 
+            elif "@cpu" in data_strip: 
                 shark.cpu_info()
-            elif "@open -server" in data: 
+            elif "@open-server" in data_strip: 
                 shark.open_server()
-            elif "@con -s" in data: 
+            elif "@con-s" in data_strip: 
                 shark.connect_server(data.split()[2], data.split()[3])
-            elif "@file" in data:
+            elif "@file" in data_strip:
                     shark.file_sys(data.split()[1], cons_(2))
-            elif "@send -w" in data:
+            elif "@send-w" in data_strip:
                 shark.send_mess(data.split()[2])
-            elif "@send -file" in data: 
+            elif "@send-file" in data_strip: 
                 shark.send_file()
-            elif "@recv -f" in data: 
+            elif "@recv-f" in data_strip: 
                 shark.recv_file(data.split()[2], data.split()[3])
-            elif data == "@shell -host":
+            elif "@shell-host" in data_strip:
                 shark.shell_host()
 
 #------------------------------------------------------------------------------------------------------------------------------
 
-            elif "@shell -c" in data:
+            elif "@shell-c" in data_strip:
                 shark.shell_client(data.split()[2], data.split()[3])
-            elif "@crypt" in data: 
+            elif "@crypt" in data_strip: 
                 shark.crypt()
-            elif "@check -n" in data: 
+            elif "@check-n" in data_strip: 
                 shark.check_phone(data.split()[2])
-            elif "@check -w" in data: 
+            elif "@check-w" in data_strip: 
                 shark.weather(data.split()[2])
-            elif "@ip -s" in data:
+            elif "@ip-s" in data_strip:
                 shark.ip_osint(data.split()[2])
-            elif "@sch -f" in data:
+            elif "@sch-f" in data_strip:
                 shark.trigger_search(cons_(2))
-            elif "@sch -m" in data:
+            elif "@sch-m" in data_strip:
                 shark.mac_lookup(data.split()[2])
-            elif "@solve -res" in data:
+            elif "@solve-res" in data_strip:
                 run_resist()
 
 #------------------------------------------------------------------------------------------------------------------------------
 
-            elif "@version" in data:
+            elif "@version" in data_strip:
                 shark.version()
-            elif "@shark" in data:
+            elif "@shark" in data_strip:
                 memory.update({data.split("=")[0].split()[1]: data.split("=")[1]})
-            elif "@clone" in data:
+            elif "@clone" in data_strip:
                 if data.split()[2] == "file":
                     clone_alias(True)
                     print(F.RED+"[!]Cloned: Restart The Shell For Update To Take Effect")
                 elif data.split()[2] == "mem":
                     memory.update(clone_alias(False))
-            elif "@name" in data:
+            elif "@name" in data_strip:
                 shark.change_name(cons_(1))
-            elif "@check -s" in data:
+            elif "@check-s" in data_strip:
                 shark.site_checker(data.split()[2])
-            elif "@exit" in data:
+            elif "@exit" in data_strip:
                 sys("clear")
                 #process.terminate()
                 quit(0)
@@ -1504,4 +1531,4 @@ if __name__ == '__main__':
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1506
+# end line 1533

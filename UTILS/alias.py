@@ -76,7 +76,7 @@ def clone_alias(mode):
         num += 1
         if data.startswith("alias"):
             #alias ii="pkg update && pkg upgrade"
-            split_line = data.split("=")
+            split_line = data.split("=", 1)
             key = split_line[0].split()[1]
             value = split_line[1]
             value = value.replace('"', '')
