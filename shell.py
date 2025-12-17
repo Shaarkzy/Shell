@@ -1407,78 +1407,78 @@ if __name__ == '__main__':
             
         try:
             #data = inpu()
-            if '@help'in data_strip and '@help' in data: 
+            if '@help'in data_strip and data.strip().startswith('@help'): 
                 shark.help()
-            elif "@get-i" in data_strip and '@get' in data1: 
+            elif "@get-i" in data_strip and data.strip().startswith('@get'): 
                 shark.get_ip(data.split()[2])
-            elif "@port-st" in data_strip:
+            elif "@port-st" in data_strip and data.strip().startswith('@port'):
                 run_port(data.split()[2], data.split()[3])
-            elif "@bina-a" in data_strip and '@bina' in data: 
+            elif "@bina-a" in data_strip and data.strip().startswith('@bina'): 
                 shark.Bina_Alpha(cons_(2))
-            elif "@alpha-b" in data_strip and '@alpha' in data: 
+            elif "@alpha-b" in data_strip and data.strip().startswith('@alpha'): 
                 shark.Alpha_Bina(cons_(2))
-            elif "@num-b" in data_strip and '@num' in data: 
+            elif "@num-b" in data_strip and data.strip().startswith('@num'): 
                 shark.Num_Bina(data.split()[2], data.split()[3])
-            elif "@bina-n" in data_strip and '@bina' in data: 
+            elif "@bina-n" in data_strip and data.strip().startswith('@bina'): 
                 shark.Bina_Num(data.split()[2], data.split()[3])
-            elif "@ip-details" in data_strip and '@ip' in data:
+            elif "@ip-details" in data_strip and data.strip().startswith('@ip'):
                 shark.get_device_ip()
 
 #------------------------------------------------------------------------------------------------------------------------------
 
-            elif "@cpu" in data_strip and '@cpu' in data: 
+            elif "@cpu" in data_strip and data.strip().startswith('@cpu'): 
                 shark.cpu_info()
-            elif "@open-server" in data_strip and '@open' in data: 
+            elif "@open-server" in data_strip and data.strip().startswith('@open'): 
                 shark.open_server()
-            elif "@con-s" in data_strip and '@con' in data: 
+            elif "@con-s" in data_strip and data.strip().startswith('@con'): 
                 shark.connect_server(data.split()[2], data.split()[3])
-            elif "@file" in data_strip and '@file' in data:
+            elif "@file" in data_strip and data.strip().startswith('@file'):
                     shark.file_sys(data.split()[1], cons_(2))
-            elif "@send-w" in data_strip and '@send' in data:
+            elif "@send-w" in data_strip and data.strip().startswith('@send'):
                 shark.send_mess(data.split()[2])
-            elif "@send-file" in data_strip and '@send' in data: 
+            elif "@send-file" in data_strip and data.strip().startswith('@send'): 
                 shark.send_file()
-            elif "@recv-f" in data_strip and '@recv' in data: 
+            elif "@recv-f" in data_strip and data.strip().startswith('@recv'): 
                 shark.recv_file(data.split()[2], data.split()[3])
-            elif "@shell-host" in data_strip and '@shell' in data:
+            elif "@shell-host" in data_strip and data.strip().startswith('@shell'):
                 shark.shell_host()
 
 #------------------------------------------------------------------------------------------------------------------------------
 
-            elif "@shell-c" in data_strip and '@shell' in data:
+            elif "@shell-c" in data_strip and data.strip().startswith('@shell'):
                 shark.shell_client(data.split()[2], data.split()[3])
-            elif "@crypt" in data_strip and '@cyrpt' in data: 
+            elif "@crypt" in data_strip and data.strip().startswith('@cyrpt'): 
                 shark.crypt()
-            elif "@check-n" in data_strip and '@check' in data: 
+            elif "@check-n" in data_strip and data.strip().startswith('@check'): 
                 shark.check_phone(data.split()[2])
-            elif "@check-w" in data_strip and '@check' in data: 
+            elif "@check-w" in data_strip and data.strip().startswith('@check'): 
                 shark.weather(data.split()[2])
-            elif "@ip-s" in data_strip and '@ip' in data:
+            elif "@ip-s" in data_strip and data.strip().startswith('@ip'):
                 shark.ip_osint(data.split()[2])
-            elif "@sch-f" in data_strip and '@sch' in data:
+            elif "@sch-f" in data_strip and data.strip().startswith('@sch'):
                 shark.trigger_search(cons_(2))
-            elif "@sch-m" in data_strip and '@sch' in data:
+            elif "@sch-m" in data_strip and data.strip().startswith('@sch'):
                 shark.mac_lookup(data.split()[2])
-            elif "@solve-res" in data_strip and '@solve' in data:
+            elif "@solve-res" in data_strip and data.strip().startswith('@solve'):
                 run_resist()
 
 #------------------------------------------------------------------------------------------------------------------------------
 
-            elif "@version" in data_strip and '@version' in data:
+            elif "@version" in data_strip and data.strip().startswith('@version'):
                 shark.version()
-            elif "@shark" in data_strip and '@shark' in data:
+            elif "@shark" in data_strip and data.strip().startswith('@shark'):
                 memory.update({data.split("=")[0].split()[1]: data.split("=")[1]})
-            elif "@clone" in data_strip and '@clone' in data:
+            elif "@clone" in data_strip and data.strip().startswith('@clone'):
                 if data.split()[2] == "file":
                     clone_alias(True)
                     print(F.RED+"[!]Cloned: Restart The Shell For Update To Take Effect")
                 elif data.split()[2] == "mem":
                     memory.update(clone_alias(False))
-            elif "@name" in data_strip and '@name' in data:
+            elif "@name" in data_strip and data.strip().startswith('@name'):
                 shark.change_name(cons_(1))
-            elif "@check-s" in data_strip and '@check' in data:
+            elif "@check-s" in data_strip and data.strip().startswith('@check'):
                 shark.site_checker(data.split()[2])
-            elif "@exit" in data_strip and '@exit' in data:
+            elif "@exit" in data_strip and data.strip().startswith('@exit'):
                 sys("clear")
                 #process.terminate()
                 quit(0)
@@ -1498,7 +1498,7 @@ if __name__ == '__main__':
                     print (f"cd:{path}: No Such File Or Directory")
             elif data.strip() == 'cd':
                 os.chdir(os.path.expanduser("~"))
-            elif data == "@update":
+            elif '@update' in data_strip and data.strip().startswith('@update'):
                 print(trigger_software_update())
 
 #------------------------------------------------------------------------------------------------------------------------------
