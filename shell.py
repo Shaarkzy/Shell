@@ -871,7 +871,7 @@ class shark:
     # send message to a whatsapp contact
     def send_mess(self, number): #14
         message = input(F.YELLOW+"[%]Message: "+F.WHITE).replace(" ", "%20")
-        sys(f'xdg-open https://wa.me/{number}?text={message}')
+        null = sub.getoutput(f'xdg-open https://wa.me/{number}?text={message}')
         print (F.BLUE+"[*]Opening Whatsapp....")
 
 
@@ -1398,8 +1398,8 @@ if __name__ == '__main__':
         data = inpu()
         if data: pass
         else: continue
-
-        data_strip = data.replace(' ','')
+        try: data_strip = data.replace(' ','')
+        except: continue 
 
         #resolve spaced file
         def cons_(num):
@@ -1447,7 +1447,7 @@ if __name__ == '__main__':
 
             elif "@shell-c" in data_strip and data.strip().startswith('@shell'):
                 shark.shell_client(data.split()[2], data.split()[3])
-            elif "@crypt" in data_strip and data.strip().startswith('@cyrpt'): 
+            elif "@crypt" in data_strip and data.strip().startswith('@crypt'): 
                 shark.crypt()
             elif "@check-n" in data_strip and data.strip().startswith('@check'): 
                 shark.check_phone(data.split()[2])
