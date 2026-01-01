@@ -406,7 +406,7 @@ class shark:
                     if not data:
                         flag = True
                         c.close()
-                        print_formatted_text(ANSI(f'{F.RED}[x]CLIENT DSICONNECTED HIT ENTER TO CLOSE SESSION'))
+                        print_formatted_text(ANSI(f'{F.RED}[x]CLIENT DISCONNECTED HIT ENTER TO CLOSE SESSION'))
                         break
                 except KeyboardInterrupt: pass
                 except: c.close(); break
@@ -457,7 +457,7 @@ class shark:
                 print(F.BLUE+"[✓]Connected To Server")
                 print(" ")
                 break
-            else: print(F.RED+'[x]Unauthorized Connection'); sock.close(); return 0
+            else: print(F.RED+'[x]Invalid Connection'); sock.close(); return 0
              
              
         client_name = username
@@ -960,7 +960,7 @@ class shark:
             if auth_r == auth_s:
                 print(F.CYAN+"[✓]Connected To Server")
                 break
-            else: print(F.RED+'[x]Unauthorized Connection'); c_socket.close(); return 0
+            else: print(F.RED+'[x]Invalid Connection'); c_socket.close(); return 0
 
         data = c_socket.recv(1024).decode()
         print (F.BLUE+data)
@@ -1073,7 +1073,7 @@ class shark:
 
             if auth_r == auth_s:
                 break
-            else: print(F.RED+'[x]Unauthoized Connection'); sock.close(); return 0
+            else: print(F.RED+'[x]Invalid Connection'); sock.close(); return 0
 
         print(F.BLUE+"[✓]Connected To Host")
         print(F.YELLOW+"[*]━━━━━━━━━━━━━━━━SERVER LOG━━━━━━━━━━━━━━━━")

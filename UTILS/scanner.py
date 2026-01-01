@@ -121,7 +121,6 @@ async def scan(host: str, ports: List[int], concurrency: int = CONCURRENCY):
     semaphore = asyncio.Semaphore(concurrency)
 
     print(f"\n{Fore.YELLOW}[!]STARTED: SCANNING {Fore.GREEN}{n_ports}{Fore.YELLOW} ports for {Fore.GREEN}{host}")
-    print(f"{Fore.YELLOW}[!]RTT estimate: {Fore.GREEN}{ping_rtt:.3f}s{Fore.YELLOW} -> per-connection timeout: {Fore.GREEN}{timeout:.2f}s\n")
     start = time.time()
 
     priority = [p for p in PRIORITY_PORTS if p in ports]
@@ -217,4 +216,4 @@ def run_port(host: str, port_range: str = "default"):
         print(Fore.RED + "\n[!]Scan interrupted by user.")
 
 #------------------------------------------------------------------------------------------------------------------------------
-#end line 219
+#end line 218

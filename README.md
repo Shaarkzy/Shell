@@ -42,9 +42,9 @@ to build and configure program (Android | Debian based system only).
 1. Some utilities requires superuser privilege (on feature 9)...
 2. For Debian installation run setup as root: $ sudo ./setup.sh
 3. Program Folder must be in the home directory (~/Shell , /root/Shell)
-4. On Debian system, it's advisable to run setup on Non root Terminal, Run: $ ./relink on Non root terminal if setup was run on Root Terminal and you wish to run shell command from Non root terminal.
-5. On Debian system, To start shell on Non root Terminal run: sudo shell.
-6. On Debian system, the program runs on root environment.
+4. On Debian system, it's advisable to run setup on Non root Terminal
+5. Run: $ ./relink on Non root terminal if setup was run on Root Terminal and you wish to run shell command from Non root terminal.
+6. On Debian system, To start shell on Non root Terminal run: sudo shell.
 7. Setup File is configured for Android and Debian based systems only
 ```
 
