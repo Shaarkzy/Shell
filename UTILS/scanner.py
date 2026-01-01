@@ -197,11 +197,13 @@ def run_port(host: str, port_range: str = "default"):
             for tok in tokens:
                 if "-" in tok:
                     a, b = tok.split("-", 1)
+                    b = '65535' if int(b) > 65535 else b
                     ports.extend(range(int(a), int(b) + 1))
                 else:
                     ports.append(int(tok))
         elif "-" in port_range:
             a, b = port_range.split("-", 1)
+            b = '65535' if int(b) > 65535 else b
             ports = list(range(int(a), int(b) + 1))
         else:
             ports = [int(port_range)]
@@ -216,4 +218,4 @@ def run_port(host: str, port_range: str = "default"):
         print(Fore.RED + "\n[!]Scan interrupted by user.")
 
 #------------------------------------------------------------------------------------------------------------------------------
-#end line 218
+#end line 219

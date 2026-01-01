@@ -354,12 +354,13 @@ class shark:
                 auth_s = '0x1000'
                 c.send(auth_s.encode())
                 auth_r = c.recv(6).decode()
-
+                if not auth_r: c.close(); continue
                 if auth_s == auth_r:
                     break
                 else: c.close(); continue
             except KeyboardInterrupt: return 0
-            except: print(F.RED+"[x]Timed Out"); return 0
+            except ConnectionResetError: c.close; continue
+            except socket.timeout: print(F.RED+"[x]Timed Out"); return 0
             
         #receive - send 
         host_name = username
@@ -918,7 +919,8 @@ class shark:
                         break
                     else: c.close(); continue
                 except KeyboardInterrupt: return 0
-                except: print(F.RED+"[x]Timed Out"); return 0
+                except ConnectionResetError: c.close; continue
+                except socket.timeout: print(F.RED+"[x]Timed Out"); return 0
 
             print(F.CYAN+"[✓]User Connected")
             print(F.BLUE+"[*]Waiting For User To Accept")
@@ -1029,7 +1031,8 @@ class shark:
                     break
                 else: c.close(); continue
             except KeyboardInterrupt: return 0
-            except: print(F.RED+"[x]Timed Out"); return 0
+            except ConnectionResetError: c.close; continue
+            except socket.timeout: print(F.RED+"[x]Timed Out"); return 0
 
         print (F.GREEN+"[✓]Client Connected")
         
@@ -1531,4 +1534,4 @@ if __name__ == '__main__':
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1533
+# end line 1536

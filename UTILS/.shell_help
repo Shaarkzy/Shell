@@ -9,6 +9,7 @@
 {F.YELLOW}[2]. {F.CYAN}Port Scanning Single/Multiple: {F.WHITE}@port -st {F.GREEN}<target> <range>|<port>
      {F.GREEN}Example: {F.WHITE}@port -st 127.0.0.1 0-65535
      {F.GREEN}Example: {F.WHITE}@port -st 127.0.0.1 80
+     {F.GREEN}Example: {F.WHITE}@port -st 127.0.0.1 1,25,80,443
      {F.RED}Note: Use <default> To Scan Well Known (1000)Ports
      {F.GREEN}Example: {F.WHITE}@port -st 127.0.0.1 default
 
