@@ -69,6 +69,20 @@ def background(): #future background process
     #do something, call something, solve something
     pass
 
+#log silent messages
+def log(data):
+    home = os.environ['HOME']
+    log_file = f'{home}/Shell/UTILS/.logs'
+    now = datetime.now()
+    time = now.strftime('%Y-%m-%d %H:%M:%S')
+    collide = f'{data} @ {time}\n'
+
+    with open(log_file, 'a') as file:
+        file.write(collide)
+
+
+
+
 #------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -93,6 +107,7 @@ class shark:
                   ╰────────────────────────╯
                     """
         print (data)
+        log("[INFO] main() displayed welcome screen")
 
 
 
@@ -103,6 +118,7 @@ class shark:
     def help(self): #1
         home = os.environ["HOME"]
         data = open(f"{home}/Shell/UTILS/.shell_help", "r").read()
+        log("[INFO] help() called")
         print(eval(f"f'''{data}'''"))
 
 
@@ -116,6 +132,7 @@ class shark:
     # getting ip address of a site
     def get_ip(self, host): #2
         try:
+            log(f"[INFO] get_ip() resolving host={host}")
             data = self.soc.gethostbyname(host)
             print (F.CYAN+f"[✓]{host}: {F.BLUE}{data}")
         except:
@@ -129,6 +146,7 @@ class shark:
     # gather information about an ip address
     def ip_osint(self, ip):
         try:
+            log(f"[INFO] ip_osint() querying ip={ip}")
             res = r.get(f"https://ipinfo.io/{ip}", timeout=5)
             fetch = res.json()
             for i in fetch.keys():
@@ -147,6 +165,7 @@ class shark:
 
    # converting binary to number
     def Bina_Num(self, binary, base): #5
+        log(f"[INFO] Bina_Num() converting binary={binary} base={base}")
         print (F.GREEN+"[%]Output"+F.BLUE)
         print (F.BLUE+str(int(binary, int(base))))
 
@@ -160,6 +179,7 @@ class shark:
     def Num_Bina(self, num, base): #6
         num = int(num)
         base = int(base)
+        log(f"[INFO] Num_Bina() converting num={num} base={base}")
         print (F.GREEN+"[*]Output"+F.BLUE)
         print (F.BLUE+bin(num) [base: ])
 
@@ -171,6 +191,7 @@ class shark:
     #repair binary files with invalid byte
     def repair(self, file):
         try:
+            log(f"[INFO] repair() repairing file={file}")
             open_file = open(file, 'r')
             read_file = open_file.read()
             open_file.close()
@@ -196,6 +217,7 @@ class shark:
     # convert alphabet to binary
     def Alpha_Bina(self, file):
         file = self.get_file(file)
+        log(f"[INFO] Alpha_Bina() converting file={file}")
         open_file = open(file, "r")
         data = open_file.read()
         open_file.close()
@@ -214,6 +236,7 @@ class shark:
     # convert binary to alphabet
     def Bina_Alpha(self, file):
         file = self.get_file(file)
+        log(f"[INFO] Bina_Alpha() converting file={file}")
         open_file = open(file, "r")
         data = open_file.read()
         open_file.close()
@@ -238,6 +261,7 @@ class shark:
             
     # get private ip address of a device
     def get_private_addr(self):
+        log("[INFO] get_private_addr() called")
         interfaces = n.interfaces()
         for interface in interfaces:
             try:
@@ -260,6 +284,7 @@ class shark:
    # get device network details and interfaces
     def get_device_ip(self):
         try:
+            log("[INFO] get_device_ip() querying public IP")
             response = r.get('https://api.ipify.org?format=json', timeout=2)
             ip_data = response.json()
             print(F.CYAN+"[*]Interface: - Public Address -")
@@ -300,6 +325,8 @@ class shark:
     # get device cpu information
     def cpu_info(self): #10
         print (F.BLUE+"[*]Cpu Details")
+
+        log("[INFO] cpu_info() started")
 
         while True:
 
@@ -347,6 +374,7 @@ class shark:
     
         sock.bind(("0.0.0.0", int(port)))
         sock.listen(5)
+        log(f"[INFO] open_server started on {ip}:{port}")
         while True:
             c = None
             try:
@@ -356,10 +384,11 @@ class shark:
                 auth_r = c.recv(6).decode()
                 if not auth_r: c.close(); continue
                 if auth_s == auth_r:
+                    log(f"[INFO] open_server accepted connection from {addr}")
                     break
-                else: c.close(); continue
+                else: c.close(); log('[x]Invalid Connection On Open Server Func'); continue
             except KeyboardInterrupt: return 0
-            except ConnectionResetError: c.close; continue
+            except ConnectionResetError: c.close; log('[x]Invalid Connection On Open Server Func'); continue
             except socket.timeout: print(F.RED+"[x]Timed Out"); return 0
             
         #receive - send 
@@ -367,6 +396,7 @@ class shark:
         
         length = int.from_bytes(c.recv(4), byteorder='big')
         client_name = c.recv(length).decode()
+        log(f"[INFO] open_server session established host={host_name} client={client_name} from={addr}")
         
         c.send(len(host_name).to_bytes(4, byteorder='big'))
         c.send(host_name.encode())
@@ -436,6 +466,7 @@ class shark:
         send__.join()
         recv__.join()
         print(F.RED+'[✓]SESSION CLOSED')
+        log(f"[INFO] open_server session closed host={host_name} client={client_name}")
 
 
 
@@ -445,6 +476,7 @@ class shark:
     # connect to wifi chat room server
     def connect_server(self, ip, port): #12
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        log(f"[INFO] connect_server attempting connection to {ip}:{port}")
         while True:
             sock.connect((ip, int(port)))
              
@@ -456,6 +488,7 @@ class shark:
                 print(F.CYAN+'[NOTE]: Only Support Wlan')
                 print(F.CYAN+'......: To Close Chat: @bye')
                 print(F.BLUE+"[✓]Connected To Server")
+                log(f"[INFO] connect_server connected to {ip}:{port}")
                 print(" ")
                 break
             else: print(F.RED+'[x]Invalid Connection'); sock.close(); return 0
@@ -544,7 +577,9 @@ class shark:
 
     # generate key for encryption
     def key(self, num):
+        log(f"[INFO] key() generating key of length={num}")
         data = str(uuid.uuid4()).replace(':', '')[:num].replace('-', 'f')
+        log(f"[DEBUG] key() generated key={data}")
         return data
 
 
@@ -577,12 +612,15 @@ class shark:
         if matches:
             if len(matches) == 1:
                 check = matches[0]
+                log(f"[INFO] get_file resolved pattern {path} -> {check}")
                 return check.replace("'", "")
             else:
                 print(F.RED+"[x] Multiple Entry Found")
+                log(f"[WARN] get_file multiple matches for pattern {path}: {matches}")
                 return False
         else:
             check = file
+            log(f"[INFO] get_file no glob match for {path}, using literal")
             return check.replace("'", "")
 
 
@@ -593,8 +631,10 @@ class shark:
 
    # file utilities
     def file_sys(self, option, file): #13
+        log(f"[INFO] file_sys called option={option} file={file}")
         if option == "-c":
             if exists(file) == False:
+                log(f"[INFO] file_sys creating new file {file}")
                 data = input(F.YELLOW+"[%]Enter Data: "+F.WHITE)
                 open_file = open(file, "w")
                 open_file.write(data)
@@ -606,6 +646,7 @@ class shark:
                 if opt == "N":
                     print (F.BLUE+"[✓]File Was Maintained".upper())
                 elif opt == "Y":
+                    log(f"[INFO] file_sys overwriting file {file}")
                     data = input(F.YELLOW+"[%]Enter Data: "+F.WHITE)
                     open_file = open(file, "w")
                     open_file.write(data)
@@ -620,6 +661,7 @@ class shark:
             if not file:
                 return False
             if exists(file):
+                log(f"[INFO] file_sys appending to file {file}")
                 data = input(F.YELLOW+"[%]Enter Data: "+F.WHITE)
                 open_file = open(file, "a")
                 open_file.write(data)
@@ -627,6 +669,7 @@ class shark:
                 print (F.BLUE+"[✓]Done".upper())
             else:
                 print (F.RED+"[x]File Doesn't Exist".uppper())
+                log(f"[WARN] file_sys append failed, file not found: {file}")
 
 
         elif option == "-d":
@@ -635,10 +678,12 @@ class shark:
             if not file:
                 return False
             if exists(file):
+                log(f"[INFO] file_sys deleting file {file}")
                 os.remove(file)
                 print (F.BLUE+"[✓]File Deleted ".upper())
             else:
                 print (F.RED+"[x]File Doesn't Exist".upper())
+                log(f"[WARN] file_sys delete failed, file not found: {file}")
 
 
         elif option == "-v":
@@ -646,6 +691,7 @@ class shark:
 
             if not file:
                 return False
+            log(f"[INFO] file_sys viewing info for {file}")
             os = self.os
             if os.path.isfile(file):
                 size_bytes = os.path.getsize(file)
@@ -677,6 +723,7 @@ class shark:
 
                 for key, value in data.items():
                     print(f"{F.CYAN}[*]{key}: {F.GREEN}{value}")
+                log(f"[INFO] file_sys displayed file info for {file}")
 
             elif os.path.isdir(file):
                 c_file = file
@@ -711,9 +758,11 @@ class shark:
                 }
                 for key, value in data.items():
                     print(f"{F.CYAN}[*]{key}: {F.GREEN}{value}")
+                log(f"[INFO] file_sys displayed directory info for {c_file}")
                     
             else:
                 print (F.RED+"[x]No Such File Or Directory")
+                log(f"[WARN] file_sys view failed, no such file or directory: {file}")
                 
                 
         elif option == "-r":
@@ -723,6 +772,7 @@ class shark:
             os = self.os
 
             if exists(file):
+                log(f"[INFO] file_sys reading file {file}")
                 try:
                     open_file = open(file, "r")
                     print(F.BLUE+"[*]File.Content:"+F.WHITE+"")
@@ -732,7 +782,7 @@ class shark:
                         print(data, end="")
                         if not data:
                             break
-                    
+                    log(f"[INFO] file_sys finished reading text file {file}")
                 except:
                     open_file = open(file, 'rb')
                     buffer = 1024
@@ -741,13 +791,16 @@ class shark:
                         print(data, end="")
                         if not data:
                             break
+                    log(f"[INFO] file_sys finished reading binary file {file}")
             else:
                 print (F.RED+"[x]File Doesn't Exist")
+                log(f"[WARN] file_sys read failed, file not found: {file}")
 
 
         elif option == "-ed":
             os = self.os
             file = self.get_file(file)
+            log(f"[INFO] file_sys option='-ed' called for file={file}")
             if not file:
                 return False
             if exists(file) and os.path.isfile(file):
@@ -758,6 +811,7 @@ class shark:
                     if opt == "Y":
                         print(F.BLUE+"[Note]: Key Must Be EITHER 16, 24 Or 32 Bytes Character\n[*]Meaning Your Key Should Be ↑Above↑ Bytes Character Long")
                         key = input(F.CYAN+"[%]KEY: "+F.WHITE)
+                        log(f"[INFO] file_sys decrypt requested for {file} with provided key length={len(key)}")
                         if len(key) == 16 or len(key) == 24 or len(key) == 32:
                             key = key.encode()
  
@@ -788,9 +842,11 @@ class shark:
                             output_file.close()
                             print (F.BLUE+"[✓]File Decrypted Successfully                             ")
                             print(f'{F.CYAN}[*]Decrypted File Is {F.YELLOW}{file}')
+                            log(f"[INFO] file_sys decrypted file successfully -> {file}")
 
                         else:
                             print (F.RED+"[x]Invalid Key Byte Size Or No key Detected")
+                            log(f"[ERROR] file_sys decryption failed for {file}: invalid key length={len(key)}")
 
                     elif opt == "N":
                         print (F.BLUE+"[✓]File Was Maintained")
@@ -807,6 +863,7 @@ class shark:
                         if option == "Y":
                             num = int(input(F.YELLOW+'[%]Key Length: '))
                             keyD = self.key(num)
+                            log(f"[INFO] file_sys generated key for encryption of {file} with length={num}")
                         elif option == "N":
                             keyD = input(F.CYAN+"[%]Key: "+F.WHITE)
                         else:
@@ -843,11 +900,14 @@ class shark:
                             file_ = "/".join(file.split(os.sep)[-1:])
                             print(f'{F.CYAN}[*]Encrypted File Is {F.WHITE}{file_}')
 
+                            log(f"[INFO] file_sys encrypted file {file} -> {file_} with key length={len(keyD)}")
+
                             key_file = open("key.txt", "a")
                             cur_dir = os.getcwd()
                             data = "[Filnename= "+file+" :Key= "+keyD+" ]\n"
                             key_file.write(data)
                             print(f"{F.CYAN}[*]Key Saved On {F.YELLOW}{cur_dir}/{F.WHITE}key.txt")
+                            log(f"[INFO] file_sys saved encryption key for {file} to {cur_dir}/key.txt")
                         else:
                             print(F.RED+"[x]Invalid Key Byte SIZE")
 
@@ -892,6 +952,8 @@ class shark:
         ip = self.get_private_addr()
         print (F.CYAN+f"[*]Ip: {F.YELLOW}{ip}  {F.CYAN}[*]Port: {F.YELLOW}{port}")
 
+        log(f"[INFO] send_file server started on {ip}:{port}")
+
         sock.listen(5)
 
         file_path = input(F.YELLOW+"[%]/path/to/file: "+F.WHITE)
@@ -914,12 +976,13 @@ class shark:
                     auth_s = '0x2000'
                     c.send(auth_s.encode())
                     auth_r = c.recv(6).decode()
-
+                    if not auth_r: c.close(); continue
                     if auth_r == auth_s:
+                        log(f"[INFO] send_file accepted connection from {addr}")
                         break
-                    else: c.close(); continue
+                    else: c.close(); log('[x]Invalid Connection On Send File Func'); continue
                 except KeyboardInterrupt: return 0
-                except ConnectionResetError: c.close; continue
+                except ConnectionResetError: c.close; log('[x]Invalid Connection On Send File Func'); continue
                 except socket.timeout: print(F.RED+"[x]Timed Out"); return 0
 
             print(F.CYAN+"[✓]User Connected")
@@ -936,8 +999,10 @@ class shark:
                             progress_bar.update    (len(data))
                 c.close()
                 print(F.BLUE+"[✓]File Uploaded")
+                log(f"[INFO] send_file uploaded {file} ({size_s}) to {addr}")
             else:
                 print(F.CYAN+"[x]Reciever Aborted")
+                log(f"[WARN] send_file receiver aborted transfer for {file} from {addr}")
                 c.close()
         else:
             print(F.RED+"[x]Error: Empty Input")
@@ -953,6 +1018,7 @@ class shark:
    # recieve file via wifi or localhost
     def recv_file(self, ip, port): #16
         c_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        log(f"[INFO] recv_file attempting connection to {ip}:{port}")
         while True:
             c_socket.connect((ip, int(port)))
             auth_s = '0x2000'
@@ -961,6 +1027,7 @@ class shark:
 
             if auth_r == auth_s:
                 print(F.CYAN+"[✓]Connected To Server")
+                log(f"[INFO] recv_file connected to {ip}:{port}")
                 break
             else: print(F.RED+'[x]Invalid Connection'); c_socket.close(); return 0
 
@@ -982,14 +1049,15 @@ class shark:
                             rec = c_socket.recv(1024)
                             if not rec:
                                 break
-                                c_socket.close()
                             new_file.write(bytes(rec))
                             progress_bar.update(len(rec))
                 c_socket.close()
                 print (F.BLUE+"[✓]File Downloaded")
+                log(f"[INFO] recv_file downloaded file to {file} from {ip}:{port}")
             elif choice == "N":
                 c_socket.send("...".encode())
                 print(F.CYAN+"[*]Aborted")
+                log(f"[WARN] recv_file user aborted download for target {file}")
                 c_socket.close()
             else:
                 c_socket.send("...".encode())
@@ -1019,6 +1087,7 @@ class shark:
 
         sock.bind(("0.0.0.0", int(port)))
         sock.listen(5)
+        log(f"[INFO] shell_host started on {ip}:{port}")
         while True:
             c = None
             try:
@@ -1026,15 +1095,17 @@ class shark:
                 auth_s = '0x3000'
                 c.send(auth_s.encode())
                 auth_r = c.recv(6).decode()
-
+                if not auth_r: c.close(); continue
                 if auth_s == auth_r:
+                    log(f"[INFO] shell_host accepted connection from {addr}")
                     break
-                else: c.close(); continue
+                else: c.close(); log('[x]Invalid Connection On Shell Host Func'); continue
             except KeyboardInterrupt: return 0
-            except ConnectionResetError: c.close; continue
+            except ConnectionResetError: c.close; log('[x]Invalid Connection On Shell Host Func'); continue
             except socket.timeout: print(F.RED+"[x]Timed Out"); return 0
 
         print (F.GREEN+"[✓]Client Connected")
+        log(f"[INFO] shell_host client connected {addr}")
         
         while True:
             data = input(F.CYAN+"\n[shell]: "+F.WHITE)
@@ -1044,6 +1115,7 @@ class shark:
                 c.send(length.to_bytes(4, byteorder='big'))
                 c.send(data.encode())
                 print(F.RED+"[*]Closing Shell")
+                log(f"[INFO] shell_host closing session with {addr}")
                 c.close()
                 break
             elif data == False:
@@ -1075,6 +1147,7 @@ class shark:
             sock.send(auth_s.encode())
 
             if auth_r == auth_s:
+                log(f"[INFO] shell_client connected to host {ip}:{port}")
                 break
             else: print(F.RED+'[x]Invalid Connection'); sock.close(); return 0
 
@@ -1087,10 +1160,12 @@ class shark:
             data = sock.recv(length).decode()
             if not data:
                 print(f'{F.RED}[x]SERVER DISCONNECTED')
+                log(f"[WARN] shell_client detected server disconnect {ip}:{port}")
                 sock.close()
                 break
 
             print(f"{F.GREEN}[*]Host Executed: {F.WHITE}{data}")
+            log(f"[INFO] shell_client received host command: {data}")
             if data == "@exit":
                 print (F.RED+"[*]Host Closed Shell")
                 sock.close()
@@ -1152,6 +1227,7 @@ class shark:
 
    # phone number osint
     def check_phone(self, number): #20
+        log(f"[INFO] check_phone() called number={number}")
         user_phone = number
         C = F.CYAN
         B = F.BLUE
@@ -1238,6 +1314,7 @@ class shark:
     # search a file        
     def search(self, directory, target_file):
         try:
+            log(f"[INFO] search() scanning directory={directory} for target={target_file}")
             full_path = directory
             os = self.os
             items = os.listdir(directory)
@@ -1284,6 +1361,7 @@ class shark:
 
         target__file = input(f"{F.BLUE}[%]File To Search:{F.WHITE} ").replace("'", "")
         
+        log(f"[INFO] trigger_search() called folder={folder} target_input={target__file}")
         if target__file:
             print("")
             self.search(folder, target__file)
@@ -1315,6 +1393,7 @@ class shark:
             
             
     def mac_lookup(self, mac):
+        log(f"[INFO] mac_lookup() looking up mac={mac}")
         if not self.check_rand(mac):
             url = f"https://api.macvendors.com/{mac}"
         
@@ -1334,10 +1413,35 @@ class shark:
 
     def version(self):
         home = os.environ["HOME"]
-        folder = f"{home}/Shell/__version__"
-        open_file = open(folder, 'r')
+        file = f"{home}/Shell/__version__"
+        open_file = open(file, 'r')
+        log("[INFO] version() called")
         print(F.GREEN+'[*]VERSION:',F.CYAN+open_file.read().strip())
         open_file.close()
+
+
+#------------------------------------------------------------------------------------------------------------------------------
+
+
+    def open_log(self, mode):
+        home = os.environ['HOME']
+        file = f'{home}/Shell/UTILS/.logs'
+
+        if mode == '-show':
+            log(f"[INFO] open_log show logs requested")
+            open_file = open(file, 'r')
+            print(F.GREEN+'[*]----------------------------LOGS------------------------------')
+            print(F.WHITE+open_file.read())
+            open_file.close()
+
+        elif mode == '-clear':
+            log(f"[INFO] open_log clearing logs")
+            open_file = open(file, 'w')
+            print(F.GREEN+'[*]Cleared')
+            open_file.close()
+
+        else:
+            print(F.RED+'[x]Invalid Mode')
 
 
 
@@ -1348,6 +1452,7 @@ class shark:
         global username
         name = name.replace(" ", "_")
         home = os.environ["HOME"]
+        log(f"[INFO] change_name() requested new_name={name}")
         with open(f"{home}/Shell/UTILS/.config.json", "r") as file:
             data = json.load(file)
             
@@ -1369,6 +1474,7 @@ class shark:
 
 
     def site_checker(self, domain):
+        log(f"[INFO] site_checker() checking domain={domain}")
         output = check_site(domain)
         if not output:
             print(f"{F.RED}[!]Error Resolving Server Element")
@@ -1469,6 +1575,8 @@ if __name__ == '__main__':
 
             elif "@version" in data_strip and data.strip().startswith('@version'):
                 shark.version()
+            elif "@logs" in data_strip and data.strip().startswith('@logs'):
+                shark.open_log(data.split()[1])
             elif "@shark" in data_strip and data.strip().startswith('@shark'):
                 memory.update({data.split("=")[0].split()[1]: data.split("=")[1]})
             elif "@clone" in data_strip and data.strip().startswith('@clone'):
@@ -1534,4 +1642,4 @@ if __name__ == '__main__':
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1536
+# end line 1641

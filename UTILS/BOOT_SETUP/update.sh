@@ -21,9 +21,10 @@ if [ $? -eq 0 ]; then
 	#copy files before deleting
 	# 1. .shellrc
 	# 2. .config.json
+    # 3. .logs
 	cp -r "$TARGET_DIR"/UTILS/.shellrc "$TEMP_DIR"/UTILS/.shellrc
 	cp -r "$TARGET_DIR"/UTILS/.config.json "$TEMP_DIR"/UTILS/.config.json
-        rm -rf "$TARGET_DIR"
+    cp -r "$TARGET_DIR"/UTILS/.config.json "$TEMP_DIR"/UTILS/.logs
         rm -rf "$TARGET_DIR"
     fi
 

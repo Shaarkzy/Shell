@@ -106,4 +106,7 @@
 {F.YELLOW}[26].{F.CYAN}To Check If A Site Is Up or Down: {F.WHITE}@check -s {F.GREEN}<domain>
      {F.GREEN}Example: {F.WHITE}@check -s {F.GREEN}google.com
 
+{F.YELLOW}[27].{F.CYAN}To Check And Clear Logs: {F.WHITE}@logs {F.GREEN}-<show | clear> 
+     {F.GREEN}Example: {F.WHITE}@logs {F.GREEN}-show
+
 {F.YELLOW}[00].{F.CYAN}To Exit Program: {F.WHITE}@exit
