@@ -1,1 +1,19 @@
 #Shark Shell Alias Command
+p=python
+c=clear
+clean=python ~/.clean.py
+phone=cd ~/storage/shared/
+nv=nvim
+g=git clone
+i=pkg install
+ir=pkg remove
+ii=pkg update && pkg upgrade
+d=rm
+sync=cp -r /data/data/com.termux/files/home/storage/shared/Project/* /data/data/com.termux/files/home/Project/
+rsync=cp -r /data/data/com.termux/files/home/Project/* /data/data/com.termux/files/home/storage/shared/Project/
+bot=python ~/gemini.py
+start=ngrok http --url=fish-social-koi.ngrok-free.app
+dd=rm -rf
+gc=git add .; git commit -m
+gp=git push origin
+cat=echo ;echo ───────────────────────── Meow Meow: Says ──────────────────────; echo ; cat

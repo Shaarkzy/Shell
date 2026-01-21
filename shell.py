@@ -26,7 +26,7 @@ with open(f'{home}/Shell/UTILS/.config.json', 'r') as file:
         data = json.load(file)
         username = data["username"]
     except:
-        print(f"{F.RED}[!]FILE CORRUPTED REDOWNLOAD THE PROGRAM WITH {F.WHITE}.setup.sh {F.RED}COMMAND")
+        print(f"{F.RED}[!]FILE CORRUPTED REDOWNLOAD THE PROGRAM WITH {F.WHITE}./setup.sh {F.RED}COMMAND")
         quit(0)
             
 if username: pass
