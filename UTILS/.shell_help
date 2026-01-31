@@ -10,7 +10,7 @@
      {F.GREEN}Example: {F.WHITE}@port -st 127.0.0.1 0-65535
      {F.GREEN}Example: {F.WHITE}@port -st 127.0.0.1 80
      {F.GREEN}Example: {F.WHITE}@port -st 127.0.0.1 1,25,80,443
-     {F.RED}Note: Use <default> To Scan Well Known (1000)Ports
+     {F.RED}Note     : {F.BLUE}Use <default> To Scan Well Known (1000)Ports
      {F.GREEN}Example: {F.WHITE}@port -st 127.0.0.1 default
 
 {F.YELLOW}[3]. {F.CYAN}Convert Number To Binary: {F.WHITE}@num -b {F.GREEN}<number> <base>
@@ -35,8 +35,8 @@
      {F.GREEN}HOST   : {F.WHITE}@open -server
      {F.GREEN}CLIENT : {F.WHITE}@con -s {F.GREEN}<ip> <port>
      {F.GREEN}Example: {F.WHITE}@con -s 127.0.0.1 12345
-     {F.RED}Note   : {F.WHITE}To Exit Chat, Users Can Input "@bye"..
-           {F.GREEN} : {F.CYAN}Doesn't Support Telnet
+     {F.RED}Note   : {F.BLUE}To Exit Chat, Users Can Input "@bye"..
+           {F.RED} : {F.BLUE}Doesn't Support Telnet
 
 {F.YELLOW}[10].{F.CYAN}To Create File: {F.WHITE}@file {F.GREEN}<option> <file_name>
             {F.GREEN}Options: {F.CYAN}-c Create File
@@ -46,7 +46,7 @@
                      {F.CYAN}-v Check The Properties Of A File And Folder
                      {F.CYAN}-ed Encrypt/Decrypt File
             {F.GREEN}Example: {F.WHITE}@file -cardrv(ed) filename.txt
-            {F.RED}NOTE   :{F.CYAN} Can only encrypt files with .enc extension
+            {F.RED}NOTE   :{F.BLUE} Can only encrypt files with .enc extension
 
 {F.YELLOW}[11].{F.CYAN}To Send Message To A Whatsapp Contact: {F.WHITE}@send -w {F.GREEN}<number>
     {F.GREEN}Example: {F.WHITE}@send -w +1234567890
@@ -54,22 +54,22 @@
 {F.YELLOW}[12].{F.CYAN}To Send File Via TCP: {F.WHITE}@send -file
      {F.GREEN}To Recieve File       : {F.WHITE}@recv -f {F.GREEN}<host> <port>
      {F.GREEN}Example: {F.WHITE}@recv -f 127.0.0.1 12345
-     {F.GREEN}NOTE: {F.CYAN}Doesn't Suppport Telnet
+     {F.RED}NOTE: {F.BLUE}Doesn't Suppport Telnet
 
 {F.YELLOW}[13].{F.CYAN}To Start Remote Shell Via TCP::
      {F.GREEN}HOST   : {F.WHITE}@shell -host
      {F.GREEN}CLIENT : {F.WHITE}@shell -c {F.GREEN}<ip> <port>
      {F.GREEN}Example: {F.WHITE}@shell -client 127.0.0.1 12345
-     {F.RED}NOTE   : {F.CYAN}Doesn't Support Telnet
-           {F.RED} : {F.CYAN}To Exit Session Input: exit
+     {F.RED}NOTE   : {F.BLUE}Doesn't Support Telnet
+           {F.RED} : {F.BLUE}To Exit Session Input: exit
 
 {F.YELLOW}[14].{F.CYAN}To Encrypt A Text: {F.WHITE}@crypt
      {F.GREEN}Example: {F.WHITE}@crypt
-     {F.RED}Note   : {F.CYAN}Can Only Encrypt String Format Not(int, bytes)
+     {F.RED}Note   : {F.BLUE}Can Only Encrypt String Format Not(int, bytes)
 
 {F.YELLOW}[15].{F.CYAN}To Check Mobile Number Details: {F.WHITE}@check -n {F.GREEN}<country code> <number>
      {F.GREEN}Example: {F.WHITE}@check -n +123123450000
-     {F.RED}NOTE   : {F.CYAN}Without Country Code: Default Is <+62>
+     {F.RED}NOTE   : {F.BLUE}Without Country Code: Default Is <+62>
 
 {F.YELLOW}[16].{F.CYAN}To Solve Resistor Colour Code: {F.WHITE}@solve -res
      {F.GREEN}Example: {F.WHITE}@solve -res
@@ -82,8 +82,8 @@
 
 {F.YELLOW}[19].{F.CYAN}To Search File In File System: {F.WHITE}@sch -f {F.GREEN}<directory>
      {F.GREEN}Example: {F.WHITE}@sch -f /root
-     {F.RED}Note: {F.CYAN}Searching From The Root(/) Directory Will Consume Enormous Time
-        {F.RED} : {F.CYAN}On Termux, Searching From The Termux {F.GREEN}(/data/data/com.termux) {F.CYAN}Directory, Use: {F.GREEN}</termux> 
+     {F.RED}Note: {F.BLUE}Searching From The Root(/) Directory Will Consume Enormous Time
+        {F.RED} : {F.BLUE}On Termux, Searching From The Termux {F.GREEN}(/data/data/com.termux) {F.CYAN}Directory, Use: {F.GREEN}</termux> 
         {F.GREEN}Example: {F.WHITE}@sch -f /termux
 
 {F.YELLOW}[20].{F.CYAN}To Lookup MAC Address: {F.WHITE}@sch -m {F.GREEN}<mac address>
