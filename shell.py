@@ -263,18 +263,19 @@ class shark:
     def get_private_addr(self):
         log("[INFO] get_private_addr() called")
         interfaces = n.interfaces()
+        ip_all = ""
         for interface in interfaces:
             try:
                 addresses = n.ifaddresses(interface)
                 if n.AF_INET in addresses:
                     for addr in addresses[n.AF_INET]:
                         ip = addr['addr']
-                        if ip.startswith('10.') or ip.startswith('172.') or ip.startswith('192.168.'):
-                            return ip
+                        if ip.startswith('10.') or ip.startswith('172.') or ip.startswith('192.168.') or ip.startswith('169.254.') or ip.startswith('127.') or ip.startswith('0.0.0.0'):
+                            ip_all = ip_all + "[" + ip + "] "
+    
             except ValueError:
                 continue
-        return "127.0.0.1"
-
+        return ip_all
 
 #------------------------------------------------------------------------------------------------------------------------------
 
@@ -367,7 +368,8 @@ class shark:
         ip = self.get_private_addr()
         port = a3+a2+a1+a2+a3
         print (F.BLUE+"[✓]Server Started")
-        print (F.CYAN+f"[*]Ip: {F.YELLOW}{ip}  {F.CYAN}[*]Port: {F.YELLOW}{port}")
+        print (F.CYAN+"[*]Possible IP Address Listed Below")
+        print (F.CYAN+f"[*]Ip: {F.YELLOW}{ip}{F.CYAN}[*]Port: {F.YELLOW}{port}")
         print(" ")
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.settimeout(500)
@@ -386,7 +388,7 @@ class shark:
                 if auth_s == auth_r:
                     log(f"[INFO] open_server accepted connection from {addr}")
                     break
-                else: c.close(); log('[x]Invalid Connection On Open Server Func'); continue
+                else: c.close(); log('[x] Invalid Connection On Open Server Func'); continue
             except KeyboardInterrupt: return 0
             except ConnectionResetError: c.close; log('[x]Invalid Connection On Open Server Func'); continue
             except socket.timeout: print(F.RED+"[x]Timed Out"); return 0
@@ -845,7 +847,7 @@ class shark:
                             log(f"[INFO] file_sys decrypted file successfully -> {file}")
 
                         else:
-                            print (F.RED+"[x]Invalid Key Byte Size Or No key Detected")
+                            print (F.RED+"[x] Invalid Key Byte Size Or No key Detected")
                             log(f"[ERROR] file_sys decryption failed for {file}: invalid key length={len(key)}")
 
                     elif opt == "N":
@@ -949,8 +951,9 @@ class shark:
         port = a3+a2+a1+a2+a3
         sock.bind(('0.0.0.0', int(port)))
         print (F.BLUE+"[✓]Server Started")
+        print (F.CYAN+"[*]Possible IP Address Listed Below")
         ip = self.get_private_addr()
-        print (F.CYAN+f"[*]Ip: {F.YELLOW}{ip}  {F.CYAN}[*]Port: {F.YELLOW}{port}")
+        print (F.CYAN+f"[*]Ip: {F.YELLOW}{ip}{F.CYAN}[*]Port: {F.YELLOW}{port}")
 
         log(f"[INFO] send_file server started on {ip}:{port}")
 
@@ -980,7 +983,7 @@ class shark:
                     if auth_r == auth_s:
                         log(f"[INFO] send_file accepted connection from {addr}")
                         break
-                    else: c.close(); log('[x]Invalid Connection On Send File Func'); continue
+                    else: c.close(); log('[x] Invalid Connection On Send File Func'); continue
                 except KeyboardInterrupt: return 0
                 except ConnectionResetError: c.close; log('[x]Invalid Connection On Send File Func'); continue
                 except socket.timeout: print(F.RED+"[x]Timed Out"); return 0
@@ -1083,7 +1086,8 @@ class shark:
         port = a3+a2+a1+a2+a3
         print(F.CYAN+"[Note]: Input <@exit> To Close Session")
         print (F.BLUE+"[✓]Shell Host Started")
-        print (F.CYAN+f"[*]Ip: {F.YELLOW}{ip}  {F.CYAN}[*]Port: {F.YELLOW}{port}")
+        print (F.CYAN+"[*]Possible IP Address Listed Below")
+        print (F.CYAN+f"[*]Ip: {F.YELLOW}{ip}{F.CYAN}[*]Port: {F.YELLOW}{port}")
 
         sock.bind(("0.0.0.0", int(port)))
         sock.listen(5)
@@ -1099,7 +1103,7 @@ class shark:
                 if auth_s == auth_r:
                     log(f"[INFO] shell_host accepted connection from {addr}")
                     break
-                else: c.close(); log('[x]Invalid Connection On Shell Host Func'); continue
+                else: c.close(); log('[x] Invalid Connection On Shell Host Func'); continue
             except KeyboardInterrupt: return 0
             except ConnectionResetError: c.close; log('[x]Invalid Connection On Shell Host Func'); continue
             except socket.timeout: print(F.RED+"[x]Timed Out"); return 0
