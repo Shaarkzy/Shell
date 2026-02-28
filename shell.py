@@ -148,7 +148,7 @@ class shark:
         try:
             log(f"[INFO] ip_osint() querying ip={ip}")
             res = r.get(f"https://ipinfo.io/{ip}", timeout=5)
-            fetch = res.json()
+            fetch = re7s.json()
             for i in fetch.keys():
                 if i != "readme":
                     print(f"{F.CYAN}[*]{i}:-->{F.GREEN}{fetch[i]}")
@@ -288,13 +288,15 @@ class shark:
             log("[INFO] get_device_ip() querying public IP")
             response = r.get('https://api.ipify.org?format=json', timeout=2)
             ip_data = response.json()
+            print(F.WHITE+"—"*62)
             print(F.CYAN+"[*]Interface: - Public Address -")
             print(F.WHITE+"-- addr: ",ip_data['ip'])
-            print("—"*50)
+            print(F.WHITE+"—"*62)
         except r.RequestException:
+            print(F.WHITE+"—"*62)
             print(F.CYAN+"[*]Interface: - Public Address -")
             print(F.WHITE+"-- addr: ", "Network Not Reachable")
-            print("—"*50)
+            print(F.WHITE+"—"*62)
         for interface in interfaces():
             print(f"{F.CYAN}[*]Interface: - {interface} -")
             addrs = ifaddresses(interface)
@@ -315,7 +317,7 @@ class shark:
                     print(f"-- Broadcast     : {addr.get('broadcast', 'N/A')}")
             else:
                 print(f"{F.MAGENTA}  No IPv6 Address")
-            print("—"*50)
+            print(F.WHITE+"—"*62)
 
 
 #------------------------------------------------------------------------------------------------------------------------------    
@@ -1488,13 +1490,9 @@ class shark:
             print(f"{F.RED}[x]Can't Reach Server")
         else:
             print(f"{F.GREEN}[*]Site is {F.CYAN}{output}")
-        
-
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-
-
 
 
 # relay for all tools
@@ -1646,4 +1644,4 @@ if __name__ == '__main__':
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1641
+# end line 1646
