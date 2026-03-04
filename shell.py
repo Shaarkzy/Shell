@@ -91,7 +91,8 @@ class shark:
     def __init__(self):
         self.soc = socket
         self.os = os
-        self.count = 0
+        self.count_f = 0
+        self.count_s = 0
 
 
         
@@ -1320,27 +1321,30 @@ class shark:
     # search a file        
     def search(self, directory, target_file):
         try:
-            log(f"[INFO] search() scanning directory={directory} for target={target_file}")
             full_path = directory
             os = self.os
-            items = os.listdir(directory)
-            for item in items:
-                full_path = os.path.join(directory, item)
-                if os.path.isdir(full_path):
-                    self.search(full_path, target_file)
+            items = os.scandir(directory)
             
-                elif os.path.isfile(full_path) and item == target_file:
-                    print(f"{F.GREEN}[✓]File Found: {F.WHITE}{full_path}")
-                    self.search_counter()
-
-        except FileNotFoundError:
-            print(f"{F.RED}[x]Invalid Directory: {F.WHITE}{directory}")
-
-        except NotADirectoryError:
-            print(f"{F.RED}[x]Not A Directory: {F.WHITE}{full_path}")
+            for item in items:
+                if item.is_dir(follow_symlinks=False):
+                    self.search(item.path, target_file)
+                elif item.name == target_file:
+                    print(f"{F.GREEN}[✓]File Found: {F.WHITE}{full_path}/{target_file}")
+                    self.file_counter()
+                else:
+                    print(f"{F.CYAN}[*]Crawling Files: {F.GREEN}{self.search_counter()}", end='\r')
+                    
 
         except PermissionError:
             print(f"{F.RED}[x]Permission Denied: {F.WHITE}{full_path}")
+            self.search_counter()
+
+        except FileNotFoundError:
+            print(f"{F.RED}[x]No Such Path: {F.WHITE}{full_path}")
+
+        except IOError:
+            print(f"{F.RED}[x]I/O ERROR: {F.WHITE}{full_path}")
+            self.search_counter()
 
 
 #------------------------------------------------------------------------------------------------------------------------------
@@ -1348,10 +1352,17 @@ class shark:
 
 
     
-    # search counter       
+    # count matched files   
+    def file_counter(self):
+        self.count_f += 1
+        return self.count_f
+
+
+
+    # count searched files
     def search_counter(self):
-        self.count+= 1
-        return self.count
+        self.count_s += 1
+        return self.count_s
 
 
 #------------------------------------------------------------------------------------------------------------------------------
@@ -1371,8 +1382,9 @@ class shark:
         if target__file:
             print("")
             self.search(folder, target__file)
-            print(f"{F.CYAN}\n[*]File Occurence:{F.GREEN} {self.search_counter()-1}")
-            self.count = 0
+            print(f"{F.CYAN}\n[*]File Occurence: {F.GREEN}{self.file_counter()-1}")
+            self.count_f = 0
+            self.count_s = 0
         else:
             print(F.RED+"[x]Error: Empty Input")
 
@@ -1631,8 +1643,6 @@ if __name__ == '__main__':
 
         except ValueError:
             print(F.RED+"[x]Invalid Value")
-        except TypeError:
-            continue
         except PermissionError:
             print(F.RED+"[x]Permission Error")
         except KeyboardInterrupt:
@@ -1644,4 +1654,4 @@ if __name__ == '__main__':
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1646
+# end line 1656
