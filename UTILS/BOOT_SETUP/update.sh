@@ -24,7 +24,7 @@ if [ $? -eq 0 ]; then
     # 3. .logs
 	cp -r "$TARGET_DIR"/UTILS/.shellrc "$TEMP_DIR"/UTILS/.shellrc
 	cp -r "$TARGET_DIR"/UTILS/.config.json "$TEMP_DIR"/UTILS/.config.json
-    cp -r "$TARGET_DIR"/UTILS/.config.json "$TEMP_DIR"/UTILS/.logs
+    cp -r "$TARGET_DIR"/UTILS/.logs "$TEMP_DIR"/UTILS/.logs
         rm -rf "$TARGET_DIR"
     fi
 
