@@ -1,7 +1,6 @@
 
-
-
           {F.YELLOW}---[Note]: Input {F.GREEN}Ctrl+C {F.YELLOW}To Quit Any Tool---
+          To Enable Colour In Output Clone Aliases {F.YELLOW}[See] {F.GREEN}[Option.21]
 
 {F.YELLOW}[1]. {F.CYAN}Getting Ip Address: {F.WHITE}@get -i {F.GREEN}<target>
      {F.GREEN}Example: {F.WHITE}@get -i google.com

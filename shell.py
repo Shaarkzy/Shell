@@ -1419,11 +1419,13 @@ class shark:
         
         log(f"[INFO] trigger_search() called folder={folder} target_input={target__file}")
         if target__file:
+
             print("")
             self.search(folder, target__file)
             print(f"{F.CYAN}\n[*]File Occurence: {F.GREEN}{self.file_counter()-1}")
             self.count_f = 0
             self.count_s = 0
+
         else:
             print(F.RED+"[x]Error: Empty Input")
 
@@ -1660,18 +1662,20 @@ if __name__ == '__main__':
                         print(F.RED+"[x]Multiple Entry Found")
                 else:
                     print (f"cd:{path}: No Such File Or Directory")
+
             elif data.strip() == 'cd':
                 os.chdir(os.path.expanduser("~"))
+
             elif '@update' in data_strip and data.strip().startswith('@update'):
                 print(trigger_software_update())
 
 #------------------------------------------------------------------------------------------------------------------------------
-
+            
             else:
                 for alias in memory.keys():
                     if data.split()[0] == alias:
                         data = data.split()[0].replace(alias, memory[alias].strip()) +' '+' '.join(data.split()[1:])
-                sub.run([data, '--color=always'])
+                sub.run(data, shell=True)
 
         except FileNotFoundError:
             print(F.RED+"[x]File Not Found")
@@ -1688,9 +1692,10 @@ if __name__ == '__main__':
             continue
         except IndexError:
             print(F.RED+"[x]Invalid Argument")
+            
         except Exception as e:
             print(f'{F.RED}[x]Error: {e}')
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1695
+# end line 1700
