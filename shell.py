@@ -50,20 +50,32 @@ sys("clear")
 # input function
 def inpu():
     #get working directories
+    
+    # wrapper to hide non printable characters in prompt for readline compatibility
+    def c(x):
+        return f"\001{x}\002"
+
     try:
         print("\n")
         #get username
         direc = os.getcwd()
         new_path = "/".join(direc.split(os.sep)[-3:])
         new_path = F.CYAN+new_path+F.YELLOW
-        
-        #initiate input method
-        s = F.CYAN+"§"
-        data = input(F.YELLOW+f"{F.YELLOW}╭─({F.CYAN}{username}{F.YELLOW}@{F.CYAN}Shell{F.YELLOW})——[{new_path}]\n│\n{F.YELLOW}╰─{s} "+ F.WHITE)
-        readline.add_history(data)
+
+        prompt = (
+            f"{c(F.YELLOW)}╭─({c(F.CYAN)}{username}{c(F.YELLOW)}@{c(F.CYAN)}Shell{c(F.YELLOW)})"
+            f"——[{new_path}]\n│\n"
+            f"{c(F.YELLOW)}╰─{c(F.CYAN)}§ {c(F.WHITE)}"
+        )
+
+        data = input(prompt)
+        if data:
+            readline.add_history(data)
         return data
-    except:
+    except KeyboardInterrupt:
+        print("")
         return 1
+    
 
 def background(): #future background process
     #do something, call something, solve something
@@ -1133,7 +1145,16 @@ class shark:
 
             length = int.from_bytes(c.recv(4), byteorder='big')
             rec = c.recv(length).decode()
-            print(F.WHITE+rec)
+            if "::EXEC" in rec or "::DIR" in rec or "::FILE" in rec:
+                for match in rec.split(" "):
+                    if "::EXEC" in match:
+                        print(F.GREEN+match.replace("::EXEC", ""))
+                    elif "::DIR" in match:
+                        print(F.BLUE+match.replace("::DIR", ""))
+                    elif "::FILE" in match:
+                        print(F.WHITE+match.replace("::FILE", ""))
+            else:
+                print(F.WHITE+rec)
 
 
 
@@ -1179,7 +1200,24 @@ class shark:
                 break
 
             elif data.strip() == "ls":
-                data = sub.getoutput("ls -p")
+                data = sub.getoutput("ls")
+                entries = data.split()      # split by whitespace (each file/folder)
+                tagged_entries = []
+                
+                for f in entries:
+                    # make a full path so we can check type
+                    full_path = os.path.join(os.getcwd(), f)
+
+                    if os.path.isdir(full_path):
+                        tagged_entries.append(f"{f}::DIR")
+                    elif os.path.isfile(full_path) and os.access(full_path, os.X_OK):
+                        tagged_entries.append(f"{f}::EXEC")
+                    else:
+                        tagged_entries.append(f"{f}::FILE")
+
+                    # this is ready to send over socket
+                    data = " ".join(tagged_entries)
+
             elif data.startswith('cd '):
                 path = data[3:]
                 path = self.get_file(path)
@@ -1188,6 +1226,7 @@ class shark:
                     data = os.getcwd()
                 except:
                     data = "Invalid Directory"
+
             else:
                 try:
                     decode_data = sub.run(
@@ -1632,7 +1671,7 @@ if __name__ == '__main__':
                 for alias in memory.keys():
                     if data.split()[0] == alias:
                         data = data.split()[0].replace(alias, memory[alias].strip()) +' '+' '.join(data.split()[1:])
-                sys(data)
+                sub.run([data, '--color=always'])
 
         except FileNotFoundError:
             print(F.RED+"[x]File Not Found")
@@ -1654,4 +1693,4 @@ if __name__ == '__main__':
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1656
+# end line 1695
