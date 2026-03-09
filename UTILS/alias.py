@@ -50,6 +50,30 @@ def compute():
 #------------------------------------------------------------------------------------------------------------------------------
 
 
+def compare_line(line, home):
+    compute = line.split("=", 1)
+    check_line_a = compute[0].split()[1]
+    check_line_b = compute[1]
+
+    check_line = check_line_a+"="+check_line_b
+    check_line = check_line.replace("'", "").replace('"', '')
+
+    shell_alias_file = f"{home}/Shell/UTILS/.shellrc"
+    file = open(shell_alias_file, 'r')
+    data = file.readlines()
+    length = len(data)
+    file.close()
+    
+    try:
+        num = 0
+        for i in range(length):
+            num += 1
+            if check_line.strip() == data[num].strip():
+                return True
+        return False
+    except:
+        return False
+
 
 
 def clone_alias(mode):
@@ -74,23 +98,24 @@ def clone_alias(mode):
     for i in range(length):
         data = read_file[num].strip()
         num += 1
-        if data.startswith("alias"):
-            #alias ii="pkg update && pkg upgrade"
-            split_line = data.split("=", 1)
-            key = split_line[0].split()[1]
-            value = split_line[1]
-            value = value.replace('"', '')
-            value = value.replace("'", "")
+        if data.startswith('alias'): 
+            if not compare_line(data, home): #function to compare if an alias already exists in the .shellrc file
+                #alias ii="pkg update && pkg upgrade"
+                split_line = data.split("=", 1)
+                key = split_line[0].split()[1]
+                value = split_line[1]
+                value = value.replace('"', '')
+                value = value.replace("'", "")
 
-            if mode:
-                construct = key+"="+value
-                open_file.write(construct+"\n")
-            else:
-                memory.update({key: value})
+                if mode:
+                    construct = key+"="+value
+                    open_file.write(construct+"\n")
+                else:
+                    memory.update({key: value})
 
     open_file.close()
     return memory
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-#end line 95
+#end line 120
