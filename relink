@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [[ "$(uname -a | grep -i android)" ]]; then
+	echo "Operating System Unsupported"
+
+else
+	sudo rm -rf /usr/local/bin/shell
+	cd ~/; sudo ln -s ~/Shell/shell.py /usr/local/bin/shell
+	echo "RELINKED"
+fi
+
