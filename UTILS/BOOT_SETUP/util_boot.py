@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------------------------------------------------------
-#imports
+
 try:
     import subprocess as sub
     from ..version import check
@@ -193,12 +193,11 @@ try:
     trigger_software_update()
     load_libraries()
 except Exception as er:
-    print(Fore.RED+"[x]",er, "                                ")
-    print(f"{Fore.GREEN}[!]Run Setup Script If A Library Isn't Installed\n[!]Incase Of File Corruption Run {Fore.YELLOW}<./update.sh>{Fore.GREEN} On {Fore.YELLOW}~/Shell/UTILS/BOOT_SETUP")
+    print(Fore.RED+"[x]",er,' '*56)
     quit(0)
 except KeyboardInterrupt:
     quit(0)
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-#end line 203
+#end line 202

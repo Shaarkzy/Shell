@@ -8,8 +8,8 @@ try:
     import base64
     import socket
     import subprocess as sub
-except ImportError:
-    pass
+except Exception as e:
+    print(f'[x]Error: {e}')
     quit(0)
 
 #------------------------------------------------------------------------------------------------------------------------------
@@ -63,19 +63,23 @@ def get_github():
 
 
 def compute(data):
-    if data == False:
-        return False
-    sp = data.split(".")
-    _, year, month, day, hr, mi = sp
+    try:
+        if data == False:
+            return False
+        sp = data.split(".")
+        _, year, month, day, hr, mi = sp
 
-    year = int(year) * 365 * 86400
-    month = int(month) * 30 * 86400
-    day = int(day) * 24 * 3600
-    hr = int(hr) * 60 * 60
-    mi = int(mi) * 60
+        year = int(year) * 365 * 86400
+        month = int(month) * 30 * 86400
+        day = int(day) * 24 * 3600
+        hr = int(hr) * 60 * 60
+        mi = int(mi) * 60
 
-    computed = year + month + day + hr + mi
-    return computed
+        computed = year + month + day + hr + mi
+        return computed
+    except Exception as e:
+        print(f'[x]Error: {e}')
+        quit(0)
 
 
 #------------------------------------------------------------------------------------------------------------------------------
@@ -86,24 +90,20 @@ def get_local():
     return open_file.read().strip()
 
 
-try:
-    def check():
-        git_val = compute(get_github())
-        local_val = compute(get_local())
+def check():
+    git_val = compute(get_github())
+    local_val = compute(get_local())
 
     
-        if git_val != False:
-            if git_val <= local_val:
-                return False
-            else:
-                return get_github()
+    if git_val != False:
+        if git_val <= local_val:
+            return False
         else:
-            return 'null_internet'
+            return get_github()
+    else:
+        return 'null_internet'
 
-except:
-    quit(0)
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-#end line 107
-
+#end line 108
