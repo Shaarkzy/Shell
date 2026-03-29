@@ -11,6 +11,7 @@ from UTILS.resistor import *
 from UTILS.alias import *
 from UTILS.scanner import *
 from UTILS.site_check import *
+from UTILS.ip_calculator import *
 
 
 #------------------------------------------------------------------------------------------------------------------------------
@@ -161,7 +162,7 @@ class shark:
         try:
             log(f"[INFO] ip_osint() querying ip={ip}")
             res = r.get(f"https://ipinfo.io/{ip}", timeout=5)
-            fetch = re7s.json()
+            fetch = res.json()
             for i in fetch.keys():
                 if i != "readme":
                     print(f"{F.CYAN}[*]{i}:-->{F.GREEN}{fetch[i]}")
@@ -1547,6 +1548,30 @@ class shark:
 
 #------------------------------------------------------------------------------------------------------------------------------
 
+    def ip_calculate(self, ip, prefix):
+
+        sample = '1234567890.'
+        for i in ip:
+            if i not in sample:
+                print(F.RED+'[x]Invalid IP')
+                return False
+
+        try:
+            prefix = int(prefix)
+        except:
+            print(F.RED+'[x]Invalid Prefix')
+            return False
+
+
+        prefix = '32' if int(prefix) > 32 else str(prefix)
+        prefix = '0' if int(prefix) < 0 else str(prefix)
+        log(f"[INFO] ip_calculator() checking network={ip}/{prefix}")
+        print(print_result(ip, prefix, F))
+
+
+
+#------------------------------------------------------------------------------------------------------------------------------
+
 
 # relay for all tools
 shark = shark()
@@ -1644,6 +1669,8 @@ if __name__ == '__main__':
                 shark.change_name(cons_(1))
             elif "@check-s" in data_strip and data.strip().startswith('@check'):
                 shark.site_checker(data.split()[2])
+            elif "@ip-c" in data_strip and data.strip().startswith('@ip'):
+                shark.ip_calculate(data.split()[2], data.split()[3])
             elif "@exit" in data_strip and data.strip().startswith('@exit'):
                 sys("clear")
                 #process.terminate()
@@ -1692,10 +1719,9 @@ if __name__ == '__main__':
             continue
         except IndexError:
             print(F.RED+"[x]Invalid Argument")
-            
         except Exception as e:
             print(f'{F.RED}[x]Error: {e}')
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1700
+# end line 1726

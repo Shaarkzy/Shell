@@ -30,6 +30,7 @@ to build and configure program (Android | Debian based system only).
 |   ├── .logs
 │   ├── .config.json
 │   ├── site_check.py
+|   ├── ip_calculator.py
 │   └── version.py
 ├── __version__
 ├── relink
@@ -83,7 +84,8 @@ to build and configure program (Android | Debian based system only).
 13. 🔎 File Searching
 14. 👁️ File and Folder Properties Viewer
 15. 🔗 Clone Aliases
-16. ✅ Site Up&Down Checker
+16. ✅ Site Up & Down Checker
+17. 🖧 IP CALCULATOR
 ```
 
 **🍀 Good luck**
