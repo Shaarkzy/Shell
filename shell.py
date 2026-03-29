@@ -1550,18 +1550,25 @@ class shark:
 
     def ip_calculate(self, ip, prefix):
 
+        # Handle User Input 
         sample = '1234567890.'
         for i in ip:
             if i not in sample:
                 print(F.RED+'[x]Invalid IP')
                 return False
-
+        octet_list = ip.split('.')
+        if len(octet_list) > 4:
+            print(F.RED+'[x]Invalid IP')
+            return False
+        for octet in octet_list:
+            if int(octet) > 255: 
+                print(F.RED+'[x]Invalid IP')
+                return False
         try:
             prefix = int(prefix)
         except:
             print(F.RED+'[x]Invalid Prefix')
             return False
-
 
         prefix = '32' if int(prefix) > 32 else str(prefix)
         prefix = '0' if int(prefix) < 0 else str(prefix)
@@ -1724,4 +1731,4 @@ if __name__ == '__main__':
 
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1726
+# end line 1733
