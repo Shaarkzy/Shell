@@ -37,11 +37,8 @@ def convert_32bin_octet(_32bin) -> str: #11111111111111111111111111111111 -> 111
     bin32 = []
     _32bin = _32bin.strip()
     for i in range(4):
-        for j in range(8):
-            bin32.append(_32bin[num])
-            num += 1
-        if num < 32:
-            bin32.append('.')
+        for j in range(8):bin32.append(_32bin[num]);num += 1
+        if num < 32:bin32.append('.')
     return ''.join(bin32)
 
 #----------------------------------------------------------------------------------------------------
@@ -190,4 +187,4 @@ def broadcast() -> str: #10.10.10.255
     return convert_bin_dec(convert_32bin_octet(compute_))
 
 #---------------------------------------------------------------------------------------------------- 
-#end line 192
+#end line 189

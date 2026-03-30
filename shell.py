@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 
+#-----------------------------------import all libraries-------------------------------------------------------------------------------
 
-#------------------------------------------------------------------------------------------------------------------------------
-
-
-# import all libraries
 from UTILS.BOOT_SETUP.util_boot import *
 from UTILS.BOOT_SETUP.util_boot import trigger_software_update
 from UTILS.resistor import *
@@ -13,42 +10,30 @@ from UTILS.scanner import *
 from UTILS.site_check import *
 from UTILS.ip_calculator import *
 
+#---------------------------------clear screen after loading libraries---------------------------------------------------------------------
 
-#------------------------------------------------------------------------------------------------------------------------------
-
-#clear screen after loading libraries
 sys("clear")
-#------------------------------------------------------------------------------------------------------------------------------
-#change username
+
+#--------------------------------------------change username-------------------------------------------------------------------------------
 
 home = os.environ["HOME"]
 with open(f'{home}/Shell/UTILS/.config.json', 'r') as file:
-    try:
-        data = json.load(file)
-        username = data["username"]
-    except:
-        print(f"{F.RED}[!]FILE CORRUPTED REDOWNLOAD THE PROGRAM WITH {F.WHITE}./setup.sh {F.RED}COMMAND")
-        quit(0)
+    try:data = json.load(file);username = data["username"]
+    except:print(f"{F.RED}[!]FILE CORRUPTED REDOWNLOAD THE PROGRAM WITH {F.WHITE}./setup.sh {F.RED}COMMAND");quit(0)
             
 if username: pass
 else:
     print(f"{F.GREEN}[!]SkIP {F.WHITE}[HIT ENTER KEY]{F.GREEN} IF YOU WISH TO CONTINUE WITH SYSTEM NAME\n{F.YELLOW}YOU CAN UPDATE NAME ANYTIME WITH {F.WHITE}@name <name> {F.YELLOW} COMMAND")
     username = input(f"{F.CYAN}[*]Username: {F.WHITE}").strip()
-    if not username:
-        username = sub.getoutput("whoami")
+    if not username:username = sub.getoutput("whoami")
             
     data["username"] = username
-    with open(f"{home}/Shell/UTILS/.config.json", "w") as file:
-        json.dump(data, file, indent=4)
-        pass
+    with open(f"{home}/Shell/UTILS/.config.json", "w") as file:json.dump(data, file, indent=4);pass
         
 sys("clear")       
-        
-        
-#------------------------------------------------------------------------------------------------------------------------------
-       
-    
-# input function
+              
+#---------------------------------------input function------------------------------------------------------------------------------
+
 def inpu():
     #get working directories
     
@@ -77,7 +62,6 @@ def inpu():
         print("")
         return 1
     
-
 def background(): #future background process
     #do something, call something, solve something
     pass
@@ -93,22 +77,15 @@ def log(data):
     with open(log_file, 'a') as file:
         file.write(collide)
 
+#--------------------------------initialize the class-----------------------------------------------------------------------------
 
-
-
-#------------------------------------------------------------------------------------------------------------------------------
-
-
-# initialize the class
 class shark:
     def __init__(self):
         self.soc = socket
         self.os = os
         self.count_f = 0
         self.count_s = 0
-
-
-        
+       
     # load the welcome screen on start
     def main(self):
         home = os.environ["HOME"]
@@ -123,27 +100,16 @@ class shark:
         print (data)
         log("[INFO] main() displayed welcome screen")
 
-
-
-#------------------------------------------------------------------------------------------------------------------------------
+#------------------------------------function for list of tools------------------------------------------------------------------------------------------
     
-
-    # function for list of tools
     def help(self): #1
         home = os.environ["HOME"]
         data = open(f"{home}/Shell/UTILS/.shell_help", "r").read()
         log("[INFO] help() called")
         print(eval(f"f'''{data}'''"))
 
+#--------------------------------------getting ip address of a site----------------------------------------------------------------------------------------
 
-
-
-
-#------------------------------------------------------------------------------------------------------------------------------
-
-
-
-    # getting ip address of a site
     def get_ip(self, host): #2
         try:
             log(f"[INFO] get_ip() resolving host={host}")
@@ -152,12 +118,8 @@ class shark:
         except:
             print (F.RED+"[x]Error, Maybe Invalid Host Or No Internet Connection")
 
+#-------------------------------------gather information about an ip address----------------------------------------------------------------------------------------
 
-
-#-----------------------------------------------------------------------------------------------------------------------------
-
-
-    # gather information about an ip address
     def ip_osint(self, ip):
         try:
             log(f"[INFO] ip_osint() querying ip={ip}")
@@ -171,25 +133,15 @@ class shark:
         except:
             print(F.RED+"[x]Error Connecting To Server")
 
+#--------------------------------------converting binary to number----------------------------------------------------------------------------------------
 
-
-#------------------------------------------------------------------------------------------------------------------------------
-
-
-
-   # converting binary to number
     def Bina_Num(self, binary, base): #5
         log(f"[INFO] Bina_Num() converting binary={binary} base={base}")
         print (F.GREEN+"[%]Output"+F.BLUE)
         print (F.BLUE+str(int(binary, int(base))))
 
+#---------------------------------converting number to binary---------------------------------------------------------------------------------------------
 
-#------------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-    # converting number to binary
     def Num_Bina(self, num, base): #6
         num = int(num)
         base = int(base)
@@ -197,12 +149,8 @@ class shark:
         print (F.GREEN+"[*]Output"+F.BLUE)
         print (F.BLUE+bin(num) [base: ])
 
+#----------------------------------------repair binary files with invalid byte--------------------------------------------------------------------------------------
 
-#------------------------------------------------------------------------------------------------------------------------------
-
-
-
-    #repair binary files with invalid byte
     def repair(self, file):
         try:
             log(f"[INFO] repair() repairing file={file}")
@@ -222,13 +170,8 @@ class shark:
         except:
             print(F.RED+"[x]Unsuccessful: File Corrupted")
 
+#-----------------------------------convert alphabet to binary-------------------------------------------------------------------------------------------
 
-
-#------------------------------------------------------------------------------------------------------------------------------
-
-
-
-    # convert alphabet to binary
     def Alpha_Bina(self, file):
         file = self.get_file(file)
         log(f"[INFO] Alpha_Bina() converting file={file}")
@@ -242,12 +185,8 @@ class shark:
         print(F.CYAN+"[*]File Converted Successfully")
         open_file.close()
 
+#-------------------------------------convert binary to alphabet-----------------------------------------------------------------------------------------
 
-#------------------------------------------------------------------------------------------------------------------------------
-
-
-
-    # convert binary to alphabet
     def Bina_Alpha(self, file):
         file = self.get_file(file)
         log(f"[INFO] Bina_Alpha() converting file={file}")
@@ -266,14 +205,8 @@ class shark:
             print(F.RED+"[x]Invalid Bytes Detected: Cleaning File")
             self.repair(file)
 
+#------------------------------------get private ip address of a device------------------------------------------------------------------------------------------
 
-
-#------------------------------------------------------------------------------------------------------------------------------
-
-
-                    
-            
-    # get private ip address of a device
     def get_private_addr(self):
         log("[INFO] get_private_addr() called")
         interfaces = n.interfaces()
@@ -291,12 +224,8 @@ class shark:
                 continue
         return ip_all
 
-#------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------get device network details and interfaces-----------------------------------------------------------------------------------------
 
-
-   
-
-   # get device network details and interfaces
     def get_device_ip(self):
         try:
             log("[INFO] get_device_ip() querying public IP")
@@ -333,13 +262,8 @@ class shark:
                 print(f"{F.MAGENTA}  No IPv6 Address")
             print(F.WHITE+"—"*62)
 
+#------------------------------------get device cpu information------------------------------------------------------------------------------------------    
 
-#------------------------------------------------------------------------------------------------------------------------------    
-
-
-
-   
-    # get device cpu information
     def cpu_info(self): #10
         print (F.BLUE+"[*]Cpu Details")
 
@@ -368,13 +292,8 @@ class shark:
             print (f'{cu}: {cpu_p} | {co}: {cpu_us} | {cl}: {cpu_l} | {ra}: {ram_used} / {total_ram}MiB   ', end='\r', flush=True)
             tm.sleep(0.5)
 
+#-----------------------------------open server for wifi chat room-------------------------------------------------------------------------------------------
 
-
-#------------------------------------------------------------------------------------------------------------------------------
-
-
-
-   # open server for wifi chat room
     def open_server(self): #11
 
         print (F.CYAN+"[Note]: Only Support TCP")
@@ -486,12 +405,8 @@ class shark:
         print(F.RED+'[✓]SESSION CLOSED')
         log(f"[INFO] open_server session closed host={host_name} client={client_name}")
 
+#-----------------------------------connect to wifi chat room server-------------------------------------------------------------------------------------------
 
-
-#------------------------------------------------------------------------------------------------------------------------------
-
-
-    # connect to wifi chat room server
     def connect_server(self, ip, port): #12
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         log(f"[INFO] connect_server attempting connection to {ip}:{port}")
@@ -586,26 +501,16 @@ class shark:
         recv__cs.join()
         print(F.RED+'[✓]SESSION CLOSED')
                  
+#---------------------------------generate key for encryption---------------------------------------------------------------------------------------------
 
-
-#------------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-    # generate key for encryption
     def key(self, num):
         log(f"[INFO] key() generating key of length={num}")
         data = str(uuid.uuid4()).replace(':', '')[:num].replace('-', 'f')
         log(f"[DEBUG] key() generated key={data}")
         return data
 
+#-------------------------------------get file size and format-----------------------------------------------------------------------------------------
 
-#------------------------------------------------------------------------------------------------------------------------------
-
-        
-     
-    # get file size and format   
     def byte_size(self, size):
         file_size_bytes = size
         if file_size_bytes < 1024:
@@ -618,12 +523,8 @@ class shark:
             file_size = f"{file_size_bytes / (1024 ** 3):.2f} GB"
         return file_size
 
+#--------------------------------------glob for file search----------------------------------------------------------------------------------------
 
-#------------------------------------------------------------------------------------------------------------------------------
-
-
-        
-    # glob for file search
     def get_file(self, file):
         path = file
         matches = glob.glob(path)
@@ -641,13 +542,8 @@ class shark:
             log(f"[INFO] get_file no glob match for {path}, using literal")
             return check.replace("'", "")
 
+#------------------------------------file utilities------------------------------------------------------------------------------------------      
 
-#------------------------------------------------------------------------------------------------------------------------------      
-
-
-
-
-   # file utilities
     def file_sys(self, option, file): #13
         log(f"[INFO] file_sys called option={option} file={file}")
         if option == "-c":
@@ -941,25 +837,15 @@ class shark:
         else:
             print(F.RED+"[x]Invalid Option")
 
+#-----------------------------------end message to a whatsapp contact-------------------------------------------------------------------------------------------          
 
-#------------------------------------------------------------------------------------------------------------------------------          
-
-
-
-
-    # send message to a whatsapp contact
     def send_mess(self, number): #14
         message = input(F.YELLOW+"[%]Message: "+F.WHITE).replace(" ", "%20")
         null = sub.getoutput(f'xdg-open https://wa.me/{number}?text={message}')
         print (F.BLUE+"[*]Opening Whatsapp....")
 
+#-------------------------------------send file via wifi or localhost-----------------------------------------------------------------------------------------
 
-        
-#------------------------------------------------------------------------------------------------------------------------------
-
-
-
-   # send file via wifi or localhost
     def send_file(self): #15
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.settimeout(500)
@@ -1026,15 +912,8 @@ class shark:
         else:
             print(F.RED+"[x]Error: Empty Input")
 
+#------------------------------------recieve file via wifi or localhost------------------------------------------------------------------------------------------
 
-#------------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-   # recieve file via wifi or localhost
     def recv_file(self, ip, port): #16
         c_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         log(f"[INFO] recv_file attempting connection to {ip}:{port}")
@@ -1087,13 +966,8 @@ class shark:
             print(F.RED+"[x]Error: Empty Input")
             c_socket.close()
 
+#----------------------------------- open server for shell-------------------------------------------------------------------------------------------
 
-#------------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-    # open server for shell
     def shell_host(self): #17
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.settimeout(500)
@@ -1157,14 +1031,8 @@ class shark:
             else:
                 print(F.WHITE+rec)
 
+#------------------------------------connect to shell host------------------------------------------------------------------------------------------
 
-
-#------------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-   # connect to shell host
     def shell_client(self, ip, port): #18
         os = self.os
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -1247,13 +1115,8 @@ class shark:
             sock.send(length.to_bytes(4, byteorder='big'))
             sock.send(data.encode())
 
+#----------------------------------encrypt a string --------------------------------------------------------------------------------------------
 
-#------------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-    # encrypt a string 
     def crypt(self): #19
         data = input(F.CYAN+"[%]Data: "+F.WHITE)
         data1 = data.replace(" ", "~").encode()
@@ -1265,14 +1128,8 @@ class shark:
         rep1 = dec_data.replace("~", " ")
         print(F.CYAN+"[*]Data: "+F.BLUE+rep1)
 
+#------------------------------phone number osint------------------------------------------------------------------------------------------------
 
-
-#------------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-   # phone number osint
     def check_phone(self, number): #20
         log(f"[INFO] check_phone() called number={number}")
         user_phone = number
@@ -1323,17 +1180,8 @@ class shark:
         else:
             print(f"{C}[*]Type                 :{B}This Is Another Type Of Number")
 
+#----------------------------------check weather information of a city/country--------------------------------------------------------------------------------------------
 
-
-
-
-#------------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-
-   # check weather information of a city/country
     def weather(self, city): #24
         try:
             giblish = "ddf55"+"8573"+"97f91b"+"75d8622f3"+"161d6f8b"
@@ -1350,15 +1198,8 @@ class shark:
         except r.exceptions.RequestException as e:
             print(F.RED+"[x]Error Connecting To Host")
 
-
-
-#------------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-            
-    # search a file        
+#-------------------------------------search a file-----------------------------------------------------------------------------------------
+   
     def search(self, directory, target_file):
         try:
             full_path = directory
@@ -1386,32 +1227,18 @@ class shark:
             print(f"{F.RED}[x]I/O ERROR: {F.WHITE}{full_path}")
             self.search_counter()
 
-
-#------------------------------------------------------------------------------------------------------------------------------
-
-
-
-    
-    # count matched files   
+#------------------------count matched files------------count searched files------------------------------------------------------------------------------------------
+  
     def file_counter(self):
         self.count_f += 1
         return self.count_f
 
-
-
-    # count searched files
     def search_counter(self):
         self.count_s += 1
         return self.count_s
 
-
-#------------------------------------------------------------------------------------------------------------------------------
-
-
-
-        
-            
-    # file search trigger        
+#---------------------------------------file search trigger ---------------------------------------------------------------------------------------
+   
     def trigger_search(self, directory):
 
         folder = "/data/data/com.termux" if directory == "/termux" else directory
@@ -1430,11 +1257,7 @@ class shark:
         else:
             print(F.RED+"[x]Error: Empty Input")
 
-
-
-#------------------------------------------------------------------------------------------------------------------------------
-
-
+#---------------------------computer mac byte---------------------------------------------------------------------------------------------------
 
     def check_rand(self, mac):
         try:
@@ -1446,12 +1269,8 @@ class shark:
         except:
             return False
 
+#-----------------------------check mac address-------------------------------------------------------------------------------------------------
 
-
-
-#------------------------------------------------------------------------------------------------------------------------------
-            
-            
     def mac_lookup(self, mac):
         log(f"[INFO] mac_lookup() looking up mac={mac}")
         if not self.check_rand(mac):
@@ -1465,12 +1284,8 @@ class shark:
         else:
             print(F.RED+"[x]Mac Is Locally Assigned [Not Lookable]")
 
-
-
-#------------------------------------------------------------------------------------------------------------------------------
+#-----------------------------lookup version-------------------------------------------------------------------------------------------------
   
-
-
     def version(self):
         home = os.environ["HOME"]
         file = f"{home}/Shell/__version__"
@@ -1479,9 +1294,7 @@ class shark:
         print(F.GREEN+'[*]VERSION:',F.CYAN+open_file.read().strip())
         open_file.close()
 
-
-#------------------------------------------------------------------------------------------------------------------------------
-
+#-------------------------logs-----------------------------------------------------------------------------------------------------
 
     def open_log(self, mode):
         home = os.environ['HOME']
@@ -1503,10 +1316,7 @@ class shark:
         else:
             print(F.RED+'[x]Invalid Mode')
 
-
-
-#------------------------------------------------------------------------------------------------------------------------------
-
+#---------------------------change name---------------------------------------------------------------------------------------------------
 
     def change_name(self, name):
         global username
@@ -1525,13 +1335,7 @@ class shark:
             print(f"{F.GREEN}[✓]Name Updated")
         username = name
 
-
-
-
-#------------------------------------------------------------------------------------------------------------------------------
-
-
-
+#-------------------------check site for reachability-----------------------------------------------------------------------------------------------------
 
     def site_checker(self, domain):
         log(f"[INFO] site_checker() checking domain={domain}")
@@ -1545,42 +1349,28 @@ class shark:
         else:
             print(f"{F.GREEN}[*]Site is {F.CYAN}{output}")
 
-
-#------------------------------------------------------------------------------------------------------------------------------
+#------------------------ip subnet calculator------------------------------------------------------------------------------------------------------
 
     def ip_calculate(self, ip, prefix):
 
         # Handle User Input 
         sample = '1234567890.'
         for i in ip:
-            if i not in sample:
-                print(F.RED+'[x]Invalid IP')
-                return False
+            if i not in sample:print(F.RED+'[x]Invalid IP');return False
         octet_list = ip.split('.')
-        if len(octet_list) > 4:
-            print(F.RED+'[x]Invalid IP')
-            return False
+        if len(octet_list) > 4:print(F.RED+'[x]Invalid IP');return False
         for octet in octet_list:
-            if int(octet) > 255: 
-                print(F.RED+'[x]Invalid IP')
-                return False
-        try:
-            prefix = int(prefix)
-        except:
-            print(F.RED+'[x]Invalid Prefix')
-            return False
+            if int(octet) > 255:print(F.RED+'[x]Invalid IP');return False
+        try:prefix = int(prefix)
+        except:print(F.RED+'[x]Invalid Prefix');return False
 
         prefix = '32' if int(prefix) > 32 else str(prefix)
         prefix = '0' if int(prefix) < 0 else str(prefix)
         log(f"[INFO] ip_calculator() checking network={ip}/{prefix}")
         print(print_result(ip, prefix, F))
 
+#------------------------------------relay for all tools------------------------------------------------------------------------------------------
 
-
-#------------------------------------------------------------------------------------------------------------------------------
-
-
-# relay for all tools
 shark = shark()
 if __name__ == '__main__':
     shark.main()
@@ -1729,6 +1519,5 @@ if __name__ == '__main__':
         except Exception as e:
             print(f'{F.RED}[x]Error: {e}')
 
-
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1733
+# end line 1522

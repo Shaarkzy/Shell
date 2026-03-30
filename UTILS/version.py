@@ -19,10 +19,7 @@ github_raw_version = "https://api.github.com/repos/Shaarkzy/Shell/contents/__ver
 home = os.environ["HOME"]
 local_raw_version = f"{home}/Shell/__version__"
 
-
 #------------------------------------------------------------------------------------------------------------------------------
-
-
 
 def is_connected(host="8.8.8.8", port=53, timeout=0.5):
 
@@ -36,12 +33,7 @@ def is_connected(host="8.8.8.8", port=53, timeout=0.5):
     except socket.error:
         return False
 
-
-
 #------------------------------------------------------------------------------------------------------------------------------
-
-
-
 
 def get_github():
     if is_connected():
@@ -58,9 +50,7 @@ def get_github():
     else:
         return False
 
-
 #------------------------------------------------------------------------------------------------------------------------------
-
 
 def compute(data):
     try:
@@ -81,9 +71,7 @@ def compute(data):
         print(f'[x]Error: {e}')
         quit(0)
 
-
 #------------------------------------------------------------------------------------------------------------------------------
-
 
 def get_local():
     open_file = open(local_raw_version, "r")
@@ -103,7 +91,5 @@ def check():
     else:
         return 'null_internet'
 
-
-
 #------------------------------------------------------------------------------------------------------------------------------
-#end line 108
+#end line 94

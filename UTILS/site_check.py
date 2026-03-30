@@ -1,3 +1,4 @@
+
 #------------------------------------------------------------------------------------------------------------------------------
 
 import requests
@@ -18,8 +19,6 @@ def check_site(domain):
     except:
         return "null_internet"
     
-    
-    
     if response.status_code == 200:
         text = response.text.lower().replace('</div>', ' ')
         match = re.search(f'{re.escape(domain.lower())} is (up|down)', text)
@@ -32,4 +31,4 @@ def check_site(domain):
         return "unreach"
         
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 34
+# end line 33
