@@ -73,15 +73,14 @@ to build and configure program (Android | Debian based system only).
 6. 🖥️ Shell Host/Client
 7. 🌤️ Weather Tools
 8. 🌐 Network Information
-9. ⚡ Cpu Information
-10. 📱 Mobile Number Osint(excluding personal information)
-11. 🏠 Grab Website Ip
-12. 📍 Gather Information About An Ip Address.
-13. 🔎 File Searching
-14. 👁️ File and Folder Properties Viewer
-15. 🔗 Clone Aliases
-16. ✅ Site Up & Down Checker
-17. 🖧 IP CALCULATOR
+9. 📱 Mobile Number Osint(excluding personal information)
+10. 🏠 Grab Website Ip
+11. 📍 Gather Information About An Ip Address.
+12. 🔎 File Searching
+13. 👁️ File and Folder Properties Viewer
+14. 🔗 Clone Aliases
+15. ✅ Site Up & Down Checker
+16. 🖧 IP CALCULATOR
 ```
 
 **🍀 Good luck**

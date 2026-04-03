@@ -27,8 +27,9 @@
 {F.YELLOW}[7]. {F.CYAN}To Get Device Network Info: {F.WHITE}@ip -details
      {F.GREEN}Example: {F.WHITE}@ip -details
 
-{F.YELLOW}[8]. {F.CYAN}To Get Cpu Info: {F.WHITE}@cpu
-     {F.GREEN}Example: {F.WHITE}@cpu
+{F.YELLOW}[8].{F.CYAN}To Calculate An Ip Network Address: {F.WHITE}@ip -c {F.GREEN}<ip> <prefix>
+     {F.GREEN}Example: {F.WHITE}@ip -c {F.GREEN}10.10.10.10 24
+
 
 {F.YELLOW}[9].{F.CYAN}To Start TCP Chat Room:
      {F.GREEN}HOST   : {F.WHITE}@open -server
@@ -101,15 +102,12 @@
 {F.YELLOW}[24].{F.CYAN}To Check If A Site Is Up or Down: {F.WHITE}@check -s {F.GREEN}<domain>
      {F.GREEN}Example: {F.WHITE}@check -s {F.GREEN}google.com
 
-{F.YELLOW}[25].{F.CYAN}To Calculate An Ip Network Address: {F.WHITE}@ip -c {F.GREEN}<ip> <prefix>
-     {F.GREEN}Example: {F.WHITE}@ip -c {F.GREEN}10.10.10.10 24
-
-{F.YELLOW}[26].{F.CYAN}To Check And Clear Logs: {F.WHITE}@logs {F.GREEN}-<show | clear> 
+{F.YELLOW}[25].{F.CYAN}To Check And Clear Logs: {F.WHITE}@logs {F.GREEN}-<show | clear> 
      {F.GREEN}Example: {F.WHITE}@logs {F.GREEN}-show
 
-{F.YELLOW}[27].{F.CYAN}To Manually Update Software: {F.WHITE}@update
+{F.YELLOW}[26].{F.CYAN}To Manually Update Software: {F.WHITE}@update
 
-{F.YELLOW}[28].{F.CYAN}To Check For Software Version: {F.WHITE}@version
+{F.YELLOW}[27].{F.CYAN}To Check For Software Version: {F.WHITE}@version
 
 
 {F.YELLOW}[00].{F.CYAN}To Exit Program: {F.WHITE}@exit
