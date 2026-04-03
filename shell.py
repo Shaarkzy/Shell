@@ -264,32 +264,81 @@ class shark:
 
 #------------------------------------get device cpu information------------------------------------------------------------------------------------------    
 
-    def cpu_info(self): #10
-        print (F.BLUE+"[*]Cpu Details")
-
+    def cpu_info(self):  # 10
+        print(F.BLUE+"[*]Cpu Details")
         log("[INFO] cpu_info() started")
 
+        def read_meminfo():
+            data = {}
+            try:
+                with open("/proc/meminfo", "r", encoding="utf-8") as f:
+                    for line in f:
+                        if ":" not in line:
+                            continue
+                        key, value = line.split(":", 1)
+                        parts = value.strip().split()
+                        if parts and parts[0].isdigit():
+                            data[key] = int(parts[0])  # kB
+            except Exception as e:
+                log(f"[ERROR] read_meminfo failed: {e}")
+            return data
+
+        def get_ram_mib():
+            mem = read_meminfo()
+            total_kb = mem.get("MemTotal", 0)
+            avail_kb = mem.get("MemAvailable", mem.get("MemFree", 0))
+            used_kb = total_kb - avail_kb if total_kb and avail_kb else 0
+            return total_kb // 1024, used_kb // 1024
+
+        def read_cpu_times():
+            try:
+                with open("/proc/stat", "r", encoding="utf-8") as f:
+                    line = f.readline()
+                parts = line.split()
+                if not parts or parts[0] != "cpu":
+                    return None
+
+                vals = list(map(int, parts[1:]))
+                idle = vals[3]
+                iowait = vals[4] if len(vals) > 4 else 0
+                total = sum(vals)
+                return total, idle + iowait
+            except Exception as e:
+                log(f"[ERROR] read_cpu_times failed: {e}")
+                return None
+
+        def cpu_percent(prev, curr):
+            if not prev or not curr:
+                return "N/A"
+            prev_total, prev_idle = prev
+            curr_total, curr_idle = curr
+            dt = curr_total - prev_total
+            di = curr_idle - prev_idle
+            if dt <= 0:
+                return "0.0%"
+            return f"{100.0 * (dt - di) / dt:.1f}%"
+        
+        cu = F.CYAN + "Cpu Usage"
+        co = F.CYAN + "Cpu Cores"
+        cl = F.CYAN + "Logical Cores"
+        ra = F.CYAN + "Ram"
+        prev_cpu = read_cpu_times()
+
         while True:
+            curr_cpu = read_cpu_times()
+            cpu_ = cpu_percent(prev_cpu, curr_cpu)
+            prev_cpu = curr_cpu
+            physical_cores = os.cpu_count()
+            logical_cores = os.cpu_count()
+            total_ram, ram_used = get_ram_mib()
 
-            cpu_p = F.GREEN+str(p.cpu_percent())+'%'
-            cpu_us =F.GREEN+str(p.cpu_count(logical=False))
-            cpu_l = F.GREEN+str(p.cpu_count(logical=True))
+            cpu_p = F.GREEN + str(cpu_)
+            cpu_us = F.GREEN + str(physical_cores if physical_cores is not None else "N/A")
+            cpu_l = F.GREEN + str(logical_cores if logical_cores is not None else "N/A")
+            total_ram = F.BLUE + str(total_ram)
+            ram_used = F.GREEN + str(ram_used)
 
-            ram = p.virtual_memory()
-            disk = p.disk_partitions()[0]
-            d_usage = p.disk_usage(disk.mountpoint)
-
-            total_ram = F.BLUE+str((ram.total // (1024 ** 2)))
-
-            ram_used = F.GREEN+str((ram.used // (1024 ** 2)))
-
-            cu = F.CYAN+'Cpu Usage'
-            co = F.CYAN+'Cpu Cores'
-            cl = F.CYAN+'Logical Cores'
-            ra = F.CYAN+'Ram'
-
-
-            print (f'{cu}: {cpu_p} | {co}: {cpu_us} | {cl}: {cpu_l} | {ra}: {ram_used} / {total_ram}MiB   ', end='\r', flush=True)
+            print(f'{cu}: {cpu_p} | {co}: {cpu_us} | {cl}: {cpu_l} | {ra}: {ram_used} / {total_ram}MiB   ',end='\r', flush=True)
             tm.sleep(0.5)
 
 #-----------------------------------open server for wifi chat room-------------------------------------------------------------------------------------------
@@ -1520,4 +1569,4 @@ if __name__ == '__main__':
             print(f'{F.RED}[x]Error: {e}')
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1522
+# end line 1571

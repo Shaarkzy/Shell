@@ -107,7 +107,6 @@ def network() -> str: #10.10.10.10/24
     final_ = convert_bin_dec(convert_32bin_octet(compute_))+'/'+prefix
     return final_
 
-
 #----------------------------------------------------------------------------------------------------
 def type_() -> str: #private
     global ip
@@ -187,4 +186,4 @@ def broadcast() -> str: #10.10.10.255
     return convert_bin_dec(convert_32bin_octet(compute_))
 
 #---------------------------------------------------------------------------------------------------- 
-#end line 189
+#end line 188

@@ -41,13 +41,12 @@ to build and configure program (Android | Debian based system only).
 
 **📌 Note:**
 ```
-1. ⚠️ Some utilities requires superuser privilege (on feature 9)...
-2. 🐧 For Debian installation run setup as root: $ sudo ./setup.sh
-3. 📂 Program Folder must be in the home directory (~/Shell , /root/Shell)
-4. 💻 On Debian system, it's advisable to run setup on Non root Terminal
-5. 🔗 Run: $ ./relink on Non root terminal if setup was run on Root Terminal and you wish to run shell command from Non root terminal.
-6. 🚀 On Debian system, To start shell on Non root Terminal run: sudo shell.
-7. ⚙️ Setup File is configured for Android and Debian based systems only
+1. 🐧 For Debian installation run setup as root: $ sudo ./setup.sh
+2. 📂 Program Folder must be in the home directory (~/Shell , /root/Shell)
+3. 💻 On Debian system, it's advisable to run setup on Non root Terminal
+4. 🔗 Run: $ ./relink on Non root terminal if setup was run on Root Terminal and you wish to run shell command from Non root terminal.
+5. 🚀 On Debian system, To start shell on Non root Terminal run: sudo shell.
+6. ⚙️ Setup File is configured for Android and Debian based systems only
 ```
 
 **📚 List Of Libraries Required**
@@ -56,15 +55,12 @@ to build and configure program (Android | Debian based system only).
 2. 🔤 regex
 3. 📊 tqdm
 4. 📁 xdg
-5. 🆔 uuid
-6. 🔢 ipaddress
-7. 🌐 requests
-8. 💾 psutil
-9. 🛜 netifaces
-10. 📱 phonenumbers
-11. 🔐 pycryptodome
-12. ⌨️ prompt_toolkit
-13. 📄 bs4
+5. 🌐 requests
+6. 🛜 netifaces
+7. 📱 phonenumbers
+8. 🔐 pycryptodome
+9. ⌨️ prompt_toolkit
+10.📄 Beautiful Soup
 ```
 
 **✨ Features:**
@@ -77,7 +73,7 @@ to build and configure program (Android | Debian based system only).
 6. 🖥️ Shell Host/Client
 7. 🌤️ Weather Tools
 8. 🌐 Network Information
-9. ⚡ Cpu Information (might work without root access on earlier Android versions)
+9. ⚡ Cpu Information
 10. 📱 Mobile Number Osint(excluding personal information)
 11. 🏠 Grab Website Ip
 12. 📍 Gather Information About An Ip Address.

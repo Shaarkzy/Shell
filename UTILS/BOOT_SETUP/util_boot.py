@@ -129,54 +129,51 @@ def load_libraries():
     import platform as pt
     print("━"*30+" •", end="\r", flush=True)
 
-    import psutil as p
+    import phonenumbers as phone
     print("━"*32+" •", end="\r", flush=True)
 
-    import phonenumbers as phone
+    from phonenumbers import carrier, geocoder, timezone
     print("━"*34+" •", end="\r", flush=True)
 
-    from phonenumbers import carrier, geocoder, timezone
+    from Crypto.Cipher import AES
     print("━"*36+" •", end="\r", flush=True)
 
-    from Crypto.Cipher import AES
-    print("━"*38+" •", end="\r", flush=True)
-
     from Crypto.Random import get_random_bytes
-    print("━"*40+" •", end="\r", flush=True)
+    print("━"*38+" •", end="\r", flush=True)
 
     from netifaces import interfaces, ifaddresses, AF_INET, AF_INET6
     import netifaces as n
-    print("━"*42+" •", end="\r", flush=True)
+    print("━"*40+" •", end="\r", flush=True)
 
     import mimetypes
-    print("━"*44+" •", end="\r", flush=True)
+    print("━"*42+" •", end="\r", flush=True)
 
     from datetime import datetime
-    print("━"*46+" •", end="\r", flush=True)
+    print("━"*44+" •", end="\r", flush=True)
 
     import glob
-    print("━"*48+" •", end="\r", flush=True)
+    print("━"*46+" •", end="\r", flush=True)
     
     from os import system as sys
-    print("━"*50+" •", end="\r", flush=True)
+    print("━"*48+" •", end="\r", flush=True)
     
     import readline, threading, multiprocessing
-    print("━"*52+" •", end="\r", flush=True)
+    print("━"*50+" •", end="\r", flush=True)
     
     import atexit as at
-    print("━"*54+" •", end="\r", flush=True)
+    print("━"*52+" •", end="\r", flush=True)
 
     from prompt_toolkit import PromptSession
     from prompt_toolkit.patch_stdout import patch_stdout
     from prompt_toolkit.shortcuts import print_formatted_text
     from prompt_toolkit.formatted_text import ANSI
-    print("━"*56+" •", end="\r", flush=True)
+    print("━"*54+" •", end="\r", flush=True)
 
 #------------------------------------------------------------------------------------------------------------------------------
 
 __all__ = [
     "sy", "F", "B", "Sty", "tm", "socket", "sub", "rd", "exists", "os", "re", "uuid",
-    "ipaddress", "r", "json", "tqdm", "pt", "p", "phone", "carrier", "geocoder", "threading", 
+    "ipaddress", "r", "json", "tqdm", "pt", "phone", "carrier", "geocoder", "threading", 
     "timezone", "AES", "get_random_bytes", "interfaces", "ifaddresses", "AF_INET", "AF_INET6", 
     "mimetypes", "datetime", "glob", "sys", "n", "readline", "at", "PromptSession", "patch_stdout",
     "print_formatted_text", "ANSI", "multiprocessing", "BeautifulSoup",
@@ -192,4 +189,4 @@ except KeyboardInterrupt:
     quit(0)
 
 #------------------------------------------------------------------------------------------------------------------------------
-#end line 194
+#end line 191

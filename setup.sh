@@ -12,14 +12,14 @@ detect_os() {
         if [[ "$(uname -a | grep -i android)" ]]; then
             echo -e "${GREEN}INSTALLING PYTHON3 & FILE ${NC}"
             pkg install python3
-	    pkg install file
+	        pkg install file
             echo -e "${BLUE}DONE${NC}"
             ./UTILS/android_setup.sh
             
         elif grep -Eq '^(ID|ID_LIKE)=.*debian' /etc/os-release; then
             echo -e "${GREEN}INSTALLING PYTHON3${NC}"
             apt-get install python3
-	    apt-get install file
+	        apt-get install file
             echo -e "${BLUE}DONE${NC}"
             ./UTILS/debian_setup.sh
 
