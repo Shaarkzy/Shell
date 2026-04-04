@@ -262,10 +262,37 @@ class shark:
                 print(f"{F.MAGENTA}  No IPv6 Address")
             print(F.WHITE+"—"*62)
 
+#-----------------------------------crazy encode-------------------------------------------------------------------------------------------
+
+    def rcode(self, data, mode):
+        if mode:
+            data_bytes = data.encode('utf-8')
+            data_bytes = bs64.b64encode(data_bytes)
+            data = data_bytes.decode('utf-8')
+            return data
+        else:
+            data_bytes = data.encode('utf-8')
+            data_bytes = bs64.b64decode(data_bytes)
+            data = data_bytes.decode('utf-8')
+            return data
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+    def sock_(self, s, data, mode):
+        if mode:
+            data = self.rcode(data, True)
+            length = len(data.encode())
+            s.send(length.to_bytes(4, byteorder='big'))
+            s.send(data.encode())
+            return True
+        else:
+            length = int.from_bytes(s.recv(4), byteorder='big')
+            data = self.rcode(s.recv(length).decode(), False)
+            return data
+
 #-----------------------------------open server for wifi chat room-------------------------------------------------------------------------------------------
 
     def open_server(self): #11
-
         print (F.CYAN+"[Note]: Only Support TCP")
         print(F.CYAN+"......: To Close Chat: @bye")
 
@@ -287,8 +314,8 @@ class shark:
             try:
                 c, addr = sock.accept()
                 auth_s = '0x1000'
-                c.send(auth_s.encode())
-                auth_r = c.recv(6).decode()
+                self.sock_(c, auth_s, True)
+                auth_r = self.sock_(c, True, False)
                 if not auth_r: c.close(); continue
                 if auth_s == auth_r:
                     log(f"[INFO] open_server accepted connection from {addr}")
@@ -298,16 +325,11 @@ class shark:
             except ConnectionResetError: c.close; log('[x]Invalid Connection On Open Server Func'); continue
             except socket.timeout: print(F.RED+"[x]Timed Out"); return 0
             
-        #receive - send 
         host_name = username
         
-        length = int.from_bytes(c.recv(4), byteorder='big')
-        client_name = c.recv(length).decode()
+        client_name = self.sock_(c, True, False)
         log(f"[INFO] open_server session established host={host_name} client={client_name} from={addr}")
-        
-        c.send(len(host_name).to_bytes(4, byteorder='big'))
-        c.send(host_name.encode())
-
+        self.sock_(c, host_name, True)
         flag = False
         session = PromptSession()
 
@@ -319,9 +341,7 @@ class shark:
                         sen = session.prompt(ANSI(f"{B.GREEN}{F.BLACK} {host_name} {Sty.RESET_ALL} {F.WHITE}"))
                         print("")
                         if sen:
-                            length = len(sen.encode())
-                            c.send(length.to_bytes(4, byteorder='big'))
-                            c.send(sen.encode())
+                            self.sock_(c, sen, True)
                     except KeyboardInterrupt: pass
                     except: c.close(); break
 
@@ -338,9 +358,7 @@ class shark:
             nonlocal flag
             while True:
                 try:
-                    length = int.from_bytes(c.recv(4), byteorder='big')
-                    data = c.recv(length).decode()
-                    
+                    data = self.sock_(c, True, False)
                     if not data:
                         flag = True
                         c.close()
@@ -383,9 +401,9 @@ class shark:
         while True:
             sock.connect((ip, int(port)))
              
+            auth_r = self.sock_(sock, True, False)
             auth_s = '0x1000'
-            auth_r = sock.recv(6).decode()
-            sock.send(auth_s.encode())
+            self.sock_(sock, auth_s, True)
 
             if auth_r == auth_s:
                 print(F.CYAN+'[NOTE]: Only Support Wlan')
@@ -398,24 +416,16 @@ class shark:
              
              
         client_name = username
-        
-        sock.send(len(client_name).to_bytes(4, byteorder='big'))
-        sock.send(client_name.encode())
-        
-        length = int.from_bytes(sock.recv(4), byteorder='big')
-        host_name = sock.recv(length).decode()
-
+        self.sock_(sock, client_name, True)
+        host_name = self.sock_(sock, True, False)
         flag = False
-
         session = PromptSession()
 
         def recv_cs():
             nonlocal flag
             while True:
                 try:
-                    length = int.from_bytes(sock.recv(4), byteorder='big')
-                    rec = sock.recv(length).decode()
-                    
+                    rec = self.sock_(sock, True, False)
                     if not rec:
                         flag = True
                         sock.close()
@@ -446,9 +456,7 @@ class shark:
                         sen = session.prompt(ANSI(f"{B.GREEN}{F.BLACK} {client_name} {Sty.RESET_ALL} {F.WHITE}"))
                         print("")
                         if sen:
-                            length = len(sen.encode())
-                            sock.send(length.to_bytes(4, byteorder='big'))
-                            sock.send(sen.encode())
+                            self.sock_(sock, sen, True)
                     except KeyboardInterrupt: pass
                     except: sock.close(); break
  
@@ -957,8 +965,8 @@ class shark:
             try:
                 c, addr = sock.accept()
                 auth_s = '0x3000'
-                c.send(auth_s.encode())
-                auth_r = c.recv(6).decode()
+                self.sock_(c, auth_s, True)
+                auth_r = self.sock_(c, True, False)
                 if not auth_r: c.close(); continue
                 if auth_s == auth_r:
                     log(f"[INFO] shell_host accepted connection from {addr}")
@@ -975,21 +983,16 @@ class shark:
             data = input(F.CYAN+"\n[shell]: "+F.WHITE)
 
             if data == "@exit":
-                length = len(data.encode())
-                c.send(length.to_bytes(4, byteorder='big'))
-                c.send(data.encode())
+                self.sock_(c, data, True)
                 print(F.RED+"[*]Closing Shell")
                 log(f"[INFO] shell_host closing session with {addr}")
                 c.close()
                 break
             elif data == False:
                 continue
-            length = len(data.encode())
-            c.send(length.to_bytes(4, byteorder='big'))
-            c.send(data.encode())
+            self.sock_(c, data, True)
 
-            length = int.from_bytes(c.recv(4), byteorder='big')
-            rec = c.recv(length).decode()
+            rec = self.sock_(c, True, False)
             if "::EXEC" in rec or "::DIR" in rec or "::FILE" in rec:
                 for match in rec.split(" "):
                     if "::EXEC" in match:
@@ -1010,8 +1013,8 @@ class shark:
             sock.connect((ip, int(port)))
 
             auth_s = '0x3000'
-            auth_r = sock.recv(6).decode()
-            sock.send(auth_s.encode())
+            auth_r = self.sock_(sock, True, False)
+            self.sock_(sock, auth_s, True)
 
             if auth_r == auth_s:
                 log(f"[INFO] shell_client connected to host {ip}:{port}")
@@ -1021,10 +1024,8 @@ class shark:
         print(F.BLUE+"[✓]Connected To Host")
         print(F.YELLOW+"[*]━━━━━━━━━━━━━━━━SERVER LOG━━━━━━━━━━━━━━━━")
         
-
         while True:
-            length = int.from_bytes(sock.recv(4), byteorder='big')
-            data = sock.recv(length).decode()
+            data = self.sock_(sock, True, False)
             if not data:
                 print(f'{F.RED}[x]SERVER DISCONNECTED')
                 log(f"[WARN] shell_client detected server disconnect {ip}:{port}")
@@ -1081,9 +1082,7 @@ class shark:
                 except:
                     data = 'unexpected'
 
-            length = len(data.encode())
-            sock.send(length.to_bytes(4, byteorder='big'))
-            sock.send(data.encode())
+            self.sock_(sock, data, True)
 
 #----------------------------------encrypt a string --------------------------------------------------------------------------------------------
 
@@ -1488,4 +1487,4 @@ if __name__ == '__main__':
             print(f'{F.RED}[x]Error: {e}')
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1490
+# end line 1489

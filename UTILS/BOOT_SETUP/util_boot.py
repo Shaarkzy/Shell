@@ -81,7 +81,7 @@ def load_libraries():
     global datetime, glob, sys, ifaddresses, interfaces
     global AF_INET, AF_INET6, n, readline, at, threading
     global PromptSession, patch_stdout, ANSI, print_formatted_text, multiprocessing
-    global BeautifulSoup
+    global BeautifulSoup, bs64
 
     import sys as sy
     print("━"*2+" •", end="\r", flush=True)
@@ -169,6 +169,9 @@ def load_libraries():
     from prompt_toolkit.formatted_text import ANSI
     print("━"*54+" •", end="\r", flush=True)
 
+    import base64 as bs64
+    print("━"*56+" •", end="\r", flush=True)
+    
 #------------------------------------------------------------------------------------------------------------------------------
 
 __all__ = [
@@ -176,7 +179,7 @@ __all__ = [
     "ipaddress", "r", "json", "tqdm", "pt", "phone", "carrier", "geocoder", "threading", 
     "timezone", "AES", "get_random_bytes", "interfaces", "ifaddresses", "AF_INET", "AF_INET6", 
     "mimetypes", "datetime", "glob", "sys", "n", "readline", "at", "PromptSession", "patch_stdout",
-    "print_formatted_text", "ANSI", "multiprocessing", "BeautifulSoup",
+    "print_formatted_text", "ANSI", "multiprocessing", "BeautifulSoup", "bs64"
 ]
 
 try:
@@ -189,4 +192,4 @@ except KeyboardInterrupt:
     quit(0)
 
 #------------------------------------------------------------------------------------------------------------------------------
-#end line 191
+#end line 193
