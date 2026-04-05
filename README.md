@@ -1,8 +1,8 @@
 # Shark Shell
 
-🐚 Shell like emulator with extra utilities
+🐚 Shell Like Simulator With Linux Extension Toolkit
 ⚙️ Run Setup for libary installations and binary setup.
-🐧 Program only for Linux.
+🐧 Software built for Linux.
 
 **▶️ Run:**
 
