@@ -7,7 +7,7 @@ else
     USER_NAME="${SUDO_USER:-$USER}"
     USER_HOME="$(getent passwd "$USER_NAME" | cut -d: -f6)"
 
-	sudo ln -sf "$USER_HOME/Shell/Core/shell.py" /usr/local/bin/shell
+	sudo ln -sf "$USER_HOME/Shell/launcher.py" /usr/local/bin/shell
 	echo "RELINKED"
 fi
 
