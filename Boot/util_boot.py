@@ -1,8 +1,9 @@
+
 #------------------------------------------------------------------------------------------------------------------------------
-#imports
+
 try:
     import subprocess as sub
-    from ..version import check
+    from Utils.version import check
     import os
     import shutil
     import time as tm
@@ -13,19 +14,16 @@ except Exception as er:
     print('[x]',er)
     quit(0)
 
+#-----------------------------detect operating system--------------------------------------------------------------------------
 
-#------------------------------------------------------------------------------------------------------------------------------
-
-
-#detect operating system
 if sub.getoutput("uname -a | grep -i linux").strip():
     pass
 else:
     print(Fore.RED+"[x]Unsupported OS")
     quit(0)
 
-#------------------------------------------------------------------------------------------------------------------------------
-#software update trigger 
+#------------------------------software update trigger ------------------------------------------------------------------------
+
 def trigger_software_update():
     global check_res
     check_res = check()
@@ -45,7 +43,6 @@ def trigger_software_update():
     elif check_res == 'null_internet':
         return f"{Fore.RED}[x]No Internet Connection"
 
-
 #------------------------------------------------------------------------------------------------------------------------------
 
 def software_update():
@@ -59,22 +56,30 @@ def software_update():
 
     #run update script
     else:
-        sys(f"{form}/UTILS/BOOT_SETUP/update.sh")
+        sys(f"{form}/Boot/update.sh")
 
-        file = f"{form}/__version__"
+        file = f"{form}/Data/__version__"
         open_f = open(file, "r")
         read_f = open_f.read()
         open_f.close()
 
         if check_res == read_f.strip():
+            print(Fore.CYAN+"[*]RUNNING-FIX : YOU CAN SKIP THE FIX IF [fix.sh] CONTAINS NO FIX")
+            print('-------------------------fix------------------------------')
+            os.system(f'cat {form}/Utils/fix.sh')
+            print('-------------------------fix------------------------------')
+            option = input('[?]Fix [y/n]: ')
+            if option.upper() == 'Y': os.system(f'sudo sh {form}/Utils/fix.sh')
+            else: pass
+
             print(Fore.RED+"[!]EXITING PROGRAM FOR UPDATE TO TAKE EFFECT")
-            tm.sleep(1)
+            tm.sleep(0.5)
             quit(0)
+
         else:
-            tm.sleep(1)
+            print(Fore.RED+"[x]AN ERROR OCCURED UPDATE UNSUCCESSFULL")
+            tm.sleep(0.5)
             pass
-
-
 
 #------------------------------------------------------------------------------------------------------------------------------
 
@@ -86,7 +91,7 @@ def load_libraries():
     global datetime, glob, sys, ifaddresses, interfaces
     global AF_INET, AF_INET6, n, readline, at, threading
     global PromptSession, patch_stdout, ANSI, print_formatted_text, multiprocessing
-    global BeautifulSoup
+    global BeautifulSoup, bs64
 
     import sys as sy
     print("━"*2+" •", end="\r", flush=True)
@@ -134,71 +139,67 @@ def load_libraries():
     import platform as pt
     print("━"*30+" •", end="\r", flush=True)
 
-    import psutil as p
+    import phonenumbers as phone
     print("━"*32+" •", end="\r", flush=True)
 
-    import phonenumbers as phone
+    from phonenumbers import carrier, geocoder, timezone
     print("━"*34+" •", end="\r", flush=True)
 
-    from phonenumbers import carrier, geocoder, timezone
+    from Crypto.Cipher import AES
     print("━"*36+" •", end="\r", flush=True)
 
-    from Crypto.Cipher import AES
-    print("━"*38+" •", end="\r", flush=True)
-
     from Crypto.Random import get_random_bytes
-    print("━"*40+" •", end="\r", flush=True)
+    print("━"*38+" •", end="\r", flush=True)
 
     from netifaces import interfaces, ifaddresses, AF_INET, AF_INET6
     import netifaces as n
-    print("━"*42+" •", end="\r", flush=True)
+    print("━"*40+" •", end="\r", flush=True)
 
     import mimetypes
-    print("━"*44+" •", end="\r", flush=True)
+    print("━"*42+" •", end="\r", flush=True)
 
     from datetime import datetime
-    print("━"*46+" •", end="\r", flush=True)
+    print("━"*44+" •", end="\r", flush=True)
 
     import glob
-    print("━"*48+" •", end="\r", flush=True)
+    print("━"*46+" •", end="\r", flush=True)
     
     from os import system as sys
-    print("━"*50+" •", end="\r", flush=True)
+    print("━"*48+" •", end="\r", flush=True)
     
     import readline, threading, multiprocessing
-    print("━"*52+" •", end="\r", flush=True)
+    print("━"*50+" •", end="\r", flush=True)
     
     import atexit as at
-    print("━"*54+" •", end="\r", flush=True)
+    print("━"*52+" •", end="\r", flush=True)
 
     from prompt_toolkit import PromptSession
     from prompt_toolkit.patch_stdout import patch_stdout
     from prompt_toolkit.shortcuts import print_formatted_text
     from prompt_toolkit.formatted_text import ANSI
+    print("━"*54+" •", end="\r", flush=True)
+
+    import base64 as bs64
     print("━"*56+" •", end="\r", flush=True)
-
-
+    
 #------------------------------------------------------------------------------------------------------------------------------
-
 
 __all__ = [
     "sy", "F", "B", "Sty", "tm", "socket", "sub", "rd", "exists", "os", "re", "uuid",
-    "ipaddress", "r", "json", "tqdm", "pt", "p", "phone", "carrier", "geocoder", "threading", 
+    "ipaddress", "r", "json", "tqdm", "pt", "phone", "carrier", "geocoder", "threading", 
     "timezone", "AES", "get_random_bytes", "interfaces", "ifaddresses", "AF_INET", "AF_INET6", 
     "mimetypes", "datetime", "glob", "sys", "n", "readline", "at", "PromptSession", "patch_stdout",
-    "print_formatted_text", "ANSI", "multiprocessing", "BeautifulSoup",
+    "print_formatted_text", "ANSI", "multiprocessing", "BeautifulSoup", "bs64"
 ]
 
 try:
     trigger_software_update()
     load_libraries()
 except Exception as er:
-    print(Fore.RED+"[x]",er, "                                ")
-    print(f"{Fore.GREEN}[!]Run Setup Script If A Library Isn't Installed\n[!]Incase Of File Corruption Run {Fore.YELLOW}<./update.sh>{Fore.GREEN} On {Fore.YELLOW}~/Shell/UTILS/BOOT_SETUP")
+    print(Fore.RED+"[x]",er,' '*56)
     quit(0)
 except KeyboardInterrupt:
     quit(0)
 
-
 #------------------------------------------------------------------------------------------------------------------------------
-#end line 203
+#end line 204

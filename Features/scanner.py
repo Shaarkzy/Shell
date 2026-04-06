@@ -1,3 +1,4 @@
+
 #------------------------------------------------------------------------------------------------------------------------------
 
 import asyncio
@@ -8,10 +9,7 @@ import time
 from typing import List, Optional, Tuple
 from colorama import Fore
 
-
 #------------------------------------------------------------------------------------------------------------------------------
-
-
 
 CONCURRENCY = 500
 MIN_TIMEOUT = 0.8
@@ -19,7 +17,6 @@ MAX_TIMEOUT = 10.0
 BASE_OVERHEAD = 0.6 
 SCALE_DIVISOR = 1000.0
 PRIORITY_PORTS = [80, 443, 22, 21, 25, 53, 8080, 8443]
-
 
 #------------------------------------------------------------------------------------------------------------------------------
 
@@ -53,7 +50,6 @@ async def async_ping(host: str, cmd_timeout: float = 2.0) -> Optional[float]:
             continue
     return None
 
-
 #------------------------------------------------------------------------------------------------------------------------------
 
 async def tcp_rtt_estimate(host: str, port: int = 80, timeout: float = 1.0) -> Optional[float]:
@@ -72,8 +68,6 @@ async def tcp_rtt_estimate(host: str, port: int = 80, timeout: float = 1.0) -> O
 
 #------------------------------------------------------------------------------------------------------------------------------
 
-
-
 def compute_timeout_from_rtt(rtt: Optional[float], n_ports: int) -> float:
 
     rtt_val = rtt if (rtt is not None and rtt > 0) else 0.15
@@ -85,10 +79,7 @@ def compute_timeout_from_rtt(rtt: Optional[float], n_ports: int) -> float:
         timeout = MAX_TIMEOUT
     return timeout
 
-
 #------------------------------------------------------------------------------------------------------------------------------
-
-
 
 async def scan_port(host: str, port: int, semaphore: asyncio.Semaphore, timeout: float) -> Tuple[int, bool]:
 
@@ -102,10 +93,7 @@ async def scan_port(host: str, port: int, semaphore: asyncio.Semaphore, timeout:
         except Exception:
             return port, False
 
-
 #------------------------------------------------------------------------------------------------------------------------------
-
-
 
 async def scan(host: str, ports: List[int], concurrency: int = CONCURRENCY):
     ports = sorted(set(ports))
@@ -140,10 +128,7 @@ async def scan(host: str, ports: List[int], concurrency: int = CONCURRENCY):
                 print(f"{Fore.BLUE}[✓]Port: {Fore.GREEN}{p} Open")
         return found
 
-
-
 #------------------------------------------------------------------------------------------------------------------------------
-
 
     if priority:
         found = await run_batch(priority, "priority")
@@ -160,11 +145,7 @@ async def scan(host: str, ports: List[int], concurrency: int = CONCURRENCY):
 
     return open_ports
 
-
 #------------------------------------------------------------------------------------------------------------------------------
-
-
-
 
 def load_ports_from_file(file_path: str) -> List[int]:
     if not os.path.exists(file_path):
@@ -181,14 +162,11 @@ def load_ports_from_file(file_path: str) -> List[int]:
             ports.append(int(t))
     return sorted(set(ports))
 
-
 #------------------------------------------------------------------------------------------------------------------------------
-
-
 
 def run_port(host: str, port_range: str = "default"):
     if port_range == "default":
-        file_path = f"{os.environ['HOME']}/Shell/UTILS/.ports"
+        file_path = f"{os.environ['HOME']}/Shell/Data/ports"
         ports = load_ports_from_file(file_path)
     else:
         if "," in port_range:
@@ -218,4 +196,4 @@ def run_port(host: str, port_range: str = "default"):
         print(Fore.RED + "\n[!]Scan interrupted by user.")
 
 #------------------------------------------------------------------------------------------------------------------------------
-#end line 219
+#end line 198
