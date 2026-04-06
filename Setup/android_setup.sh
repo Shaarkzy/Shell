@@ -54,6 +54,6 @@ pip install bs4
 echo -e "\n${YELLOW}DONE INSTALLING BEUTIFULSOUP 12/12${NC}\n"
 
 echo -e "\n${BLUE}[*] SETTING UP SHELL.PY${NC}"
-chmod +x shell.py
-cd ~/; ln -s ~/Shell/shell.py /data/data/com.termux/files/usr/bin/shell
+chmod +x ~/Shell/launcher.py
+ln -sf ~/Shell/launcher.py /data/data/com.termux/files/usr/bin/shell
 echo -e "\n${GREEN}[*] IF NOT ERROR: Start Terminal By executing : shell${NC}\n"

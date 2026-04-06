@@ -105,9 +105,12 @@
 {F.YELLOW}[25].{F.CYAN}To Check And Clear Logs: {F.WHITE}@logs {F.GREEN}-<show | clear> 
      {F.GREEN}Example: {F.WHITE}@logs {F.GREEN}-show
 
-{F.YELLOW}[26].{F.CYAN}To Manually Update Software: {F.WHITE}@update
+{F.YELLOW}[26].{F.CYAN}To Obfuscate A Python file: {F.WHITE}@obf -f {F.GREEN}<input_file> <output_file> 
+     {F.GREEN}Example: {F.WHITE}@obf -f {F.GREEN}shell.py obfuscated_shell.py
 
-{F.YELLOW}[27].{F.CYAN}To Check For Software Version: {F.WHITE}@version
+{F.YELLOW}[27].{F.CYAN}To Manually Update Software: {F.WHITE}@update
+
+{F.YELLOW}[28].{F.CYAN}To Check For Software Version: {F.WHITE}@version
 
 
 {F.YELLOW}[00].{F.CYAN}To Exit Program: {F.WHITE}@exit

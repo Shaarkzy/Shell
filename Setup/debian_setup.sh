@@ -4,6 +4,10 @@ BLUE='\033[0;34m'
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 NC='\033[0m'
+
+USER_NAME="${SUDO_USER:-$USER}"
+USER_HOME="$(getent passwd "$USER_NAME" | cut -d: -f6)"
+
 echo -e "\n${BLUE}BUILDING ESSENTIALS FOR PYTHON3-DEV${NC}\n"
 apt-get install build-essential python3-dev
 echo -e "\n${BLUE}DONE${NC}\n"
@@ -45,7 +49,7 @@ apt-get install python3-netifaces
 echo -e "\n${GREEN}DONE INSTALLING NETIFACES 9/12${NC}\n"
 
 echo -e "\n${YELLOW}INSTALLING PYCRYPTODOME 10/12${NC}\n"
-bash -c "cd UTILS/BOOT* && ./pycryptodome.sh"
+bash -c "./pycryptodome.sh"
 echo -e "\n${YELLOW}DONE INSTALLING PYCRYPTODOME 10/12${NC}\n"
 
 echo -e "\n${YELLOW}INSTALLING PROMPT TOOLKIT 11/12${NC}\n"
@@ -58,7 +62,7 @@ echo -e "\n${YELLOW}DONE INSTALLING BEAUTIFULSOUP 12/12${NC}\n"
 
 echo -e "\n${GREEN}[*] SETTING UP SHELL.PY${NC}"
 
-chmod +x shell.py
-cd ~/; ln -s ~/Shell/shell.py /usr/local/bin/shell
+chmod +x "$USER_HOME/Shell/Core/shell.py"
+ln -sf "$USER_HOME/Shell/launcher.py" "/usr/local/bin/shell"
 
 echo -e "\n${YELLOW}[*] IF NOT ERROR: Start Terminal By executing: shell${NC}\n"

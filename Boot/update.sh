@@ -22,9 +22,9 @@ if [ $? -eq 0 ]; then
 	# 1. .shellrc
 	# 2. .config.json
     # 3. .logs
-	cp -r "$TARGET_DIR"/UTILS/.shellrc "$TEMP_DIR"/UTILS/.shellrc
-	cp -r "$TARGET_DIR"/UTILS/.config.json "$TEMP_DIR"/UTILS/.config.json
-    cp -r "$TARGET_DIR"/UTILS/.logs "$TEMP_DIR"/UTILS/.logs
+	cp -r "$TARGET_DIR"/Data/shellrc "$TEMP_DIR"/Data/shellrc
+	cp -r "$TARGET_DIR"/Data/config.json "$TEMP_DIR"/Data/config.json
+    cp -r "$TARGET_DIR"/Data/logs "$TEMP_DIR"/Data/logs
         rm -rf "$TARGET_DIR"
     fi
 
@@ -32,7 +32,7 @@ if [ $? -eq 0 ]; then
     mv "$TEMP_DIR" "$TARGET_DIR"
     echo -e "${YELLOW}[✓]UPDATE SUCCESSFUL${NC}"
 
-    version="$HOME/Shell/__version__"
+    version="$HOME/Shell/Data/__version__"
     if [ -f "$version" ]; then
         data=$(cat "$version")
         echo -e "${GREEN}[!]SOFTWARE UPDATED: VERSION: ${YELLOW}${data}${NC}"

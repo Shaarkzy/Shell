@@ -9,7 +9,7 @@ import os
 
 def load_file():
     home = os.environ["HOME"]
-    file = f"{home}/Shell/UTILS/.shellrc"
+    file = f"{home}/Shell/Data/shellrc"
 
     open_file = open(file, "r")
 
@@ -46,7 +46,7 @@ def compare_line(line, home):
     check_line = check_line_a+"="+check_line_b
     check_line = check_line.replace("'", "").replace('"', '')
 
-    shell_alias_file = f"{home}/Shell/UTILS/.shellrc"
+    shell_alias_file = f"{home}/Shell/Data/shellrc"
     file = open(shell_alias_file, 'r')
     data = file.readlines()
     length = len(data)
@@ -70,11 +70,12 @@ def clone_alias(mode):
     detect_shell = os.environ.get("SHELL", "/bin/bash").split("/")[-1]
     shell = ".zshrc" if detect_shell == "zsh" else ".bashrc"
     bash_alias_file = f"{home}/{shell}"
-    shell_alias_file = f"{home}/Shell/UTILS/.shellrc"
+    shell_alias_file = f"{home}/Shell/Data/shellrc"
 
 
     open_file = open(bash_alias_file, "r")
     read_file = open_file.readlines()
+    open_file.seek(0)
     length = len(read_file)
     open_file.close()
 
@@ -87,22 +88,22 @@ def clone_alias(mode):
         data = read_file[num].strip()
         num += 1
         if data.startswith('alias'): 
-            if not compare_line(data, home): #function to compare if an alias already exists in the .shellrc file
-                #alias ii="pkg update && pkg upgrade"
-                split_line = data.split("=", 1)
-                key = split_line[0].split()[1]
-                value = split_line[1]
-                value = value.replace('"', '')
-                value = value.replace("'", "")
+            #alias ii="pkg update && pkg upgrade"
+            split_line = data.split("=", 1)
+            key = split_line[0].split()[1]
+            value = split_line[1]
+            value = value.replace('"', '')
+            value = value.replace("'", "")
 
-                if mode:
-                    construct = key+"="+value
-                    open_file.write(construct+"\n")
-                else:
-                    memory.update({key: value})
+            if mode and not compare_line(data, home):
+                construct = key+"="+value
+                open_file.write(construct+"\n")
+            elif not mode:
+                memory.update({key: value})
+            else: pass
 
     open_file.close()
     return memory
 
 #------------------------------------------------------------------------------------------------------------------------------
-#end line 107
+#end line 108

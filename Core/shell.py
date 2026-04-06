@@ -1,14 +1,14 @@
-#!/usr/bin/env python3
 
 #-----------------------------------import all libraries-------------------------------------------------------------------------------
 
-from UTILS.BOOT_SETUP.util_boot import *
-from UTILS.BOOT_SETUP.util_boot import trigger_software_update
-from UTILS.resistor import *
-from UTILS.alias import *
-from UTILS.scanner import *
-from UTILS.site_check import *
-from UTILS.ip_calculator import *
+from Boot.util_boot import *
+from Boot.util_boot import trigger_software_update
+from Features.resistor import *
+from Utils.alias import *
+from Features.scanner import *
+from Features.site_check import *
+from Features.ip_calculator import *
+from Features.obfuscate import obfuscator
 
 #---------------------------------clear screen after loading libraries---------------------------------------------------------------------
 
@@ -17,9 +17,9 @@ sys("clear")
 #--------------------------------------------change username-------------------------------------------------------------------------------
 
 home = os.environ["HOME"]
-with open(f'{home}/Shell/UTILS/.config.json', 'r') as file:
+with open(f'{home}/Shell/Data/config.json', 'r') as file:
     try:data = json.load(file);username = data["username"]
-    except:print(f"{F.RED}[!]FILE CORRUPTED REDOWNLOAD THE PROGRAM WITH {F.WHITE}./setup.sh {F.RED}COMMAND");quit(0)
+    except:print(f"{F.RED}[!]FILE CORRUPTED");quit(0)
             
 if username: pass
 else:
@@ -28,7 +28,7 @@ else:
     if not username:username = sub.getoutput("whoami")
             
     data["username"] = username
-    with open(f"{home}/Shell/UTILS/.config.json", "w") as file:json.dump(data, file, indent=4);pass
+    with open(f"{home}/Shell/Data/config.json", "w") as file:json.dump(data, file, indent=4);pass
         
 sys("clear")       
               
@@ -69,7 +69,7 @@ def background(): #future background process
 #log silent messages
 def log(data):
     home = os.environ['HOME']
-    log_file = f'{home}/Shell/UTILS/.logs'
+    log_file = f'{home}/Shell/Data/logs'
     now = datetime.now()
     time = now.strftime('%Y-%m-%d %H:%M:%S')
     collide = f'{data} @ {time}\n'
@@ -79,7 +79,7 @@ def log(data):
 
 #--------------------------------initialize the class-----------------------------------------------------------------------------
 
-class shark:
+class Shark:
     def __init__(self):
         self.soc = socket
         self.os = os
@@ -89,7 +89,7 @@ class shark:
     # load the welcome screen on start
     def main(self):
         home = os.environ["HOME"]
-        version = open(f"{home}/Shell/__version__", "r").read().strip()
+        version = open(f"{home}/Shell/Data/__version__", "r").read().strip()
         data = f"""
                 {F.CYAN}  ╭────────────────────────╮
                 • │ {F.YELLOW}WELCOME·TO·SHARK-SHELL{F.CYAN} |─╮
@@ -104,7 +104,7 @@ class shark:
     
     def help(self): #1
         home = os.environ["HOME"]
-        data = open(f"{home}/Shell/UTILS/.shell_help", "r").read()
+        data = open(f"{home}/Shell/Data/shell_help", "r").read()
         log("[INFO] help() called")
         print(eval(f"f'''{data}'''"))
 
@@ -794,12 +794,6 @@ class shark:
 
                             log(f"[INFO] file_sys encrypted file {file} -> {file_} with key length={len(keyD)}")
 
-                            key_file = open("key.txt", "a")
-                            cur_dir = os.getcwd()
-                            data = "[Filnename= "+file+" :Key= "+keyD+" ]\n"
-                            key_file.write(data)
-                            print(f"{F.CYAN}[*]Key Saved On {F.YELLOW}{cur_dir}/{F.WHITE}key.txt")
-                            log(f"[INFO] file_sys saved encryption key for {file} to {cur_dir}/key.txt")
                         else:
                             print(F.RED+"[x]Invalid Key Byte SIZE")
 
@@ -1257,7 +1251,7 @@ class shark:
   
     def version(self):
         home = os.environ["HOME"]
-        file = f"{home}/Shell/__version__"
+        file = f"{home}/Shell/Data/__version__"
         open_file = open(file, 'r')
         log("[INFO] version() called")
         print(F.GREEN+'[*]VERSION:',F.CYAN+open_file.read().strip())
@@ -1267,7 +1261,7 @@ class shark:
 
     def open_log(self, mode):
         home = os.environ['HOME']
-        file = f'{home}/Shell/UTILS/.logs'
+        file = f'{home}/Shell/Data/logs'
 
         if mode == '-show':
             log(f"[INFO] open_log show logs requested")
@@ -1292,14 +1286,14 @@ class shark:
         name = name.replace(" ", "_")
         home = os.environ["HOME"]
         log(f"[INFO] change_name() requested new_name={name}")
-        with open(f"{home}/Shell/UTILS/.config.json", "r") as file:
+        with open(f"{home}/Shell/Data/config.json", "r") as file:
             data = json.load(file)
             
         if name == "default": name = sub.getoutput("whoami")
         else: pass
 
         data["username"] = name
-        with open(f"{home}/Shell/UTILS/.config.json", "w") as file:
+        with open(f"{home}/Shell/Data/config.json", "w") as file:
             json.dump(data, file, indent=4)
             print(f"{F.GREEN}[✓]Name Updated")
         username = name
@@ -1340,8 +1334,8 @@ class shark:
 
 #------------------------------------relay for all tools------------------------------------------------------------------------------------------
 
-shark = shark()
-if __name__ == '__main__':
+def _main_():
+    shark = Shark()
     shark.main()
     memory = compute()
 
@@ -1429,12 +1423,16 @@ if __name__ == '__main__':
                     print(F.RED+"[!]Cloned: Restart The Shell For Update To Take Effect")
                 elif data.split()[2] == "mem":
                     memory.update(clone_alias(False))
+                else: print(F.RED+'[x]Invalid Option')
             elif "@name" in data_strip and data.strip().startswith('@name'):
                 shark.change_name(cons_(1))
             elif "@check-s" in data_strip and data.strip().startswith('@check'):
                 shark.site_checker(data.split()[2])
             elif "@ip-c" in data_strip and data.strip().startswith('@ip'):
                 shark.ip_calculate(data.split()[2], data.split()[3])
+            elif "@obf-f" in data_strip and data.strip().startswith('@obf'):
+                obfuscator(shark.get_file(data.split()[2]), data.split()[3])
+                print(F.CYAN+'[*]COMPLETED')
             elif "@exit" in data_strip and data.strip().startswith('@exit'):
                 sys("clear")
                 #process.terminate()
@@ -1487,4 +1485,4 @@ if __name__ == '__main__':
             print(f'{F.RED}[x]Error: {e}')
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1489
+# end line 1487

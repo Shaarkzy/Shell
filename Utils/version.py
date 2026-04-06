@@ -17,7 +17,7 @@ except Exception as e:
 github_raw_version = "https://api.github.com/repos/Shaarkzy/Shell/contents/__version__?ref=main"
 
 home = os.environ["HOME"]
-local_raw_version = f"{home}/Shell/__version__"
+local_raw_version = f"{home}/Shell/Data/__version__"
 
 #------------------------------------------------------------------------------------------------------------------------------
 

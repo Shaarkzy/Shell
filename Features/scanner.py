@@ -166,7 +166,7 @@ def load_ports_from_file(file_path: str) -> List[int]:
 
 def run_port(host: str, port_range: str = "default"):
     if port_range == "default":
-        file_path = f"{os.environ['HOME']}/Shell/UTILS/.ports"
+        file_path = f"{os.environ['HOME']}/Shell/Data/ports"
         ports = load_ports_from_file(file_path)
     else:
         if "," in port_range:

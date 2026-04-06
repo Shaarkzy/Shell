@@ -3,7 +3,7 @@
 
 try:
     import subprocess as sub
-    from ..version import check
+    from Utils.version import check
     import os
     import shutil
     import time as tm
@@ -56,19 +56,29 @@ def software_update():
 
     #run update script
     else:
-        sys(f"{form}/UTILS/BOOT_SETUP/update.sh")
+        sys(f"{form}/Boot/update.sh")
 
-        file = f"{form}/__version__"
+        file = f"{form}/Data/__version__"
         open_f = open(file, "r")
         read_f = open_f.read()
         open_f.close()
 
         if check_res == read_f.strip():
+            print(Fore.CYAN+"[*]RUNNING-FIX : YOU CAN SKIP THE FIX IF [fix.sh] CONTAINS NO FIX")
+            print('-------------------------fix------------------------------')
+            os.system(f'cat {form}/Utils/fix.sh')
+            print('-------------------------fix------------------------------')
+            option = input('[?]Fix [y/n]: ')
+            if option.upper() == 'Y': os.system(f'sudo sh {form}/Utils/fix.sh')
+            else: pass
+
             print(Fore.RED+"[!]EXITING PROGRAM FOR UPDATE TO TAKE EFFECT")
-            tm.sleep(1)
+            tm.sleep(0.5)
             quit(0)
+
         else:
-            tm.sleep(1)
+            print(Fore.RED+"[x]AN ERROR OCCURED UPDATE UNSUCCESSFULL")
+            tm.sleep(0.5)
             pass
 
 #------------------------------------------------------------------------------------------------------------------------------
@@ -192,4 +202,4 @@ except KeyboardInterrupt:
     quit(0)
 
 #------------------------------------------------------------------------------------------------------------------------------
-#end line 193
+#end line 204
