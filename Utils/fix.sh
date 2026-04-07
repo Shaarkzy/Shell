@@ -2,7 +2,7 @@
 
 if [[ "$(uname -a | grep -i android)" ]]; then
 	#do  nothing
-    echo "NOthing Done"
+    echo "Nothing Done"
 
 else
     #do nothing

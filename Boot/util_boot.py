@@ -69,8 +69,10 @@ def software_update():
             print('-------------------------fix------------------------------')
             os.system(f'cat {form}/Utils/fix.sh')
             print('-------------------------fix------------------------------')
+
             option = input(Fore.YELLOW+'[?]Fix [y/n]: ')
-            if option.upper() == 'Y': os.system(f'sudo bash {form}/Utils/fix.sh')
+            print(Fore.WHITE)
+            if option.upper() == 'Y': os.system(f'bash {form}/Utils/fix.sh')
             else: pass
 
             print(Fore.RED+"[!]EXITING PROGRAM FOR UPDATE TO TAKE EFFECT")
@@ -204,4 +206,4 @@ except KeyboardInterrupt:
     quit(0)
 
 #------------------------------------------------------------------------------------------------------------------------------
-#end line 206
+#end line 208
