@@ -66,9 +66,9 @@ def software_update():
         if check_res == read_f.strip():
             print(Fore.CYAN+"[*]RUNNING-FIX : YOU CAN SKIP THE FIX IF [fix.sh] CONTAINS NO FIX")
             print(Fore.WHITE)
-            print('-------------------------fix------------------------------')
+            print('-------------------------------fix-----------------------------------------')
             os.system(f'cat {form}/Utils/fix.sh')
-            print('-------------------------fix------------------------------')
+            print('-------------------------------fix-----------------------------------------')
 
             option = input(Fore.YELLOW+'[?]Fix [y/n]: ')
             print(Fore.WHITE)

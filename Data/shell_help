@@ -96,8 +96,9 @@
      {F.GREEN}Example: {F.WHITE}@shark {F.GREEN}p=python
      {F.RED}NOTE: {F.BLUE}Creating Or cloning An Alias For Shell Commands Isn't Supported.
 
-{F.YELLOW}[23].{F.CYAN}To Change Username: {F.WHITE}@name {F.GREEN}<name>
+{F.YELLOW}[23].{F.CYAN}To Change Username: {F.WHITE}@name {F.GREEN}<name | default>
      {F.GREEN}Example: {F.WHITE}@name {F.GREEN}john doe
+     {F.GREEN}Example: {F.WHITE}@name {F.GREEN}default
      
 {F.YELLOW}[24].{F.CYAN}To Check If A Site Is Up or Down: {F.WHITE}@check -s {F.GREEN}<domain>
      {F.GREEN}Example: {F.WHITE}@check -s {F.GREEN}google.com
