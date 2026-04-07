@@ -65,14 +65,16 @@ def software_update():
 
         if check_res == read_f.strip():
             print(Fore.CYAN+"[*]RUNNING-FIX : YOU CAN SKIP THE FIX IF [fix.sh] CONTAINS NO FIX")
+            print(Fore.WHITE)
             print('-------------------------fix------------------------------')
             os.system(f'cat {form}/Utils/fix.sh')
             print('-------------------------fix------------------------------')
-            option = input('[?]Fix [y/n]: ')
+            option = input(Fore.YELLOW+'[?]Fix [y/n]: ')
             if option.upper() == 'Y': os.system(f'sudo bash {form}/Utils/fix.sh')
             else: pass
 
             print(Fore.RED+"[!]EXITING PROGRAM FOR UPDATE TO TAKE EFFECT")
+            print(Fore.WHITE)
             tm.sleep(0.5)
             quit(0)
 
@@ -202,4 +204,4 @@ except KeyboardInterrupt:
     quit(0)
 
 #------------------------------------------------------------------------------------------------------------------------------
-#end line 204
+#end line 206
