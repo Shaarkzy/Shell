@@ -23,10 +23,13 @@ with open(f'{home}/Shell/Data/config.json', 'r') as file:
             
 if username: pass
 else:
-    print(f"{F.GREEN}[!]SkIP {F.WHITE}[HIT ENTER KEY]{F.GREEN} IF YOU WISH TO CONTINUE WITH SYSTEM NAME\n{F.YELLOW}YOU CAN UPDATE NAME ANYTIME WITH {F.WHITE}@name <name> {F.YELLOW} COMMAND")
-    username = input(f"{F.CYAN}[*]Username: {F.WHITE}").strip()
-    if not username:username = sub.getoutput("whoami")
-            
+    try:
+        print(f"{F.GREEN}[!]SkIP {F.WHITE}[HIT ENTER KEY]{F.GREEN} IF YOU WISH TO CONTINUE WITH SYSTEM NAME\n{F.YELLOW}YOU CAN UPDATE NAME ANYTIME WITH {F.WHITE}@name <name> {F.YELLOW} COMMAND")
+        username = input(f"{F.CYAN}[*]Username: {F.WHITE}").strip()
+        if not username:username = sub.getoutput("whoami")
+        if username.strip().lower() == 'default':username = sub.getoutput("whoami")
+    except:print();quit(0)
+                
     data["username"] = username
     with open(f"{home}/Shell/Data/config.json", "w") as file:json.dump(data, file, indent=4);pass
         
