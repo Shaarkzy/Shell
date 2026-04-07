@@ -5,8 +5,7 @@ GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 NC='\033[0m'
 
-USER_NAME="${SUDO_USER:-$USER}"
-USER_HOME="$(getent passwd "$USER_NAME" | cut -d: -f6)"
+USER_HOME="$(getent passwd "$USER" | cut -d: -f6)"
 
 echo -e "\n${BLUE}BUILDING ESSENTIALS FOR PYTHON3-DEV${NC}\n"
 apt-get install build-essential python3-dev
