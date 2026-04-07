@@ -8,7 +8,7 @@
 
 ```$ ./setup.sh ``` 
 
-to build and configure program (Android | Debian based system only).
+To build and configure program (Android [Termux-only] | Debian based system only).
 
 **📁 Program File Structure (Architecture)**
 ```

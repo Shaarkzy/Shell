@@ -4,7 +4,8 @@ if [[ "$(uname -a | grep -i android)" ]]; then
 	echo "Operating System Unsupported"
 
 else
-    USER_HOME="$(getent passwd "$USER" | cut -d: -f6)"
+    USER_NAME="$(whoami)"
+    USER_HOME="$(getent passwd "$USER_NAME" | cut -d: -f6)"
 
 	sudo ln -sf "$USER_HOME/Shell/launcher.py" /usr/local/bin/shell
 	echo "RELINKED"
