@@ -220,12 +220,19 @@ class Shark:
                 if n.AF_INET in addresses:
                     for addr in addresses[n.AF_INET]:
                         ip = addr['addr']
-                        if ip.startswith('10.') or ip.startswith('172.') or ip.startswith('192.168.') or ip.startswith('169.254.') or ip.startswith('127.') or ip.startswith('0.0.0.0'):
-                            ip_all = ip_all + "[" + ip + "] "
+                        if (ip.startswith('10.') or 
+                        ip.startswith('172.') or 
+                        ip.startswith('192.168.') or 
+                        ip.startswith('169.254.') or 
+                        ip.startswith('127.') or 
+                        ip.startswith('0.0.0.0')):
+                            ip_all = ip_all + F.CYAN+"[" +  interface + "] " + F.YELLOW+"[" + ip + "]\n"
+                            data = f"{F.WHITE}-------------------------------------\n{ip_all}{F.WHITE}-------------------------------------\n"
+
     
             except ValueError:
                 continue
-        return ip_all
+        return data
 
 #-------------------------------------get device network details and interfaces-----------------------------------------------------------------------------------------
 
@@ -304,7 +311,7 @@ class Shark:
         port = a3+a2+a1+a2+a3
         print (F.BLUE+"[✓]Server Started")
         print (F.CYAN+"[*]Possible IP Address Listed Below")
-        print (F.CYAN+f"[*]Ip: {F.YELLOW}{ip}{F.CYAN}[*]Port: {F.YELLOW}{port}")
+        print (f"{ip}{F.GREEN}[*]Port: {F.YELLOW}{port}")
         print(" ")
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.settimeout(500)
@@ -825,12 +832,12 @@ class Shark:
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.settimeout(500)
         a1, a2, a3 = str(rd.randint(1,6)), str(rd.randint(1,6)), str(rd.randint(1,5))
+        ip = self.get_private_addr()
         port = a3+a2+a1+a2+a3
         sock.bind(('0.0.0.0', int(port)))
         print (F.BLUE+"[✓]Server Started")
         print (F.CYAN+"[*]Possible IP Address Listed Below")
-        ip = self.get_private_addr()
-        print (F.CYAN+f"[*]Ip: {F.YELLOW}{ip}{F.CYAN}[*]Port: {F.YELLOW}{port}")
+        print (f"{ip}{F.GREEN}[*]Port: {F.YELLOW}{port}")
 
         log(f"[INFO] send_file server started on {ip}:{port}")
 
@@ -952,7 +959,7 @@ class Shark:
         print(F.CYAN+"[Note]: Input <@exit> To Close Session")
         print (F.BLUE+"[✓]Shell Host Started")
         print (F.CYAN+"[*]Possible IP Address Listed Below")
-        print (F.CYAN+f"[*]Ip: {F.YELLOW}{ip}{F.CYAN}[*]Port: {F.YELLOW}{port}")
+        print (f"{ip}{F.GREEN}[*]Port: {F.YELLOW}{port}")
 
         sock.bind(("0.0.0.0", int(port)))
         sock.listen(5)
@@ -1488,4 +1495,4 @@ def _main_():
             print(f'{F.RED}[x]Error: {e}')
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1487
+# end line 1497

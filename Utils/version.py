@@ -44,7 +44,7 @@ def get_github():
                 content = base64.b64decode(file_cont['content']).decode('utf-8')
                 return content.strip()
             else:
-                return False
+                return "null_server"
         except RequestException:
             return False
     else:
@@ -83,13 +83,15 @@ def check():
     local_val = compute(get_local())
 
     
-    if git_val != False:
+    if git_val != 'null_server' and git_val != False:
         if git_val <= local_val:
             return False
         else:
             return get_github()
+    elif git_val == 'null_server':
+        return 'null_server'
     else:
         return 'null_internet'
 
 #------------------------------------------------------------------------------------------------------------------------------
-#end line 94
+#end line 96
