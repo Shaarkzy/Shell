@@ -28,7 +28,7 @@ def trigger_software_update():
     global check_res
     check_res = check()
 
-    if check_res != False and check_res != "null_internet":
+    if check_res != False and check_res != "null_internet" and check_res != "null_server":
         #software update function
         option = input(f"{Fore.GREEN}[!]NEW UPDATE {Fore.YELLOW}[{check_res}]{Fore.GREEN} AVAILABLE\n[?]WISH TO UPDATE [y/n]: "+Fore.WHITE).lower().strip()
         if option == "y":
@@ -42,6 +42,9 @@ def trigger_software_update():
 
     elif check_res == 'null_internet':
         return f"{Fore.RED}[x]No Internet Connection"
+
+    elif check_res == "null_server":
+        return f"{Fore.RED}[x]Server Error"
 
 #------------------------------------------------------------------------------------------------------------------------------
 
@@ -206,4 +209,4 @@ except KeyboardInterrupt:
     quit(0)
 
 #------------------------------------------------------------------------------------------------------------------------------
-#end line 208
+#end line 211
