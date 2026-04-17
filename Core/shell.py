@@ -276,29 +276,39 @@ class Shark:
 
     def rcode(self, data, mode):
         if mode:
-            data_bytes = data.encode('utf-8')
-            data_bytes = bs64.b64encode(data_bytes)
-            data = data_bytes.decode('utf-8')
-            return data
+            try:
+                data_bytes = data.encode('utf-8')
+                data_bytes = bs64.b64encode(data_bytes)
+                data = data_bytes.decode('utf-8')
+                return data
+            except: return False
         else:
-            data_bytes = data.encode('utf-8')
-            data_bytes = bs64.b64decode(data_bytes)
-            data = data_bytes.decode('utf-8')
-            return data
+            try:
+                data_bytes = data.encode('utf-8')
+                data_bytes = bs64.b64decode(data_bytes)
+                data = data_bytes.decode('utf-8')
+                return data
+            except: return False
 
 #--------------------------------------socket comms---------------------------------------------------------------------------------------------
 
     def sock_(self, s, data, mode):
         if mode:
-            data = self.rcode(data, True)
-            length = len(data.encode())
-            s.send(length.to_bytes(4, byteorder='big'))
-            s.send(data.encode())
-            return True
+            try:
+                data = self.rcode(data, True)
+                length = len(data.encode())
+                s.send(length.to_bytes(4, byteorder='big'))
+                s.send(data.encode())
+                return True
+            except:
+                return False
         else:
-            length = int.from_bytes(s.recv(4), byteorder='big')
-            data = self.rcode(s.recv(length).decode(), False)
-            return data
+            try:
+                length = int.from_bytes(s.recv(4), byteorder='big')
+                data = self.rcode(s.recv(length).decode(), False)
+                return data
+            except:
+                return False
 
 #-----------------------------------open server for wifi chat room-------------------------------------------------------------------------------------------
 
@@ -997,6 +1007,11 @@ class Shark:
             self.sock_(c, data, True)
 
             rec = self.sock_(c, True, False)
+            if not rec:
+                print (F.RED+"[✓]CLIENT DISCONECTED")
+                log(f"[WARN] shell_client detected server disconnect")
+                c.close()
+                break
             if "::EXEC" in rec or "::DIR" in rec or "::FILE" in rec:
                 for match in rec.split(" "):
                     if "::EXEC" in match:
@@ -1499,4 +1514,4 @@ def _main_():
             print(f'{F.RED}[x]Error: {e}')
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1501
+# end line 1516
