@@ -1024,9 +1024,9 @@ class Shark:
                 log(f"[INFO] shell_client connected to host {ip}:{port}")
                 break
             else: print(F.RED+'[x]Invalid Connection'); sock.close(); return 0
-
+        home = os.environ["HOME"]
         print(F.BLUE+"[✓]Connected To Host")
-        print(F.YELLOW+"[*]━━━━━━━━━━━━━━━━SERVER LOG━━━━━━━━━━━━━━━━")
+        print(F.YELLOW+"[*]━━━━━━━━━━━━━━━━━━━SERVER LOG━━━━━━━━━━━━━━━━━━━")
         
         while True:
             data = self.sock_(sock, True, False)
@@ -1035,7 +1035,7 @@ class Shark:
                 log(f"[WARN] shell_client detected server disconnect {ip}:{port}")
                 sock.close()
                 break
-
+            data = data.replace('~/', home+'/')
             print(f"{F.GREEN}[*]Host Executed: {F.WHITE}{data}")
             log(f"[INFO] shell_client received host command: {data}")
             if data == "@exit":
@@ -1045,11 +1045,10 @@ class Shark:
 
             elif data.strip() == "ls":
                 data = sub.getoutput("ls")
-                entries = data.split()      # split by whitespace (each file/folder)
+                entries = data.split()
                 tagged_entries = []
                 
                 for f in entries:
-                    # make a full path so we can check type
                     full_path = os.path.join(os.getcwd(), f)
 
                     if os.path.isdir(full_path):
@@ -1059,8 +1058,12 @@ class Shark:
                     else:
                         tagged_entries.append(f"{f}::FILE")
 
-                    # this is ready to send over socket
                     data = " ".join(tagged_entries)
+
+            elif data.strip() == 'cd' :
+                os.chdir(os.path.expanduser("~"))
+                data = home
+
 
             elif data.startswith('cd '):
                 path = data[3:]
@@ -1348,6 +1351,7 @@ def _main_():
     shark = Shark()
     shark.main()
     memory = compute()
+    home = os.environ['HOME']
 
     #start Future background processs
     #process = multiprocessing.Process(target=background)
@@ -1452,7 +1456,7 @@ def _main_():
 
             elif data.lstrip().startswith('cd') and "cd" != data.strip():
                 d_path = ' '.join(filter(None, data.split()))
-                path = d_path[3:]
+                path = d_path[3:].replace('~/', home)
                 matches = glob.glob(path)
                 if matches:
                     if len(matches) == 1:
@@ -1495,4 +1499,4 @@ def _main_():
             print(f'{F.RED}[x]Error: {e}')
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1497
+# end line 1501
