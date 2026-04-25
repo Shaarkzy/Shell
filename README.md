@@ -80,7 +80,7 @@ To build and configure program (Android [Termux-only] | Debian based system only
 **✨ Features:**
 ```
 1. 🔧 Binary Tools
-2. 🔍 Port Scanner (multi/single) (Aggresive)
+2. 🔍 Port Scanner (multi/single) : (Aggresive) (Conservative)
 3. 📂 File Management (Supports Cryptography)
 4. 💬 Wifi Chat Room
 5. 📤 File Transfer Via Wifi

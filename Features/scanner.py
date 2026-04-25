@@ -16,7 +16,7 @@ def counter():
 
 #------------------------------------------------------------------------------------------------------------------------------
 
-async def check_port(sem, ip, port, timeout=5.0):
+async def check_port(sem, ip, port, timeout=4.0):
     async with sem:
         try:
             reader, writer = await asyncio.wait_for(
@@ -33,8 +33,12 @@ async def check_port(sem, ip, port, timeout=5.0):
 
 #------------------------------------------------------------------------------------------------------------------------------
 
-async def scan_ports(ip, ports, concurrency=10000):
+async def scan_ports(ip, ports, speed):
     global count
+    if speed=='fast': concurrency = 10000
+    elif speed=='slow': concurrency = 1000
+    else: return True
+
     sem = asyncio.Semaphore(concurrency)
     n_ports = len(ports)
     print(f"{Fore.GREEN}[*]Scanning {Fore.YELLOW}{n_ports} {Fore.GREEN}ports")
@@ -69,7 +73,7 @@ def load_ports_from_file(file_path):
 
 #------------------------------------------------------------------------------------------------------------------------------
 
-def run_port(host, port_range):
+def run_port(host, port_range, speed):
     if port_range == "default":
         file_path = f"{os.environ['HOME']}/Shell/Data/ports"
         ports = load_ports_from_file(file_path)
@@ -97,12 +101,16 @@ def run_port(host, port_range):
 
     try:
         start = time.perf_counter()
-        asyncio.run(scan_ports(host, ports))
-        end = time.perf_counter()
-        elapsed = end - start
-        print(f"{Fore.WHITE}[*]Elapsed Time: {Fore.YELLOW}{elapsed:.3f} {Fore.WHITE}seconds")
+        if not asyncio.run(scan_ports(host, ports, speed)):
+            end = time.perf_counter()
+            elapsed = end - start
+            print(f"{Fore.WHITE}[*]Elapsed Time: {Fore.YELLOW}{elapsed:.3f} {Fore.WHITE}seconds")
+        else:
+            print(Fore.RED+'[x]Invalid Mode')
+
+            
     except KeyboardInterrupt:
         print(Fore.RED + "\n[!]Scan interrupted by user.")
 
 #------------------------------------------------------------------------------------------------------------------------------
-#end line 107
+#end line 115

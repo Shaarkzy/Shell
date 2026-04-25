@@ -5,12 +5,14 @@
 {F.YELLOW}[1]. {F.CYAN}Getting Ip Address: {F.WHITE}@get -i {F.GREEN}<target>
      {F.GREEN}Example: {F.WHITE}@get -i google.com
 
-{F.YELLOW}[2]. {F.CYAN}Port Scanning Single/Multiple: {F.WHITE}@port -st {F.GREEN}<target> <range>|<port>
-     {F.GREEN}Example: {F.WHITE}@port -st 127.0.0.1 0-65535
-     {F.GREEN}Example: {F.WHITE}@port -st 127.0.0.1 80
+{F.YELLOW}[2]. {F.CYAN}Port Scanning Single/Multiple: {F.WHITE}@port -st {F.GREEN}<target> <range | port> <fast | slow>
+     {F.GREEN}Example: {F.WHITE}@port -st 127.0.0.1 0-65535 fast
+     {F.GREEN}Example: {F.WHITE}@port -st 127.0.0.1 80 slow
      {F.GREEN}Example: {F.WHITE}@port -st 127.0.0.1 1,25,80,443
      {F.RED}Note     : {F.BLUE}Use <default> To Scan Well Known (1000)Ports
-     {F.GREEN}Example: {F.WHITE}@port -st 127.0.0.1 default
+     {F.GREEN}Example: {F.WHITE}@port -st 127.0.0.1 default fast
+            {F.RED}NOTE   :{F.BLUE} Use fast mode for high-concurrency best-effort scans
+                    where TCP stack load may reduce completeness.
 
 {F.YELLOW}[3]. {F.CYAN}Convert Number To Binary: {F.WHITE}@num -b {F.GREEN}<number> <base>
      {F.GREEN}Example: {F.WHITE}@num -b 2000 2

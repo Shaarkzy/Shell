@@ -1390,7 +1390,7 @@ def _main_():
             elif "@get-i" in data_strip and data.strip().startswith('@get'): 
                 shark.get_ip(data.split()[2])
             elif "@port-st" in data_strip and data.strip().startswith('@port'):
-                run_port(data.split()[2], data.split()[3])
+                run_port(data.split()[2], data.split()[3], data.split()[4])
             elif "@bina-a" in data_strip and data.strip().startswith('@bina'): 
                 shark.Bina_Alpha(cons_(2))
             elif "@alpha-b" in data_strip and data.strip().startswith('@alpha'): 
