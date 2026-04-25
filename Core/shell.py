@@ -891,9 +891,9 @@ class Shark:
                 print (F.CYAN+"") 
                 with tqdm(total=size, unit='B', unit_scale=True, desc="Uploading", ascii=False) as progress_bar:
                     with open(file_path, 'rb') as file:
-                        for data in iter(lambda:     file.read(1024), b''):
+                        for data in iter(lambda: file.read(1024), b''):
                             c.send(data)
-                            progress_bar.update    (len(data))
+                            progress_bar.update(len(data))
                 c.close()
                 print(F.BLUE+"[✓]File Uploaded")
                 log(f"[INFO] send_file uploaded {file} ({size_s}) to {addr}")
