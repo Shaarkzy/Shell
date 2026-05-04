@@ -328,7 +328,7 @@ class Shark:
     
         sock.bind(("0.0.0.0", int(port)))
         sock.listen(5)
-        log(f"[INFO] open_server started on {ip}:{port}")
+        log(f"[INFO] open_server started on port:{port}")
         while True:
             c = None
             try:
@@ -849,7 +849,7 @@ class Shark:
         print (F.CYAN+"[*]Possible IP Address Listed Below")
         print (f"{ip}{F.GREEN}[*]Port: {F.YELLOW}{port}")
 
-        log(f"[INFO] send_file server started on {ip}:{port}")
+        log(f"[INFO] send_file server started on port:{port}")
 
         sock.listen(5)
 
@@ -973,7 +973,7 @@ class Shark:
 
         sock.bind(("0.0.0.0", int(port)))
         sock.listen(5)
-        log(f"[INFO] shell_host started on {ip}:{port}")
+        log(f"[INFO] shell_host started on port:{port}")
         while True:
             c = None
             try:
@@ -1231,11 +1231,8 @@ class Shark:
 #---------------------------------------file search trigger ---------------------------------------------------------------------------------------
    
     def trigger_search(self, directory):
-
         folder = "/data/data/com.termux" if directory == "/termux" else directory
-
         target__file = input(f"{F.BLUE}[%]File To Search:{F.WHITE} ").replace("'", "")
-        
         log(f"[INFO] trigger_search() called folder={folder} target_input={target__file}")
         if target__file:
 
@@ -1244,7 +1241,6 @@ class Shark:
             print(f"{F.CYAN}\n[*]File Occurence: {F.GREEN}{self.file_counter()-1}")
             self.count_f = 0
             self.count_s = 0
-
         else:
             print(F.RED+"[x]Error: Empty Input")
 
@@ -1297,13 +1293,11 @@ class Shark:
             print(F.GREEN+'[*]----------------------------LOGS------------------------------')
             print(F.WHITE+open_file.read())
             open_file.close()
-
         elif mode == '-clear':
             log(f"[INFO] open_log clearing logs")
             open_file = open(file, 'w')
             print(F.GREEN+'[*]Cleared')
             open_file.close()
-
         else:
             print(F.RED+'[x]Invalid Mode')
 
@@ -1311,6 +1305,8 @@ class Shark:
 
     def change_name(self, name):
         global username
+        if name:pass
+        else:print(F.RED+'[x]Please Specify'); return False
         name = name.replace(" ", "_")
         home = os.environ["HOME"]
         log(f"[INFO] change_name() requested new_name={name}")
@@ -1514,4 +1510,4 @@ def _main_():
             print(f'{F.RED}[x]Error: {e}')
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1516
+# end line 1512
