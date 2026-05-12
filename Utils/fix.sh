@@ -2,9 +2,9 @@
 
 if [[ "$(uname -a | grep -i android)" ]]; then
 	#do  nothing for android
-    echo "Nothing Done"
+    echo "hello"
 
 else
     #do nothing for debian
-    echo "Nothing Done"
+    echo "hello test"
 fi
