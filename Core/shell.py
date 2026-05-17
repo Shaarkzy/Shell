@@ -297,16 +297,21 @@ class Shark:
             try:
                 data = self.rcode(data, True)
                 length = len(data.encode())
-                s.send(length.to_bytes(4, byteorder='big'))
-                s.send(data.encode())
+                s.sendall(length.to_bytes(4, byteorder='big'))
+                s.sendall(data.encode())
                 return True
             except:
                 return False
         else:
             try:
                 length = int.from_bytes(s.recv(4), byteorder='big')
-                data = self.rcode(s.recv(length).decode(), False)
-                return data
+                total_data = ''
+                while len(total_data) < length:
+                    data = s.recv(length - len(total_data)).decode()
+                    if not data:return False
+                    total_data += data
+                data_ = self.rcode(total_data, False)
+                return data_
             except:
                 return False
 
@@ -362,7 +367,7 @@ class Shark:
                         print("")
                         if sen:
                             self.sock_(c, sen, True)
-                    except KeyboardInterrupt: pass
+                    except KeyboardInterrupt: continue
                     except: c.close(); break
 
                 if sen.strip() == '@bye':
@@ -384,7 +389,7 @@ class Shark:
                         c.close()
                         print_formatted_text(ANSI(f'{F.RED}[x]CLIENT DISCONNECTED HIT ENTER TO CLOSE SESSION'))
                         break
-                except KeyboardInterrupt: pass
+                except KeyboardInterrupt: continue
                 except: c.close(); break
 
                 if data.strip() == '@bye':
@@ -451,7 +456,7 @@ class Shark:
                         sock.close()
                         print_formatted_text(ANSI(f'{F.RED}[x]SERVER DISCONNECTED HIT ENTER TO CLOSE SESSION'))
                         break
-                except KeyboardInterrupt: pass
+                except KeyboardInterrupt: continue
                 except: sock.close(); break
 
                 if rec.strip() == '@bye':
@@ -477,7 +482,7 @@ class Shark:
                         print("")
                         if sen:
                             self.sock_(sock, sen, True)
-                    except KeyboardInterrupt: pass
+                    except KeyboardInterrupt: continue
                     except: sock.close(); break
  
                 if sen.strip() == "@bye":
@@ -871,7 +876,7 @@ class Shark:
                 try:
                     c, addr = sock.accept()
                     auth_s = '0x2000'
-                    c.send(auth_s.encode())
+                    c.sendall(auth_s.encode())
                     auth_r = c.recv(6).decode()
                     if not auth_r: c.close(); continue
                     if auth_r == auth_s:
@@ -892,7 +897,7 @@ class Shark:
                 with tqdm(total=size, unit='B', unit_scale=True, desc="Uploading", ascii=False) as progress_bar:
                     with open(file_path, 'rb') as file:
                         for data in iter(lambda: file.read(1024), b''):
-                            c.send(data)
+                            c.sendall(data)
                             progress_bar.update(len(data))
                 c.close()
                 print(F.BLUE+"[✓]File Uploaded")
@@ -913,7 +918,7 @@ class Shark:
             c_socket.connect((ip, int(port)))
             auth_s = '0x2000'
             auth_r = c_socket.recv(6).decode()
-            c_socket.send(auth_s.encode())
+            c_socket.sendall(auth_s.encode())
 
             if auth_r == auth_s:
                 print(F.CYAN+"[✓]Connected To Server")
@@ -1510,4 +1515,4 @@ def _main_():
             print(f'{F.RED}[x]Error: {e}')
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1512
+# end line 1517
