@@ -1207,7 +1207,7 @@ class Shark:
                     self.search(item.path, target_file)
                 elif item.name == target_file:
                     print(f"{F.GREEN}[✓]File Found: {F.WHITE}{full_path}/{target_file}")
-                    self.file_counter()
+                    self.file_counter(); self.search_counter()
                 else:
                     print(f"{F.CYAN}[*]Crawling Files: {F.GREEN}{self.search_counter()}", end='\r')
                     
