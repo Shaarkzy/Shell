@@ -11,7 +11,7 @@
      {F.GREEN}Example: {F.WHITE}@port -st 127.0.0.1 1,25,80,443 slow
      {F.RED}Note     : {F.BLUE}Use <default> To Scan Well Known (1000)Ports
      {F.GREEN}Example: {F.WHITE}@port -st 127.0.0.1 default fast
-            {F.RED}NOTE   :{F.BLUE} Use fast mode for high-concurrency best-effort scans
+     {F.RED}NOTE   :{F.BLUE} Use fast mode for high-concurrency best-effort scans
                     where TCP stack load may reduce completeness.
 
 {F.YELLOW}[3]. {F.CYAN}Convert Number To Binary: {F.WHITE}@num -b {F.GREEN}<number> <base>

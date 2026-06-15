@@ -431,7 +431,6 @@ class Shark:
             self.sock_(sock, auth_s, True)
 
             if auth_r == auth_s:
-                print(F.CYAN+'[NOTE]: Only Support Wlan')
                 print(F.CYAN+'......: To Close Chat: @bye')
                 print(F.BLUE+"[✓]Connected To Server")
                 log(f"[INFO] connect_server connected to {ip}:{port}")
@@ -894,7 +893,7 @@ class Shark:
             if "YES" in choice: 
                 c.send(str(size).encode())
                 print (F.CYAN+"") 
-                with tqdm(total=size, unit='B', unit_scale=True, desc="Uploading", ascii=False) as progress_bar:
+                with tqdm(total=size, unit='B', unit_scale=True, desc="[↑↑]", ascii=False) as progress_bar:
                     with open(file_path, 'rb') as file:
                         for data in iter(lambda: file.read(1024), b''):
                             c.sendall(data)
@@ -938,7 +937,7 @@ class Shark:
                 size = c_socket.recv(1024).decode()
                 size = int(size)
                 print (F.CYAN+"")
-                with tqdm(total=size, unit='B', unit_scale=True, desc="Downloading", ascii=False) as progress_bar:
+                with tqdm(total=size, unit='B', unit_scale=True, desc="[↓↓]", ascii=False) as progress_bar:
                     with open(file, 'wb') as new_file:
                         while True:
                             rec = c_socket.recv(1024)
@@ -1515,4 +1514,4 @@ def _main_():
             print(f'{F.RED}[x]Error: {e}')
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1517
+# end line 1516
