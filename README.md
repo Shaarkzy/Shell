@@ -49,13 +49,17 @@ To build and configure program (Android [Termux-only] | Debian based system only
 
 **📌 Note:**
 ```
-1. 🐧 For Debian installation run setup as root: $ sudo ./setup.sh
-2. 📂 Program Folder must be in the home directory (~/Shell , /root/Shell)
-3. 💻 On Debian system, it's advisable to run setup on Non root Terminal
-4. 🔗 Run: $ bash Core/relink on Non root terminal if setup was run on Root Terminal and you wish to run shell command from Non root terminal.
-5. 🚀 On Debian system, To start shell on Non root Terminal run: sudo shell.
-6. ⚙️ Setup File is configured for Android and Debian based systems only
-7. 🛠️ Each update may require system-level fixes. The script fix.sh is executed automatically with every update.
+1. 📂 Program Folder must be in the home directory (~/Shell , /root/Shell)
+
+2. 💻 On Debian system, setup script must run as root as it calls (apt-get) command
+
+3. 🔗 Run: $ bash /.../Shell/Core/relink on (root, non-root terminal) to link [launcher.py, shell] so you can start the program by calling [~$ shell] -> debian only.
+
+4. 🚀 On Debian system, To start shell on Non root Terminal run: sudo shell.
+
+5. ⚙️ Setup File is configured for Non-root Android Termux and Debian based systems only
+
+6. 🛠️ Each update may require system-level fixes. The script fix.sh is executed automatically with every update.
 --------fix.sh runs every time, regardless of whether fixes are needed.
 --------If no fixes are required, fix.sh remains empty.
 --------If fixes are necessary, fix.sh contains the relevant commands.

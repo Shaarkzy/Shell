@@ -7,7 +7,7 @@ else
     USER_NAME="$(whoami)"
     USER_HOME="$(getent passwd "$USER_NAME" | cut -d: -f6)"
 
+    chmod +x "$USER_HOME/Shell/launcher.py"
 	sudo ln -sf "$USER_HOME/Shell/launcher.py" /usr/local/bin/shell
 	echo "RELINKED"
 fi
-

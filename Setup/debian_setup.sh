@@ -60,9 +60,4 @@ echo -e "\n${YELLOW}INSTALLING BEAUTIFULSOUP 12/12${NC}\n"
 apt-get install python3-bs4
 echo -e "\n${YELLOW}DONE INSTALLING BEAUTIFULSOUP 12/12${NC}\n"
 
-echo -e "\n${GREEN}[*] SETTING UP SHELL.PY${NC}"
-
-chmod +x "$USER_HOME/Shell/Core/shell.py"
-ln -sf "$USER_HOME/Shell/launcher.py" "/usr/local/bin/shell"
-
-echo -e "\n${YELLOW}[*] IF NOT ERROR: Start Terminal By executing: shell${NC}\n"
+echo -e "\n${YELLOW}[*] RUN ../Shell/Core/relink & Start Terminal By executing: shell${NC}\n"
