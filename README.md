@@ -79,6 +79,9 @@ To build and configure program (Android [Termux-only] | Debian based system only
 8. 🔐 pycryptodome
 9. ⌨️ prompt_toolkit
 10.📄 Beautiful Soup
+
+Note: install libraries that failed to install.
+    : Use (pip or building from source)
 ```
 
 **✨ Features:**
