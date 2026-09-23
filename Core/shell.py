@@ -715,13 +715,19 @@ class Shark:
 
         elif option == "-ed":
             os = self.os
+            is_magic_byte = False
+
             file = self.get_file(file)
             log(f"[INFO] file_sys option='-ed' called for file={file}")
             if not file:
                 return False
             if exists(file) and os.path.isfile(file):
-                reg = file.endswith(".enc")
-                if reg == True:
+                open_file = open(file, 'rb')
+                check_magic_byte = open_file.read(15).decode()
+                if check_magic_byte == "__SHARK_SHELL__":
+                    is_magic_byte = True
+
+                if is_magic_byte == True:
                     print (F.GREEN+"[*]File Is In Encrypted Format!!\n[*]Wish To Decrypt")
                     opt = input(F.YELLOW+"[?]Y/N: "+F.WHITE).upper()
                     if opt == "Y":
@@ -736,13 +742,12 @@ class Shark:
                                 files.seek(0,2)
                                 size = files.tell()
                             
-                            open_file = open(file, "rb")
                             iv = open_file.read(16)
                             size = size - len(iv)
   
                             cipher_encrypt = AES.new(key, AES.MODE_CFB, iv=iv)
                             buffer = open_file.read(buffer_size)
-                            file = file.replace(".enc","")
+                            file = file.replace(".shell","")
                             output_file = open(file, "wb")
                             print(F.YELLOW+"")
                             with tqdm(total=size, unit='B', unit_scale=True, desc="Decrypting File", ascii=False) as progress_bar:
@@ -770,7 +775,7 @@ class Shark:
                     else:
                         print (F.RED+"[x]Error, Invalid Input")
 
-                elif reg == False:
+                elif is_magic_byte == False:
                     print (F.GREEN+"[*]File Is In Decrypted Format!!\n[*]Wish To Encrypt")
                     opt = input(F.YELLOW+"[?]Y/N: "+F.WHITE).upper()
                     if opt == "Y":
@@ -794,12 +799,12 @@ class Shark:
 
                             buffer_size = 65536 
                             iv = os.urandom(16)
-                            
                             cipher_encrypt = AES.new(key, AES.MODE_CFB, iv=iv)
                             open_file = open(file, 'rb')
                             buffer = open_file.read(buffer_size)
-                            file = file+".enc"
+                            file = file+".shell"
                             output_file = open(file, "wb")
+                            output_file.write(b"__SHARK_SHELL__")
                             output_file.write(iv)
                             
                             print(F.YELLOW+"")
@@ -1514,4 +1519,4 @@ def _main_():
             print(f'{F.RED}[x]Error: {e}')
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1516
+# end line 1521

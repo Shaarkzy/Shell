@@ -48,7 +48,7 @@
                      {F.CYAN}-v Check The Properties Of A File And Folder
                      {F.CYAN}-ed Encrypt/Decrypt File
             {F.GREEN}Example: {F.WHITE}@file -cardrv(ed) filename.txt
-            {F.RED}NOTE   :{F.BLUE} Can only encrypt files with .enc extension
+            {F.RED}NOTE   :{F.BLUE} Can only encrypt files encrypted with this Software
 
 {F.YELLOW}[11].{F.CYAN}To Send Message To A Whatsapp Contact: {F.WHITE}@send -w {F.GREEN}<number>
     {F.GREEN}Example: {F.WHITE}@send -w +1234567890
