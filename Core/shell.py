@@ -16,6 +16,7 @@ sys("clear")
 
 #--------------------------------------------change username-------------------------------------------------------------------------------
 
+#get username
 home = os.environ["HOME"]
 with open(f'{home}/Shell/Data/config.json', 'r') as file:
     try:data = json.load(file);username = data["username"]
@@ -44,10 +45,15 @@ def inpu():
     def c(x):
         return f"\001{x}\002"
 
+
+    global direc
     try:
         print("\n")
-        #get username
-        direc = os.getcwd()
+        try:
+            direc = os.getcwd()
+        except FileNotFoundError:
+            os.chdir(direc)
+
         new_path = "/".join(direc.split(os.sep)[-3:])
         new_path = F.CYAN+new_path+F.YELLOW
 
@@ -1519,4 +1525,4 @@ def _main_():
             print(f'{F.RED}[x]Error: {e}')
 
 #------------------------------------------------------------------------------------------------------------------------------
-# end line 1521
+# end line 1527
