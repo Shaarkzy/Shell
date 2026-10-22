@@ -55,7 +55,7 @@ apt-get install python3-netifaces -y
 echo -e "\n${GREEN}DONE INSTALLING NETIFACES 9/12${NC}\n"
 
 echo -e "\n${YELLOW}INSTALLING PYCRYPTODOME 10/12${NC}\n"
-bash -c "./pycryptodome.sh" -y
+$USER_HOME/Shell/Setup/pycryptodome.sh
 echo -e "\n${YELLOW}DONE INSTALLING PYCRYPTODOME 10/12${NC}\n"
 
 echo -e "\n${YELLOW}INSTALLING PROMPT TOOLKIT 11/12${NC}\n"

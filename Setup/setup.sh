@@ -14,14 +14,20 @@ detect_os() {
             pkg install python3
 	        pkg install file
             echo -e "${BLUE}DONE${NC}"
-            ./android_setup.sh
+            /data/data/com.termux/files/home/Shell/Setup/android_setup.sh
             
         elif grep -Eq '^(ID|ID_LIKE)=.*debian' /etc/os-release; then
+            if [[ "$PWD" == /root* ]]; then
+                USER_NAME="root"
+            else
+                USER_NAME="${SUDO_USER:-$(whoami)}"
+            fi
+            USER_HOME="$(getent passwd "$USER_NAME" | cut -d: -f6)"
             echo -e "${GREEN}INSTALLING PYTHON3${NC}"
             apt-get install python3
 	        apt-get install file
             echo -e "${BLUE}DONE${NC}"
-            ./debian_setup.sh
+            $USER_HOME/Shell/Setup/debian_setup.sh
 
 	    else
 	        echo -e "${RED}[x]No Setup File For Your Os${NC}"
