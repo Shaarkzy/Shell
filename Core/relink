@@ -4,7 +4,11 @@ if [[ "$(uname -a | grep -i android)" ]]; then
 	echo "Operating System Unsupported"
 
 else
-    USER_NAME="$(whoami)"
+    if [[ "$PWD" == /root* ]]; then
+        USER_NAME="root"
+    else
+        USER_NAME="${SUDO_USER:-$(whoami)}"
+    fi
     USER_HOME="$(getent passwd "$USER_NAME" | cut -d: -f6)"
 
     chmod +x "$USER_HOME/Shell/launcher.py"
