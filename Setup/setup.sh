@@ -11,8 +11,8 @@ detect_os() {
     
         if [[ "$(uname -a | grep -i android)" ]]; then
             echo -e "${GREEN}INSTALLING PYTHON3 & FILE ${NC}"
-            pkg install python3
-	        pkg install file
+            pkg install python3 -y
+	        pkg install file -y
             echo -e "${BLUE}DONE${NC}"
             /data/data/com.termux/files/home/Shell/Setup/android_setup.sh
             
@@ -24,8 +24,8 @@ detect_os() {
             fi
             USER_HOME="$(getent passwd "$USER_NAME" | cut -d: -f6)"
             echo -e "${GREEN}INSTALLING PYTHON3${NC}"
-            apt-get install python3
-	        apt-get install file
+            apt-get install python3 -y
+	        apt-get install file -y
             echo -e "${BLUE}DONE${NC}"
             $USER_HOME/Shell/Setup/debian_setup.sh
 
