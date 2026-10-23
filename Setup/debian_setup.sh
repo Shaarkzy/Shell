@@ -66,4 +66,6 @@ echo -e "\n${YELLOW}INSTALLING BEAUTIFULSOUP 12/12${NC}\n"
 apt-get install python3-bs4 -y
 echo -e "\n${YELLOW}DONE INSTALLING BEAUTIFULSOUP 12/12${NC}\n"
 
-echo -e "\n${YELLOW}[*] RUN < root | /home/user > /Shell/Core/relink & Start Terminal By executing: shell${NC}\n"
+sudo chown -R $USER_NAME:$USER_NAME $USER_HOME/Shell
+
+echo -e "\n${YELLOW}[*] RUN < /root | /home/user > /Shell/Core/relink & Start Terminal By executing: shell${NC}\n"
