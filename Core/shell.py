@@ -749,7 +749,7 @@ class Shark:
                                 size = files.tell()
                             
                             iv = open_file.read(16)
-                            size = size - len(iv)
+                            size = size - (len(iv) + 15)
   
                             cipher_encrypt = AES.new(key, AES.MODE_CFB, iv=iv)
                             buffer = open_file.read(buffer_size)
